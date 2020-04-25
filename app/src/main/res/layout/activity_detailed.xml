@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailedActivity">
+
+    <include
+        android:id="@+id/app_toolbar"
+        layout="@layout/app_toolbar"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_toolbar"
+        android:layout_marginTop="-1dp"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relative_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <ImageView
+                android:id="@+id/flag_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/corona_virus_image" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circular_image_view"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                app:civ_border_width="4dp"
+                app:civ_border_color="#DDE5EC"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="180dp"
+                android:src="@drawable/indian_flag"
+                />
+
+        </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/country_name_text_view"
+                android:layout_below="@+id/relative_layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="INDIA"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:textColor="#ee00aa"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:background="@drawable/text_view_background_shape"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/update_date_text_view"
+                android:layout_below="@+id/country_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update at 2020-04-24 19:26:01.82"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:textColor="#C2185B"
+                android:textStyle="bold"
+                android:padding="13dp"
+                android:background="@drawable/text_view_background_shape"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_below="@+id/update_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recent report of Corona Virus affected People in INDIA"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:padding="13dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_view_background_shape"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                />
+
+            <TextView
+                android:id="@+id/total_cases_text_view"
+                android:layout_below="@id/text_view"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Cases: 24434"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+            <TextView
+                android:id="@+id/total_deaths_text_view"
+                android:layout_below="@id/total_cases_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Deaths: 780"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+            <TextView
+                android:id="@+id/active_cases_text_view"
+                android:layout_below="@id/total_deaths_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Active Cases: 18197"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+            <TextView
+                android:id="@+id/total_recovered_text_view"
+                android:layout_below="@id/active_cases_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Recovered: 5457"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/total_tests_text_view"
+                android:layout_below="@id/total_recovered_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Tests: 541789"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+
+            <TextView
+                android:id="@+id/total_tests_per_millin_text_view"
+                android:layout_below="@id/total_tests_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Tests Per Millin: 393"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+
+            <TextView
+                android:id="@+id/total_cases_per_millin_text_view"
+                android:layout_below="@id/total_tests_per_millin_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Cases Per Millin: 1"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+            <TextView
+                android:id="@+id/deaths_per_millin_text_view"
+                android:layout_below="@id/total_cases_per_millin_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deaths Per Millin: 0.6"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                />
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>
