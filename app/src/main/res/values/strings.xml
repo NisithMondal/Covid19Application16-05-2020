@@ -2,6 +2,7 @@
     <string name="app_name">Covid19 Application</string>
 
 
+
     <string-array name="countries_name">
 
         <item>Afghanistan</item>
@@ -20,7 +21,7 @@
         <item>Azerbaijan</item>
         <item>Bahamas</item>
         <item>Bahrain</item>
-        <item>Banglades</item>
+        <item>Bangladesh</item>
         <item>Barbados</item>
         <item>Belarus</item>
         <item>Belgium</item>
@@ -33,8 +34,7 @@
         <item>Botswana</item>
         <item>Bouvet Island</item>
         <item>Brazil</item>
-        <item>British Indian O. Terr.</item>
-        <item>British Virgin Islands</item>
+        <item>British Indian Ocean Territory</item>
         <item>Brunei Darussalam</item>
         <item>Bulgaria</item>
         <item>Burkina Faso</item>
@@ -42,9 +42,8 @@
         <item>Cambodia</item>
         <item>Cameroon</item>
         <item>Canada</item>
-        <item>Cape Verde</item>
         <item>Cayman Islands</item>
-        <item>Central African Rep.</item>
+        <item>Central African Republic</item>
         <item>Chad</item>
         <item>Chile</item>
         <item>China</item>
@@ -52,18 +51,16 @@
         <item>Cocos (Keeling) Islands</item>
         <item>Colombia</item>
         <item>Comoros</item>
-        <item>Congo (Brazzaville)</item>
+        <item>Congo</item>
         <item>Cook Islands</item>
         <item>Costa Rica</item>
         <item>Croatia</item>
         <item>Cuba</item>
         <item>Cyprus</item>
         <item>Czech Republic</item>
-        <item>Democratic Republic of Congo (Kinshasa-Zaire)</item>
         <item>Denmark</item>
         <item>Djibouti</item>
         <item>Dominica</item>
-        <item>Dominican Republic</item>
         <item>Ecuador</item>
         <item>Egypt</item>
         <item>El Salvador</item>
@@ -71,15 +68,14 @@
         <item>Estonia</item>
         <item>Ethiopia</item>
         <item>European Union</item>
-        <item>Falkland Isl., Malvinas</item>
+        <item>Falkland Island Malvinas</item>
         <item>Faroe Islands</item>
         <item>Fiji</item>
         <item>Finland</item>
         <item>France</item>
-        <item>France, Metropolitan</item>
         <item>French Guiana</item>
         <item>French Polynesia</item>
-        <item>French Southern Terr.</item>
+        <item>French Southern Territories</item>
         <item>Gabon</item>
         <item>Gambia</item>
         <item>Georgia</item>
@@ -88,17 +84,17 @@
         <item>Gibraltar</item>
         <item>Great Britain - UK</item>
         <item>Greece</item>
-        <item>Greenland (Denmark)</item>
+        <item>Greenland</item>
         <item>Grenada</item>
-        <item>Guadaloupe</item>
-        <item>Guam (US)</item>
+        <item>Guadeloupe</item>
+        <item>Guam</item>
         <item>Guatemala</item>
         <item>Guernsey</item>
         <item>Guinea (Conakry)</item>
         <item>Guinea Bissau</item>
         <item>Guyana</item>
         <item>Haiti</item>
-        <item>Heard and McDonald Isl.</item>
+        <item>Heard Island and McDonald Islands</item>
         <item>Honduras</item>
         <item>Hong Kong</item>
         <item>Hungary</item>
@@ -111,7 +107,6 @@
         <item>Isle of Man</item>
         <item>Israel</item>
         <item>Italy</item>
-        <item>Ivory Coast</item>
         <item>Jamaica</item>
         <item>Japan</item>
         <item>Jersey</item>
@@ -119,7 +114,7 @@
         <item>Kazakhstan</item>
         <item>Kenya</item>
         <item>Kuwait</item>
-        <item>Kyrgyz Republic</item>
+        <item>Kyrgyzstan</item>
         <item>Laos</item>
         <item>Latvia</item>
         <item>Lebanon</item>
@@ -128,8 +123,9 @@
         <item>Libya</item>
         <item>Liechtenstein</item>
         <item>Luxembourg</item>
-        <item>Macau</item>
-        <item>Macedonia</item>
+        <item>Lithuania</item>
+        <item>Macao</item>
+        <item>North Macedonia</item>
         <item>Madagascar</item>
         <item>Malawi</item>
         <item>Malaysia</item>
@@ -154,7 +150,6 @@
         <item>Namibia</item>
         <item>Nauru</item>
         <item>Nepal</item>
-        <item>Netherland Antilles</item>
         <item>Netherlands</item>
         <item>New Caledonia</item>
         <item>New Zealand</item>
@@ -164,7 +159,7 @@
         <item>Niue</item>
         <item>Norfolk Island</item>
         <item>North Korea</item>
-        <item>Northern Mariana Isl.</item>
+        <item>Northern Mariana Island</item>
         <item>Norway</item>
         <item>Oman</item>
         <item>Pakistan</item>
@@ -201,17 +196,11 @@
         <item>South Africa</item>
         <item>South Georgia and South Sandwich Islands</item>
         <item>South Korea</item>
-        <item>Soviet Union</item>
         <item>Spain</item>
         <item>Sri Lanka</item>
-        <item>St. Helena</item>
-        <item>St. Tome and Principe</item>
-        <item>St.Kitts Nevis Anguilla</item>
-        <item>St.Vincent and Grenadines</item>
         <item>Sudan</item>
         <item>Suriname</item>
-        <item>Svalbard and Jan Mayen Is</item>
-        <item>Swaziland</item>
+        <item>Svalbard and Jan Mayen</item>
         <item>Sweden</item>
         <item>Switzerland</item>
         <item>Syria</item>
@@ -232,23 +221,17 @@
         <item>Uganda</item>
         <item>Ukraine</item>
         <item>United Arab Emirates</item>
-        <item>United States</item>
+        <item>USA</item>
         <item>Uruguay</item>
-        <item>US Minor outlying Isl.</item>
-        <item>US Virgin Islands</item>
         <item>Uzbekistan</item>
         <item>Vanuatu</item>
-        <item>Vatican City State</item>
         <item>Venezuela</item>
         <item>Vietnam</item>
         <item>Wallis and Futuna Islands</item>
         <item>Western Sahara</item>
-        <item>Western Samoa</item>
         <item>Yemen</item>
         <item>Zambia</item>
         <item>Zimbabwe</item>
     </string-array>
-
-
 
 </resources>

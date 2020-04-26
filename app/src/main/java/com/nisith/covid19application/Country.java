@@ -1,9 +1,16 @@
 package com.nisith.covid19application;
 
+import android.content.Context;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Country {
 
 
-    int allCountriesFlags[] = {R.drawable.af,R.drawable.al,R.drawable.dz,R.drawable.as,R.drawable.ad,
+    private int allCountriesFlags[] = {R.drawable.af,R.drawable.al,R.drawable.dz,R.drawable.as,R.drawable.ad,
             R.drawable.ao,R.drawable.ai,R.drawable.aq,
             R.drawable.ar,R.drawable.am,R.drawable.aw,R.drawable.au,R.drawable.at,R.drawable.az,
             R.drawable.bs,R.drawable.bh,
@@ -53,9 +60,28 @@ public class Country {
             R.drawable.wf,R.drawable.eh,R.drawable.ye,R.drawable.zm,R.drawable.zw
     };
 
+    private Context context;
+    private List<String> allCountryNamesList;
+
+    public Country(Context context){
+        this.context = context;
+        allCountryNamesList = Arrays.asList(context.getResources().getStringArray(R.array.countries_name));
 
 
-    
+    }
+
+    public int getCountryFlag(String countryName){
+        int flagId = -1;
+        if (allCountryNamesList != null){
+
+            if (allCountryNamesList.contains(countryName)){
+                int position = allCountryNamesList.indexOf(countryName);
+                flagId = allCountriesFlags[position];
+            }
+        }
+
+        return flagId;
+    }
 
 
 }

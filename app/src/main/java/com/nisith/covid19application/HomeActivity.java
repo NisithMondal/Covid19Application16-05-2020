@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.setting:
                 Intent intent = new Intent(HomeActivity.this,CountrySettingActivity.class);
+                intent.putExtra("ALL_EFFECTED_COUNTRIES_NAME",getResources().getStringArray(R.array.countries_name));
                 startActivity(intent);
                 break;
         }

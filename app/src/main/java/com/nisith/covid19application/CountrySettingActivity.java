@@ -3,7 +3,10 @@ package com.nisith.covid19application;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +17,22 @@ import android.widget.Toast;
 
 public class CountrySettingActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private CountryPickerRecyclerViewAdapter adapter;
+    private String allEffectedCountriesName[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_setting);
         setUpLayout();
+        Intent intent = getIntent();
+        allEffectedCountriesName = intent.getStringArrayExtra("ALL_EFFECTED_COUNTRIES_NAME");
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new CountryPickerRecyclerViewAdapter(this,allEffectedCountriesName);
+        recyclerView.setAdapter(adapter);
+
     }
 
     private void setUpLayout(){
@@ -34,6 +48,8 @@ public class CountrySettingActivity extends AppCompatActivity {
                 finish();
             }
         });
+        recyclerView = findViewById(R.id.recycler_view);
+
     }
 
     @Override
