@@ -1,31 +1,37 @@
 package com.nisith.covid19application;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nisith.covid19application.model.EffectedCountryInfo;
+import com.nisith.covid19application.model.CountriesInfoModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCountriesRecyclerViewAdapter.MyViewHoldar> {
 
-    private ArrayList<EffectedCountryInfo> allEffectedCountryInfoArrayList;
+    private List<CountriesInfoModel> allEffectedCountriesInfoList;
     private OnCountryCardItemClickInterface onCountryCardItemClickInterface;
+    private CountryFlags countryFlags;
 
 
     public interface OnCountryCardItemClickInterface {
-        void onCountryCardItemClick(int position);
+        void onCountryCardItemClick(int position, int countryFlagId);
     }
 
-    public AllCountriesRecyclerViewAdapter(ArrayList<EffectedCountryInfo> allEffectedCountryInfoArrayList, OnCountryCardItemClickInterface onCountryCardItemClickInterface){
-        this.allEffectedCountryInfoArrayList = allEffectedCountryInfoArrayList;
-        this.onCountryCardItemClickInterface = onCountryCardItemClickInterface;
+    public AllCountriesRecyclerViewAdapter(List<CountriesInfoModel> allEffectedCountriesInfoList, AppCompatActivity appCompatActivity){
+        this.allEffectedCountriesInfoList = allEffectedCountriesInfoList;
+        this.onCountryCardItemClickInterface = (AllEffectedCountriesActivity) appCompatActivity;
+        countryFlags = new CountryFlags(appCompatActivity.getApplicationContext());
     }
 
     @NonNull
@@ -37,13 +43,19 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHoldar holder, int position) {
-        EffectedCountryInfo effectedCountryInfo = allEffectedCountryInfoArrayList.get(position);
+        CountriesInfoModel effectedCountryInfo = allEffectedCountriesInfoList.get(position);
 
-        //baki set Image View
+        String countryName = effectedCountryInfo.getCountryName();
+        int flagId = countryFlags.getCountryFlag(countryName);
+        if (flagId != -1){
+            Picasso.get().load(flagId).fit().centerCrop().into(holder.flagImageThumbnail);
+        }else {
+            Picasso.get().load(R.drawable.ic_defalt_flag).fit().centerCrop().into(holder.flagImageThumbnail);
+        }
 
-        holder.countryName.setText(effectedCountryInfo.getCountryName());
-        holder.totalCases.setText(effectedCountryInfo.getTotalCaases());
-        holder.totalDeaths.setText(effectedCountryInfo.getTotalDeaths());
+        holder.countryName.setText(countryName);
+        holder.totalCases.setText("Total Cases: "+effectedCountryInfo.getTotalCases());
+        holder.totalDeaths.setText("Total Deaths: "+effectedCountryInfo.getTotalDeaths());
 
 
     }
@@ -51,8 +63,8 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
     @Override
     public int getItemCount() {
         int totalItems = 0;
-        if (allEffectedCountryInfoArrayList != null){
-            totalItems = allEffectedCountryInfoArrayList.size();
+        if (allEffectedCountriesInfoList != null){
+            totalItems = allEffectedCountriesInfoList.size();
         }
         return totalItems;
     }
@@ -71,7 +83,8 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onCountryCardItemClickInterface.onCountryCardItemClick(getAdapterPosition());
+                    int flagId = countryFlags.getCountryFlag(allEffectedCountriesInfoList.get(getAdapterPosition()).getCountryName());
+                    onCountryCardItemClickInterface.onCountryCardItemClick(getAdapterPosition(),flagId);
                 }
             });
         }

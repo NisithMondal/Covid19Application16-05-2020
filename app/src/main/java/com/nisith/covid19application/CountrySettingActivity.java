@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nisith.covid19application.model.CountriesInfoModel;
+
+import java.util.ArrayList;
+
 public class CountrySettingActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -28,17 +32,14 @@ public class CountrySettingActivity extends AppCompatActivity {
         setUpLayout();
         Intent intent = getIntent();
         allEffectedCountriesName = intent.getStringArrayExtra("ALL_EFFECTED_COUNTRIES_NAME");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter = new CountryPickerRecyclerViewAdapter(this,allEffectedCountriesName);
-        recyclerView.setAdapter(adapter);
+        setUpRecyclerViewWithAdapter();
 
     }
 
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Setting");
+        toolbarTextView.setText("Set CountryFlags");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -50,6 +51,20 @@ public class CountrySettingActivity extends AppCompatActivity {
         });
         recyclerView = findViewById(R.id.recycler_view);
 
+    }
+
+    private void setUpRecyclerViewWithAdapter(){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new CountryPickerRecyclerViewAdapter(this,allEffectedCountriesName);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private ArrayList<CountriesInfoModel> getAllEffectedCountriesInfoArrayList(){
+        ArrayList<CountriesInfoModel> countriesInfoArrayList = new ArrayList<>();
+
+        return countriesInfoArrayList;
     }
 
     @Override

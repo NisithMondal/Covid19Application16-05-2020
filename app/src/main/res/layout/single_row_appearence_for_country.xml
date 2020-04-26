@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="10dp"
-    app:cardBackgroundColor="@android:color/white"
-    android:layout_margin="5dp"
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#ffffff"
+    android:layout_margin="3dp"
+    android:elevation="10dp"
     >
 
     <RelativeLayout
@@ -14,12 +15,13 @@
 
         <ImageView
             android:id="@+id/flag_image_thumbnail"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
+            android:layout_width="115dp"
+            android:layout_height="88dp"
             android:layout_marginTop="9dp"
             android:layout_marginBottom="9dp"
-            android:layout_marginStart="7dp"
+            android:layout_marginStart="13dp"
             android:scaleType="centerCrop"
+            android:elevation="10dp"
             />
 
         <TextView
@@ -57,7 +59,7 @@
 
 
         <TextView
-            android:id="@+id/total_death_text_view"
+            android:id="@+id/total_deaths_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Total Deaths  54534"

@@ -17,14 +17,14 @@ public class CountryPickerRecyclerViewAdapter extends RecyclerView.Adapter<Count
 
 
     private String allEffectedCountriesName[];
-    private Country country;
+    private CountryFlags countryFlags;
 
 
 
 
     public CountryPickerRecyclerViewAdapter(Context context, String  []allEffectedCountryInfoArrayList ){
         this.allEffectedCountriesName = allEffectedCountryInfoArrayList;
-        country = new Country(context);
+        countryFlags = new CountryFlags(context);
     }
 
     @NonNull
@@ -38,7 +38,7 @@ public class CountryPickerRecyclerViewAdapter extends RecyclerView.Adapter<Count
     public void onBindViewHolder(@NonNull MyViewHoldar holder, int position) {
         String countryName = allEffectedCountriesName[position];
 
-        int flagId = country.getCountryFlag(countryName);
+        int flagId = countryFlags.getCountryFlag(countryName);
         if (flagId != -1){
 //            holder.flagImageThumbnail.setImageResource(flagId);
             Picasso.get().load(flagId).centerCrop().fit().into(holder.flagImageThumbnail);

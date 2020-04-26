@@ -9,16 +9,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private Button effectedCountriesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUpLayout();
+        setClickListenerOnButtons();
     }
 
     private void setUpLayout(){
@@ -27,7 +32,11 @@ public class HomeActivity extends AppCompatActivity {
         toolbarTextView.setText("Home");
         setSupportActionBar(appToolbar);
         setTitle("");
+        effectedCountriesButton = findViewById(R.id.effected_countries_button);
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,4 +57,24 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void setClickListenerOnButtons(){
+
+        effectedCountriesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,AllEffectedCountriesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+
+
+
+
+
 }

@@ -95,7 +95,7 @@
                 />
 
             <Button
-                android:id="@+id/see_other_countries_button"
+                android:id="@+id/effected_countries_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Effected Countries"

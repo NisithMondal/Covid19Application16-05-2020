@@ -1,8 +1,16 @@
 package com.nisith.covid19application;
 
-public class Country1 {
+import android.content.Context;
+import android.util.Log;
 
-    int allCountriesFlags[] = {R.drawable.af,R.drawable.al,R.drawable.dz,R.drawable.as,R.drawable.ad,
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class CountryFlags {
+
+
+    private int allCountriesFlags[] = {R.drawable.af,R.drawable.al,R.drawable.dz,R.drawable.as,R.drawable.ad,
             R.drawable.ao,R.drawable.ai,R.drawable.aq,
             R.drawable.ar,R.drawable.am,R.drawable.aw,R.drawable.au,R.drawable.at,R.drawable.az,
             R.drawable.bs,R.drawable.bh,
@@ -49,8 +57,37 @@ public class Country1 {
             R.drawable.to,R.drawable.tt,R.drawable.tn,R.drawable.tr,R.drawable.tm,R.drawable.tc,
             R.drawable.tv,R.drawable.ug,R.drawable.ua,R.drawable.ae,R.drawable.us,
             R.drawable.uy,R.drawable.uz,R.drawable.vu,R.drawable.ve,R.drawable.vn,
-            R.drawable.wf,R.drawable.eh,R.drawable.ye,R.drawable.zm,R.drawable.zw
+            R.drawable.wf,R.drawable.eh,R.drawable.ye,R.drawable.zm,R.drawable.zw,
+            R.drawable.gb,R.drawable.ru,R.drawable.kr,R.drawable.ae,R.drawable.cz,
+            R.drawable.ba,R.drawable.ci,R.drawable.gn,R.drawable.gb,R.drawable.cd,
+            R.drawable.gq,R.drawable.fo,R.drawable.bn,R.drawable.cv,R.drawable.sx,
+            R.drawable.sz,R.drawable.gw,R.drawable.mf,R.drawable.kn,R.drawable.vc,
+            R.drawable.fk,R.drawable.tc,R.drawable.va,R.drawable.vg,R.drawable.bl,R.drawable.ss,
+            R.drawable.bq,R.drawable.st,R.drawable.pm
     };
+
+    private Context context;
+    private List<String> allCountryNamesList;
+
+    public CountryFlags(Context context){
+        this.context = context;
+        allCountryNamesList = Arrays.asList(context.getResources().getStringArray(R.array.countries_name));
+
+
+    }
+
+    public int getCountryFlag(String countryName){
+        int flagId = -1;
+        if (allCountryNamesList != null){
+
+            if (allCountryNamesList.contains(countryName)){
+                int position = allCountryNamesList.indexOf(countryName);
+                flagId = allCountriesFlags[position];
+            }
+        }
+
+        return flagId;
+    }
 
 
 }
