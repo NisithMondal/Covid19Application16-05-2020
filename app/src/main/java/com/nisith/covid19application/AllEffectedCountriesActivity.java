@@ -101,8 +101,9 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
         if (responseStatus.equalsIgnoreCase("success") && allEffectedCountriesModel != null){
             allEffectedCountriesInfoList.clear();
             allEffectedCountriesInfoList.addAll(allEffectedCountriesModel.getAllEffectedCountriesDetaildList());
-            allEffectedCountriesInfoList.remove(0); //Because in '0' index there is no Country name
-            Log.d("XYZ","List Size= "+allEffectedCountriesInfoList.size());
+            if (! allEffectedCountriesInfoList.isEmpty()){
+                allEffectedCountriesInfoList.remove(0);//Because in '0' index there is no Country name
+            }
             if (allCountriesRecyclerViewAdapter != null){
                 runOnUiThread(new Runnable() {
                     @Override

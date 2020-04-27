@@ -79,7 +79,6 @@ public class CountryFlags {
     public int getCountryFlag(String countryName){
         int flagId = -1;
         if (allCountryNamesList != null){
-
             if (allCountryNamesList.contains(countryName)){
                 int position = allCountryNamesList.indexOf(countryName);
                 flagId = allCountriesFlags[position];

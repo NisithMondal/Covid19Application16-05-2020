@@ -1,6 +1,7 @@
 package com.nisith.covid19application;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,8 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
         if (flagId != -1){
             Picasso.get().load(flagId).fit().centerCrop().into(holder.flagImageThumbnail);
         }else {
-            Picasso.get().load(R.drawable.ic_defalt_flag).fit().centerCrop().into(holder.flagImageThumbnail);
+//            Picasso.get().load(R.drawable.ic_defalt_flag).into(holder.flagImageThumbnail);// Here Picasso not work
+            holder.flagImageThumbnail.setImageResource(R.drawable.ic_defalt_flag);
         }
 
         holder.countryName.setText(countryName);

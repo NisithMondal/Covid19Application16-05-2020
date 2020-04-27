@@ -1,6 +1,7 @@
 package com.nisith.covid19application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,11 +20,11 @@ import com.nisith.covid19application.model.CountriesInfoModel;
 
 import java.util.ArrayList;
 
-public class CountrySettingActivity extends AppCompatActivity {
+public class CountrySettingActivity extends AppCompatActivity implements CountryPickerRecyclerViewAdapter.OnCardItemClickListener {
 
     private RecyclerView recyclerView;
     private CountryPickerRecyclerViewAdapter adapter;
-    private String allEffectedCountriesName[];
+    private ArrayList<String> allEffectedCountriesName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +32,17 @@ public class CountrySettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_country_setting);
         setUpLayout();
         Intent intent = getIntent();
-        allEffectedCountriesName = intent.getStringArrayExtra("ALL_EFFECTED_COUNTRIES_NAME");
+        allEffectedCountriesName = intent.getStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME");
         setUpRecyclerViewWithAdapter();
 
     }
 
+
+
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Set CountryFlags");
+        toolbarTextView.setText("Set Your Country");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -61,11 +64,6 @@ public class CountrySettingActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<CountriesInfoModel> getAllEffectedCountriesInfoArrayList(){
-        ArrayList<CountriesInfoModel> countriesInfoArrayList = new ArrayList<>();
-
-        return countriesInfoArrayList;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,5 +80,15 @@ public class CountrySettingActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onCardItemClicked(int position,String countryName, int countryFlagId) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("SELECTED_COUNTRY_NAME",countryName);
+        resultIntent.putExtra("SELECTED_COUNTRY_FLAG",countryFlagId);
+        setResult(RESULT_OK,resultIntent);
+        finish();
+
     }
 }

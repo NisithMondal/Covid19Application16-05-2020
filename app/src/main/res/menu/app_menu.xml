@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/setting"
-        android:title="Setting"
+        android:id="@+id/set_country"
+        android:title="Set Your Country"
         app:showAsAction="never"
         android:icon="@drawable/ic_settings"
         />
