@@ -3,16 +3,19 @@ package com.nisith.covid19application;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ public class CountrySettingActivity extends AppCompatActivity implements Country
     private RecyclerView recyclerView;
     private CountryPickerRecyclerViewAdapter adapter;
     private ArrayList<String> allEffectedCountriesName;
+    private ArrayList<String> temporaryArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class CountrySettingActivity extends AppCompatActivity implements Country
         Intent intent = getIntent();
         allEffectedCountriesName = intent.getStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME");
         setUpRecyclerViewWithAdapter();
+        temporaryArrayList = new ArrayList<>();
 
     }
 
@@ -69,18 +74,25 @@ public class CountrySettingActivity extends AppCompatActivity implements Country
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.setting_activity_menu,menu);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint("Enter Your Country Name");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Filter filter = adapter.getFilter();
+                filter.filter(searchView.getQuery());
+                return true;
+            }
+        });
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.search:
-                Toast.makeText(getApplicationContext(),"Search",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
+
 
     @Override
     public void onCardItemClicked(int position,String countryName, int countryFlagId) {

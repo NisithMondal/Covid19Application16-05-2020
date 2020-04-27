@@ -112,31 +112,65 @@
 
 
 
-
-         <Button
-             android:id="@+id/indian_states_button"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+         <HorizontalScrollView
+             android:id="@+id/scroll_view"
              android:layout_below="@+id/linear_layout"
-             android:text="Effected States in India"
-             android:textSize="14sp"
-             android:textAllCaps="false"
-             android:textColor="@android:color/white"
-             android:background="@drawable/button_background_shape"
-             android:padding="12dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:scrollbars="horizontal"
              android:layout_marginTop="15dp"
-             android:layout_centerHorizontal="true"
-             android:textStyle="bold"
-             android:drawableStart="@drawable/ic_effected_state"
-             android:drawablePadding="5dp"
+             >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
 
-             />
+               <Button
+                   android:id="@+id/indian_states_button"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Effected States in India"
+                   android:textSize="14sp"
+                   android:textAllCaps="false"
+                   android:textColor="@android:color/white"
+                   android:background="@drawable/button_background_shape"
+                   android:padding="12dp"
+                   android:textStyle="bold"
+                   android:drawableStart="@drawable/ic_effected_state"
+                   android:layout_marginStart="10dp"
+                   android:drawablePadding="5dp"
+                   android:visibility="gone"
+                   />
+
+               <Button
+                   android:id="@+id/world_status_effected"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Total Effected By COVID19 All Over The World"
+                   android:textSize="14sp"
+                   android:textAllCaps="false"
+                   android:textColor="@android:color/white"
+                   android:background="@drawable/button_background_shape"
+                   android:padding="12dp"
+                   android:textStyle="bold"
+                   android:drawableStart="@drawable/ic_star"
+                   android:drawablePadding="5dp"
+                   android:gravity="center"
+                   android:layout_marginStart="30dp"
+                   />
+            </LinearLayout>
+
+         </HorizontalScrollView>
+
+
+
 
 
 
          <TextView
              android:id="@+id/text_view"
-             android:layout_below="@+id/indian_states_button"
+             android:layout_below="@+id/scroll_view"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="Report of Corona Virus affected People in INDIA"

@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCountriesRecyclerViewAdapter.MyViewHoldar> {
+public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCountriesRecyclerViewAdapter.MyViewHoldar> implements Filterable {
 
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
+    private List<CountriesInfoModel> anotherAllEffectedCountriesInfoList;
     private OnCountryCardItemClickInterface onCountryCardItemClickInterface;
     private CountryFlags countryFlags;
 
@@ -33,6 +36,13 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
         this.allEffectedCountriesInfoList = allEffectedCountriesInfoList;
         this.onCountryCardItemClickInterface = (AllEffectedCountriesActivity) appCompatActivity;
         countryFlags = new CountryFlags(appCompatActivity.getApplicationContext());
+        Log.d("ABCD","allEffectedCountriesInfoList size= "+allEffectedCountriesInfoList.size());
+
+    }
+
+
+    public void setAnotherAllEffectedCountriesInfoList(List<CountriesInfoModel> anotherAllEffectedCountriesInfoList){
+        this.anotherAllEffectedCountriesInfoList = new ArrayList<>(anotherAllEffectedCountriesInfoList);
     }
 
     @NonNull
@@ -58,6 +68,7 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
         holder.countryName.setText(countryName);
         holder.totalCases.setText("Total Cases: "+effectedCountryInfo.getTotalCases());
         holder.totalDeaths.setText("Total Deaths: "+effectedCountryInfo.getTotalDeaths());
+        Log.d("ABCD","allEffectedCountriesInfoList size= "+allEffectedCountriesInfoList.size());
 
 
     }
@@ -70,6 +81,48 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
         }
         return totalItems;
     }
+
+
+    private class MyFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            //This method run on background thread
+            List<CountriesInfoModel> arrayList = new ArrayList<>();
+            String inputString = constraint.toString().toLowerCase().trim();
+            if (inputString.length() == 0){
+                arrayList.addAll(anotherAllEffectedCountriesInfoList);
+
+            }else {
+                for (int i = 0; i<anotherAllEffectedCountriesInfoList.size(); i++){
+                    CountriesInfoModel countriesInfoModel = anotherAllEffectedCountriesInfoList.get(i);
+                    String countryName = countriesInfoModel.getCountryName();
+                    if (countryName.toLowerCase().contains(inputString)){
+                        arrayList.add(countriesInfoModel);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = arrayList;
+            Log.d("ABCD","arrayList size= "+arrayList.size());
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
+            //This method run on main thread i.e.ui thread thread
+            allEffectedCountriesInfoList.clear();
+            allEffectedCountriesInfoList.addAll((List<CountriesInfoModel>)filterResults.values);
+            notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
+    public Filter getFilter() {
+        return new MyFilter();
+    }
+
 
     class MyViewHoldar extends RecyclerView.ViewHolder{
 

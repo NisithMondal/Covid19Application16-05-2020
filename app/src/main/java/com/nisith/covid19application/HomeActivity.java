@@ -15,11 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nisith.covid19application.model.AllEffectedCountriesModel;
 import com.nisith.covid19application.model.CountriesInfoModel;
 import com.nisith.covid19application.server_operation.FeatchEffectedCountriesDataFromServer;
+import com.nisith.covid19application.shared_preference.SaveSelectedCountrySharedPreference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,12 +29,13 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
     private Button effectedCountriesButton;
     private Button loadDataButton;
-    private Button indianStatesButton;
+    private Button allOverWorldCasesButton,indianStatesButton;
     private List<CountriesInfoModel> allEffectedCountriesInfoList = null;
     private boolean isOpenFlagSettingActivity = false;
     private static final int FLAG_SETTING_REQUECT_CODE = 123;
     private ImageView countryFlagImageView;
     private TextView countryNameTextView;
+    private SaveSelectedCountrySharedPreference saveSelectedCountrySharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         setContentView(R.layout.activity_home);
         setUpLayout();
         setClickListenerOnButtons();
+        saveSelectedCountrySharedPreference = new SaveSelectedCountrySharedPreference(getApplicationContext());
+        setViewsVisibility();
+        setActivityCountryNameAndFlags();
 
 
         //////////////////
@@ -61,9 +65,34 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         indianStatesButton = findViewById(R.id.indian_states_button);
         countryFlagImageView = findViewById(R.id.country_flag_image_view);
         countryNameTextView = findViewById(R.id.country_name_text_view);
+        allOverWorldCasesButton = findViewById(R.id.world_status_effected);
+        indianStatesButton = findViewById(R.id.indian_states_button);
     }
 
 
+    private void setViewsVisibility(){
+        if (saveSelectedCountrySharedPreference != null){
+            String countryName = saveSelectedCountrySharedPreference.getSavedCountryName();
+            if (countryName.equalsIgnoreCase("India")){
+                indianStatesButton.setVisibility(View.VISIBLE);
+            }else {
+                indianStatesButton.setVisibility(View.GONE);
+            }
+        }
+    }
+
+
+    private void setActivityCountryNameAndFlags(){
+        int flagId = saveSelectedCountrySharedPreference.getSavedCountryFlagId();
+        String countryName = saveSelectedCountrySharedPreference.getSavedCountryName();
+        if (flagId != -1){
+            Picasso.get().load(flagId).fit().centerCrop().into(countryFlagImageView);
+        }else {
+            countryFlagImageView.setImageResource(R.drawable.ic_defalt_flag);
+        }
+        countryNameTextView.setText(countryName);
+
+    }
 
 
     @Override
@@ -82,11 +111,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                     ArrayList<String> allEffectedCountriesNameList = getAllEffectedCountriesName(allEffectedCountriesInfoList);
                     intent.putStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME",allEffectedCountriesNameList);
                     startActivityForResult(intent,FLAG_SETTING_REQUECT_CODE);
-                    Log.d("ABCD","allEffectedCountriesInfoList != null");
                 }else {
                     performServerOperation();
                     isOpenFlagSettingActivity = true;
-                    Log.d("ABCD","allEffectedCountriesInfoList == null");
                 }
 
 
@@ -103,8 +130,10 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         if (requestCode == FLAG_SETTING_REQUECT_CODE && resultCode == RESULT_OK && data != null){
             String selectedCountryName = data.getStringExtra("SELECTED_COUNTRY_NAME");
             int selectedCountryFlagId = data.getIntExtra("SELECTED_COUNTRY_FLAG",-1);
-            Picasso.get().load(selectedCountryFlagId).fit().centerCrop().into(countryFlagImageView);
-            countryNameTextView.setText(selectedCountryName);
+            saveCountryNameAndFlagOnSharedPreference(selectedCountryName,selectedCountryFlagId);
+            setActivityCountryNameAndFlags();
+            setViewsVisibility();
+
         }
 
     }
@@ -161,5 +190,12 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     protected void onStart() {
         super.onStart();
         isOpenFlagSettingActivity = false;
+    }
+
+
+    private void saveCountryNameAndFlagOnSharedPreference(String countryName, int flagId){
+        if (saveSelectedCountrySharedPreference != null){
+            saveSelectedCountrySharedPreference.saveCountryInfo(countryName,flagId);
+        }
     }
 }

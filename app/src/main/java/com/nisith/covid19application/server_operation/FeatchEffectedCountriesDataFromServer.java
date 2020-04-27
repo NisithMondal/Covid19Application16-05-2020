@@ -1,5 +1,7 @@
 package com.nisith.covid19application.server_operation;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.nisith.covid19application.model.AllEffectedCountriesModel;
 import com.nisith.covid19application.model.TotalWorldEffectedCasesModel;
@@ -52,6 +54,7 @@ public class FeatchEffectedCountriesDataFromServer {
             @Override
             public void onFailure(Call call, IOException e) {
                 onServerResponseListener.onServerResponse("error",null);
+                Log.d("ABC","onFailure() error = "+e.getMessage());
             }
 
             @Override

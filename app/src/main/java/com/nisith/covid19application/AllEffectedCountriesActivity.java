@@ -2,6 +2,7 @@ package com.nisith.covid19application;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +14,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Filter;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nisith.covid19application.model.AllEffectedCountriesModel;
 import com.nisith.covid19application.model.CountriesInfoModel;
 import com.nisith.covid19application.server_operation.FeatchEffectedCountriesDataFromServer;
@@ -29,6 +35,9 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     private RecyclerView recyclerView;
     private AllCountriesRecyclerViewAdapter allCountriesRecyclerViewAdapter;
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
+    private RelativeLayout loadingDataLayout;
+    private TextView errorMessageTextView;
+    private Button retryButton;
 
 
     @Override
@@ -58,6 +67,18 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
             }
         });
         recyclerView = findViewById(R.id.all_countries_recycler_view);
+        loadingDataLayout = findViewById(R.id.loading_data_layout);
+        loadingDataLayout.setVisibility(View.GONE);
+        errorMessageTextView = findViewById(R.id.error_message_text_view);
+        errorMessageTextView.setVisibility(View.GONE);
+        retryButton = findViewById(R.id.retry_button);
+        retryButton.setVisibility(View.GONE);
+        retryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performServerOperation();
+            }
+        });
 
     }
 
@@ -68,23 +89,33 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.setting_activity_menu,menu);
+        final SearchView searchView =(SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint("Enter Country Name");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Filter filter = allCountriesRecyclerViewAdapter.getFilter();
+                filter.filter(searchView.getQuery());
+                return true;
+            }
+        });
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.search:
-                Toast.makeText(getApplicationContext(),"Search",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
+
 
 
     private void performServerOperation(){
         FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(this);
         server.getAllEffectedCountriesDataFromServer();
+        loadingDataLayout.setVisibility(View.VISIBLE);
+        errorMessageTextView.setVisibility(View.GONE);
+        retryButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -104,14 +135,31 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
             if (! allEffectedCountriesInfoList.isEmpty()){
                 allEffectedCountriesInfoList.remove(0);//Because in '0' index there is no Country name
             }
-            if (allCountriesRecyclerViewAdapter != null){
+            if (allCountriesRecyclerViewAdapter != null && allEffectedCountriesInfoList != null){
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        allCountriesRecyclerViewAdapter.setAnotherAllEffectedCountriesInfoList(allEffectedCountriesInfoList);
                         allCountriesRecyclerViewAdapter.notifyDataSetChanged();
                     }
                 });
             }
+        }else if (responseStatus.equalsIgnoreCase("error")){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    errorMessageTextView.setVisibility(View.VISIBLE);
+                    errorMessageTextView.setText("Please Check Your Internet Connection and Try Again...");
+                    retryButton.setVisibility(View.VISIBLE);
+                }
+            });
         }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadingDataLayout.setVisibility(View.GONE);
+            }
+        });
+
     }
 }

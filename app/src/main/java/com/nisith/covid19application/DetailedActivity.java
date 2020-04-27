@@ -8,13 +8,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 public class DetailedActivity extends AppCompatActivity {
 
-    private CircleImageView circleFlagImageView;
+    private ImageView flagImageView;
+    private TextView countryNameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,11 @@ public class DetailedActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int flagId = intent.getIntExtra("FLAG_ID",-1);
-        Picasso.get().load(flagId).fit().into(circleFlagImageView);
+        if (flagId != -1) {
+            Picasso.get().load(flagId).fit().into(flagImageView);
+        }else {
+            flagImageView.setImageResource(R.drawable.ic_defalt_flag);
+        }
     }
 
     private void setUpLayout(){
@@ -40,8 +46,8 @@ public class DetailedActivity extends AppCompatActivity {
                 finish();
             }
         });
-        circleFlagImageView = findViewById(R.id.circular_image_view);
-
+        flagImageView = findViewById(R.id.flag_image_view);
+        countryNameTextView = findViewById(R.id.country_name_text_view);
     }
 
 
