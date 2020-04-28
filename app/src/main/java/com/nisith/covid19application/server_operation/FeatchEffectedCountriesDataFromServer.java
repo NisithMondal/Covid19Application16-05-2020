@@ -23,7 +23,7 @@ public class FeatchEffectedCountriesDataFromServer {
     private TotalWorldEffectedCasesModel totalWorldEffectedCasesModel = null;
 
     public interface OnServerResponseListener{
-        void onServerResponse(String responseStatus, AllEffectedCountriesModel allEffectedCountriesModel);
+        void onServerResponse(String responseStatus,String errorMessage, AllEffectedCountriesModel allEffectedCountriesModel);
     }
 
     public interface OnTotalWorldCasesServerResponseListener{
@@ -53,8 +53,7 @@ public class FeatchEffectedCountriesDataFromServer {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                onServerResponseListener.onServerResponse("error",null);
-                Log.d("ABC","onFailure() error = "+e.getMessage());
+                onServerResponseListener.onServerResponse("error",e.getMessage(),null);
             }
 
             @Override
@@ -63,9 +62,9 @@ public class FeatchEffectedCountriesDataFromServer {
                     String serverResponse = response.body().string();
                     Gson gson = new Gson();
                     allEffectedCountriesModel = gson.fromJson(serverResponse, AllEffectedCountriesModel.class);
-                    onServerResponseListener.onServerResponse("success", allEffectedCountriesModel);
+                    onServerResponseListener.onServerResponse("success","", allEffectedCountriesModel);
                 }else {
-                    onServerResponseListener.onServerResponse("not_success", null);
+                    onServerResponseListener.onServerResponse("not_success","", null);
                 }
             }
         });

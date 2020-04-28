@@ -18,6 +18,16 @@
         android:layout_centerInParent="true"
         />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/text_view"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_cloud_circle"
+        android:scaleType="centerCrop"
+        />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="50dp"

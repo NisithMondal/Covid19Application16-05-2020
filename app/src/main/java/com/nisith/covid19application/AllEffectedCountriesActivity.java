@@ -38,6 +38,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     private RelativeLayout loadingDataLayout;
     private TextView errorMessageTextView;
     private Button retryButton;
+    private String updatedDateOfServerData;
 
 
     @Override
@@ -121,17 +122,23 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     @Override
     public void onCountryCardItemClick(int position,int countryFlagId) {
         Intent intent = new Intent(AllEffectedCountriesActivity.this,DetailedActivity.class);
+        CountriesInfoModel countriesInfoModel = allEffectedCountriesInfoList.get(position);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(countriesInfoModel);
+        intent.putExtra("JSON_STRING",jsonString);
         intent.putExtra("FLAG_ID",countryFlagId);
+        intent.putExtra("UPDATE_DATE",updatedDateOfServerData);
         startActivity(intent);
 
     }
 
     @Override
-    public void onServerResponse(String responseStatus, AllEffectedCountriesModel allEffectedCountriesModel) {
+    public void onServerResponse(String responseStatus, final String errorMessage, AllEffectedCountriesModel allEffectedCountriesModel) {
 
         if (responseStatus.equalsIgnoreCase("success") && allEffectedCountriesModel != null){
             allEffectedCountriesInfoList.clear();
             allEffectedCountriesInfoList.addAll(allEffectedCountriesModel.getAllEffectedCountriesDetaildList());
+            updatedDateOfServerData = allEffectedCountriesModel.getUpdatedDate();
             if (! allEffectedCountriesInfoList.isEmpty()){
                 allEffectedCountriesInfoList.remove(0);//Because in '0' index there is no Country name
             }
@@ -149,7 +156,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
                 @Override
                 public void run() {
                     errorMessageTextView.setVisibility(View.VISIBLE);
-                    errorMessageTextView.setText("Please Check Your Internet Connection and Try Again...");
+                    errorMessageTextView.setText(errorMessage);
                     retryButton.setVisibility(View.VISIBLE);
                 }
             });

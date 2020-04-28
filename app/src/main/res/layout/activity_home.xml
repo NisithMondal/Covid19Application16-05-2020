@@ -12,11 +12,63 @@
        />
 
 
+   <include
+       android:id="@+id/loading_data_layout"
+       layout="@layout/loading_data_layout"
+       android:visibility="gone"
+       />
+
+
+
+   <TextView
+       android:id="@+id/error_message_text_view"
+       android:layout_marginTop="100dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textSize="16sp"
+       android:layout_above="@+id/retry_button"
+       android:textColor="#ee00aa"
+       android:layout_centerHorizontal="true"
+       android:visibility="gone"
+       />
+
+   <Button
+       android:id="@+id/retry_button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/cancel_button"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="30dp"
+       android:background="@drawable/button_background_shape"
+       android:text="RETRY"
+       android:textSize="18sp"
+       android:textColor="@android:color/white"
+       android:visibility="gone"
+       />
+
+
+   <Button
+       android:id="@+id/cancel_button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="20dp"
+       android:background="@drawable/another_button_background_shape"
+       android:text="CANCEL"
+       android:textSize="18sp"
+       android:textColor="@android:color/white"
+       android:visibility="gone"
+       android:layout_alignParentBottom="true"
+       android:layout_marginBottom='60dp'
+       />
+
+
    <ScrollView
+       android:id="@+id/scroll_view"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_below="@+id/app_toolbar"
-       android:layout_marginBottom="8dp"
+       android:visibility="visible"
        >
       <RelativeLayout
           android:layout_width="match_parent"
@@ -70,7 +122,7 @@
              android:orientation="horizontal"
              android:layout_width="match_parent"
              android:gravity="center"
-             android:layout_marginTop="15dp"
+             android:layout_marginTop="30dp"
              android:layout_height="wrap_content">
 
 
@@ -113,17 +165,17 @@
 
 
          <HorizontalScrollView
-             android:id="@+id/scroll_view"
+             android:id="@+id/horizental_scroll_view"
              android:layout_below="@+id/linear_layout"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:scrollbars="horizontal"
              android:layout_marginTop="15dp"
              >
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center"
                 >
 
                <Button
@@ -147,7 +199,7 @@
                    android:id="@+id/world_status_effected"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="Total Effected By COVID19 All Over The World"
+                   android:text="World Status Effected by COVID19"
                    android:textSize="14sp"
                    android:textAllCaps="false"
                    android:textColor="@android:color/white"
@@ -169,14 +221,13 @@
 
 
          <TextView
-             android:id="@+id/text_view"
-             android:layout_below="@+id/scroll_view"
+             android:id="@+id/report_text_view"
+             android:layout_below="@+id/horizental_scroll_view"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="Report of Corona Virus affected People in INDIA"
              android:textSize="16sp"
              android:textAlignment="center"
-             android:layout_marginTop="20dp"
+             android:layout_marginTop="25dp"
              android:textColor="#E64A19"
              android:textStyle="bold"
              android:padding="10dp"
@@ -187,9 +238,26 @@
              android:layout_marginEnd="5dp"
              />
 
+
+         <TextView
+             android:id="@+id/update_date_text_view"
+             android:layout_below="@+id/report_text_view"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="15sp"
+             android:textAlignment="center"
+             android:layout_marginTop="20dp"
+             android:textColor="#C2185B"
+             android:textStyle="bold"
+             android:padding="13dp"
+             android:background="@drawable/text_view_background_shape"
+             android:layout_marginStart="10dp"
+             />
+
+
          <TextView
              android:id="@+id/total_cases_text_view"
-             android:layout_below="@id/text_view"
+             android:layout_below="@id/update_date_text_view"
              android:layout_marginTop="20dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -199,12 +267,13 @@
              android:textStyle="normal"
              android:layout_marginStart="15dp"
              android:drawableStart="@drawable/ic_star_border"
+
              />
 
          <TextView
              android:id="@+id/total_deaths_text_view"
              android:layout_below="@id/total_cases_text_view"
-             android:layout_marginTop="10dp"
+             android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:text="Total Deaths: 780"
@@ -214,13 +283,12 @@
              android:layout_marginStart="15dp"
              android:drawableStart="@drawable/ic_star_border"
 
-
              />
 
          <TextView
              android:id="@+id/active_cases_text_view"
              android:layout_below="@id/total_deaths_text_view"
-             android:layout_marginTop="10dp"
+             android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:text="Active Cases: 18197"
@@ -232,10 +300,29 @@
 
              />
 
+
+         <TextView
+             android:id="@+id/total_tests_text_view"
+             android:layout_below="@id/active_cases_text_view"
+             android:layout_marginTop="8dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="Total Tests: 541789"
+             android:textSize="16sp"
+             android:textColor="@android:color/black"
+             android:textStyle="normal"
+             android:layout_marginStart="15dp"
+             android:drawableStart="@drawable/ic_star_border"
+
+             />
+
+
+
+
          <TextView
              android:id="@+id/total_recovered_text_view"
-             android:layout_below="@id/active_cases_text_view"
-             android:layout_marginTop="10dp"
+             android:layout_below="@id/total_tests_text_view"
+             android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:text="Total Recovered: 5457"
@@ -247,30 +334,47 @@
 
              />
 
-
-
          <TextView
-             android:id="@+id/total_tests_text_view"
+             android:id="@+id/serious_condition_text_view"
              android:layout_below="@id/total_recovered_text_view"
-             android:layout_marginTop="10dp"
+             android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="Total Tests: 541789"
+             android:text="Serious Condition: 57"
              android:textSize="16sp"
              android:textColor="@android:color/black"
              android:textStyle="normal"
              android:layout_marginStart="15dp"
              android:drawableStart="@drawable/ic_star_border"
+
              />
 
 
+
+
+
+
          <TextView
-             android:id="@+id/total_tests_per_million_text_view"
-             android:layout_below="@id/total_tests_text_view"
-             android:layout_marginTop="10dp"
+             android:id="@+id/deaths_per_million_text_view"
+             android:layout_below="@id/serious_condition_text_view"
+             android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="Total Tests Per Millin: 393"
+             android:text="Deaths Per Millin: 0.6"
+             android:textSize="16sp"
+             android:textColor="@android:color/black"
+             android:textStyle="normal"
+             android:layout_marginStart="15dp"
+             android:drawableStart="@drawable/ic_star_border"
+
+             />
+
+         <TextView
+             android:id="@+id/total_tests_per_million_text_view"
+             android:layout_below="@id/deaths_per_million_text_view"
+             android:layout_marginTop="8dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
              android:textSize="16sp"
              android:textColor="@android:color/black"
              android:textStyle="normal"
@@ -283,29 +387,16 @@
          <TextView
              android:id="@+id/total_cases_per_million_text_view"
              android:layout_below="@id/total_tests_per_million_text_view"
-             android:layout_marginTop="10dp"
+             android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="Total Cases Per Millin: 1"
              android:textSize="16sp"
              android:textColor="@android:color/black"
              android:textStyle="normal"
              android:layout_marginStart="15dp"
+             android:layout_marginBottom="15dp"
              android:drawableStart="@drawable/ic_star_border"
-             />
 
-         <TextView
-             android:id="@+id/deaths_per_million_text_view"
-             android:layout_below="@id/total_cases_per_million_text_view"
-             android:layout_marginTop="10dp"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="Deaths Per Millin: 0.6"
-             android:textSize="16sp"
-             android:textColor="@android:color/black"
-             android:textStyle="normal"
-             android:layout_marginStart="15dp"
-             android:drawableStart="@drawable/ic_star_border"
              />
 
 
