@@ -112,7 +112,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
 
 
     private void performServerOperation(){
-        FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(this);
+        FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(getApplicationContext(),this);
         server.getAllEffectedCountriesDataFromServer();
         loadingDataLayout.setVisibility(View.VISIBLE);
         errorMessageTextView.setVisibility(View.GONE);
@@ -128,6 +128,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
         intent.putExtra("JSON_STRING",jsonString);
         intent.putExtra("FLAG_ID",countryFlagId);
         intent.putExtra("UPDATE_DATE",updatedDateOfServerData);
+        intent.putExtra("INTENT_TYPE","type_country");
         startActivity(intent);
 
     }

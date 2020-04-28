@@ -1,6 +1,9 @@
 package com.nisith.covid19application.server_operation;
 
-import android.util.Log;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.google.gson.Gson;
 import com.nisith.covid19application.model.AllEffectedCountriesModel;
@@ -21,22 +24,25 @@ public class FeatchEffectedCountriesDataFromServer {
     private OnTotalWorldCasesServerResponseListener onTotalWorldCasesServerResponseListener;
     private AllEffectedCountriesModel allEffectedCountriesModel = null;
     private TotalWorldEffectedCasesModel totalWorldEffectedCasesModel = null;
+    private Context context;
 
     public interface OnServerResponseListener{
         void onServerResponse(String responseStatus,String errorMessage, AllEffectedCountriesModel allEffectedCountriesModel);
     }
 
     public interface OnTotalWorldCasesServerResponseListener{
-        void onServerResponse(String responseStatus, TotalWorldEffectedCasesModel totalWorldEffectedCasesModel);
+        void onTotalWorldDataServerResponse(String responseStatus,String errorMessage, TotalWorldEffectedCasesModel totalWorldEffectedCasesModel);
     }
 
 
-    public FeatchEffectedCountriesDataFromServer(OnTotalWorldCasesServerResponseListener onTotalWorldCasesServerResponseListener) {
+    public FeatchEffectedCountriesDataFromServer(Context context,OnTotalWorldCasesServerResponseListener onTotalWorldCasesServerResponseListener) {
+        this.context = context;
         this.onTotalWorldCasesServerResponseListener = onTotalWorldCasesServerResponseListener;
 
     }
 
-    public FeatchEffectedCountriesDataFromServer(OnServerResponseListener onServerResponseListener) {
+    public FeatchEffectedCountriesDataFromServer(Context context ,OnServerResponseListener onServerResponseListener) {
+        this.context = context;
         this.onServerResponseListener = onServerResponseListener;
     }
 
@@ -53,7 +59,11 @@ public class FeatchEffectedCountriesDataFromServer {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                onServerResponseListener.onServerResponse("error",e.getMessage(),null);
+                String errorMessage = e.getMessage();
+               if (! isInternetAvailable()){
+                   errorMessage = "You are Offline. Please Check Your Internet Connection";
+               }
+                onServerResponseListener.onServerResponse("error",errorMessage,null);
             }
 
             @Override
@@ -85,7 +95,11 @@ public class FeatchEffectedCountriesDataFromServer {
         OkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                onTotalWorldCasesServerResponseListener.onServerResponse("error",null);
+                String errorMessage = e.getMessage();
+                if (! isInternetAvailable()){
+                    errorMessage = "You are Offline. Please Check Your Internet Connection";
+                }
+                onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("error",errorMessage,null);
             }
 
             @Override
@@ -94,16 +108,24 @@ public class FeatchEffectedCountriesDataFromServer {
                     String serverResponse = response.body().string();
                     Gson gson = new Gson();
                     totalWorldEffectedCasesModel = gson.fromJson(serverResponse, TotalWorldEffectedCasesModel.class);
-                    onTotalWorldCasesServerResponseListener.onServerResponse("success", totalWorldEffectedCasesModel);
+                    onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("success","", totalWorldEffectedCasesModel);
                 }else {
-                    onTotalWorldCasesServerResponseListener.onServerResponse("not_success",null);
+                    onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("not_success","",null);
                 }
-
             }
         });
     }
 
 
-
+    private boolean isInternetAvailable() {
+        //This method check if the internet is available or not
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

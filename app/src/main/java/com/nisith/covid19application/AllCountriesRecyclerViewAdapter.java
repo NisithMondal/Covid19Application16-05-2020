@@ -36,7 +36,6 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
         this.allEffectedCountriesInfoList = allEffectedCountriesInfoList;
         this.onCountryCardItemClickInterface = (AllEffectedCountriesActivity) appCompatActivity;
         countryFlags = new CountryFlags(appCompatActivity.getApplicationContext());
-        Log.d("ABCD","allEffectedCountriesInfoList size= "+allEffectedCountriesInfoList.size());
 
     }
 

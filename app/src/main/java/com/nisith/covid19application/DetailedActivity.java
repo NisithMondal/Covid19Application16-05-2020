@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.nisith.covid19application.model.CountriesInfoModel;
+import com.nisith.covid19application.model.TotalWorldEffectedCasesModel;
 import com.squareup.picasso.Picasso;
 
 public class DetailedActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class DetailedActivity extends AppCompatActivity {
     private String updatedDateOfServerData;
     private int flagId;
     private CountriesInfoModel countriesInfoModel;
+    private TotalWorldEffectedCasesModel totalWorldEffectedCasesModelObject;
+    private String intentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,32 +71,57 @@ public class DetailedActivity extends AppCompatActivity {
 
     private void extractDataFromIntent(){
         Intent intent = getIntent();
-        updatedDateOfServerData = intent.getStringExtra("UPDATE_DATE");
-        flagId = intent.getIntExtra("FLAG_ID",-1);
-        String jsonString = intent.getStringExtra("JSON_STRING");
         Gson gson = new Gson();
-        countriesInfoModel = gson.fromJson(jsonString, CountriesInfoModel.class);
+        intentType = intent.getStringExtra("INTENT_TYPE");
+        flagId = intent.getIntExtra("FLAG_ID", -1);
+        String jsonString = intent.getStringExtra("JSON_STRING");
+        if (intentType.equalsIgnoreCase("type_country")) {
+
+            updatedDateOfServerData = intent.getStringExtra("UPDATE_DATE");
+            countriesInfoModel = gson.fromJson(jsonString, CountriesInfoModel.class);
+
+        }else if (intentType.equalsIgnoreCase("type_world")){
+            totalWorldEffectedCasesModelObject = gson.fromJson(jsonString,TotalWorldEffectedCasesModel.class);
+        }
     }
 
 
-    private void setDataOnViews(){
-        countryNameTextView.setText(countriesInfoModel.getCountryName());
-        if (flagId != -1) {
-            Picasso.get().load(flagId).fit().into(flagImageView);
-        }else {
-            flagImageView.setImageResource(R.drawable.ic_defalt_flag);
+    private void setDataOnViews() {
+
+        if (intentType.equalsIgnoreCase("type_country")) {
+            countryNameTextView.setText(countriesInfoModel.getCountryName());
+            if (flagId != -1) {
+                Picasso.get().load(flagId).fit().into(flagImageView);
+            } else {
+                flagImageView.setImageResource(R.drawable.ic_defalt_flag);
+            }
+            updateDateTextView.setText("Update on " + updatedDateOfServerData);
+            reportTextView.setText("Report of Corona Virus Effected People in " + countriesInfoModel.getCountryName());
+            totalCasesTextView.setText("Total cases: " + countriesInfoModel.getTotalCases());
+            totalDeathsTextView.setText("Total Deaths: " + countriesInfoModel.getTotalDeaths());
+            activeCasesTextView.setText("Active Cases: " + countriesInfoModel.getActivCcases());
+            totalRecoveredTextView.setText("Total Recovered: " + countriesInfoModel.getTotalRecovered());
+            totalTestsTextView.setText("Total Test: " + countriesInfoModel.getTotalTests());
+            totalCasesPerMillionTextView.setText("Total Cases Per 1 Million Population: " + countriesInfoModel.getTotalCasesPer1mPopulation());
+            totalTestsPerMillionTextView.setText("Total Tests Per 1 Million Population: " + countriesInfoModel.getTestsPer1mPopulation());
+            deathsPerMillionTextView.setText("Deaths Per 1 Million Population: " + countriesInfoModel.getDeathsPer1mPopulation());
+            seriousConditionTextView.setText("Serious Condition: " + countriesInfoModel.getSeriousCritical());
+
+        }else if (intentType.equalsIgnoreCase("type_world")){
+            countryNameTextView.setVisibility(View.GONE);
+            flagImageView.setImageResource(flagId);
+            updateDateTextView.setText("Update on " + totalWorldEffectedCasesModelObject.getUpdatedDate());
+            reportTextView.setText("Report of Corona Virus Effected People Through Out the World");
+            totalCasesTextView.setText("Total cases: " + totalWorldEffectedCasesModelObject.getTotalCases());
+            totalDeathsTextView.setText("Total Deaths: " + totalWorldEffectedCasesModelObject.getTotalDeaths());
+            activeCasesTextView.setText("Active Cases: " + totalWorldEffectedCasesModelObject.getActiveCases());
+            totalRecoveredTextView.setText("Total Recovered: " + totalWorldEffectedCasesModelObject.getTotalRecovered());
+            totalTestsTextView.setText("New Cases: " + totalWorldEffectedCasesModelObject.getNewCases());
+            totalCasesPerMillionTextView.setText("Total Cases Per 1 Million Population: " + totalWorldEffectedCasesModelObject.getTotalCasesPer1mPopulation());
+            totalTestsPerMillionTextView.setText("Total New Deaths: " + totalWorldEffectedCasesModelObject.getNewDeaths());
+            deathsPerMillionTextView.setText("Deaths Per 1 Million Population: " + totalWorldEffectedCasesModelObject.getDeathsPer1mPopulation());
+            seriousConditionTextView.setText("Serious Condition: " + totalWorldEffectedCasesModelObject.getSeriousCritical());
         }
-        updateDateTextView.setText("Update at "+updatedDateOfServerData);
-        reportTextView.setText("Report of Corona Virus Effected People in "+countriesInfoModel.getCountryName());
-        totalCasesTextView.setText("Total cases: "+countriesInfoModel.getTotalCases());
-        totalDeathsTextView.setText("Total Deaths: "+countriesInfoModel.getTotalDeaths());
-        activeCasesTextView.setText("Active Cases: "+countriesInfoModel.getActivCcases());
-        totalRecoveredTextView.setText("Total Recovered: "+countriesInfoModel.getTotalRecovered());
-        totalTestsTextView.setText("Total Test: "+countriesInfoModel.getTotalTests());
-        totalCasesPerMillionTextView.setText("Total Cases Per 1 Million Population: "+countriesInfoModel.getTotalCasesPer1mPopulation());
-        totalTestsPerMillionTextView.setText("Total Tests Per 1 Million Population: "+countriesInfoModel.getTestsPer1mPopulation());
-        deathsPerMillionTextView.setText("Deaths Per 1 Million Population: "+countriesInfoModel.getDeathsPer1mPopulation());
-        seriousConditionTextView.setText("Serious Condition: "+countriesInfoModel.getSeriousCritical());
     }
 
 

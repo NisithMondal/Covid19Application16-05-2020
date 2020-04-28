@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,8 +24,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nisith.covid19application.model.AllEffectedCountriesModel;
 import com.nisith.covid19application.model.CountriesInfoModel;
+import com.nisith.covid19application.model.TotalWorldEffectedCasesModel;
 import com.nisith.covid19application.popup_alert_dialog.InternetErrorAlertDialog;
 import com.nisith.covid19application.server_operation.FeatchEffectedCountriesDataFromServer;
 import com.nisith.covid19application.shared_preference.SaveSelectedCountrySharedPreference;
@@ -31,7 +36,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements FeatchEffectedCountriesDataFromServer.OnServerResponseListener {
+public class HomeActivity extends AppCompatActivity implements FeatchEffectedCountriesDataFromServer.OnServerResponseListener , FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener {
 
 
     private TextView updateDateTextView,reportTextView, totalCasesTextView, totalDeathsTextView,activeCasesTextView,totalRecoveredTextView,
@@ -42,9 +47,8 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private Button effectedCountriesButton;
     private Button loadDataButton;
     private Button allOverWorldCasesButton,indianStatesButton;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
     private RelativeLayout loadingDataRelativeLayout;
-
     private List<CountriesInfoModel> allEffectedCountriesInfoList = null;
     private boolean isOpenFlagSettingActivity = false;
     private static final int FLAG_SETTING_REQUEST_CODE = 123;
@@ -52,7 +56,11 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private TextView countryNameTextView;
     private SaveSelectedCountrySharedPreference saveSelectedCountrySharedPreference;
     private boolean isServerOperationAlreadyGoingOn = false;
-
+    private TotalWorldEffectedCasesModel totalWorldEffectedCasesModelObject = null;
+    //For grid view
+    private List<Integer> mostEffectedCountriesIndexList;
+    private RecyclerView recyclerView;
+    private HomeActivityRecyclerViewAdapter homeActivityRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         setViewsVisibility();
         setActivityCountryNameAndFlags();
         setHomeCountryDetailedViewsVisibility(View.INVISIBLE);
+        allEffectedCountriesInfoList = new ArrayList<>();
+        mostEffectedCountriesIndexList = new ArrayList<>();
+        setUpRecyclerViewWithAdapter();
 
         if (isInternetAvailable()) {
             performServerOperation();
@@ -105,8 +116,18 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         serverErrorMessageTextView = findViewById(R.id.error_message_text_view);
         retryButton = findViewById(R.id.retry_button);
         cancelButton = findViewById(R.id.cancel_button);
+        recyclerView = findViewById(R.id.recycler_view);
+
     }
 
+
+    private void setUpRecyclerViewWithAdapter(){
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setHasFixedSize(true);
+        homeActivityRecyclerViewAdapter = new HomeActivityRecyclerViewAdapter(mostEffectedCountriesIndexList, allEffectedCountriesInfoList, this);
+        recyclerView.setAdapter(homeActivityRecyclerViewAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
+    }
 
     private void setViewsVisibility(){
         if (saveSelectedCountrySharedPreference != null){
@@ -149,7 +170,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             case R.id.set_country:
                 Intent intent = new Intent(HomeActivity.this,CountrySettingActivity.class);
                 if (! isServerOperationAlreadyGoingOn) {
-                    if (allEffectedCountriesInfoList != null) {
+                    if (allEffectedCountriesInfoList.size()>0) {
                         ArrayList<String> allEffectedCountriesNameList = getAllEffectedCountriesName(allEffectedCountriesInfoList);
                         intent.putStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME", allEffectedCountriesNameList);
                         startActivityForResult(intent, FLAG_SETTING_REQUEST_CODE);
@@ -228,6 +249,31 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             }
         });
 
+        allOverWorldCasesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (totalWorldEffectedCasesModelObject == null) {
+                    FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(getApplicationContext(), (FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener) HomeActivity.this);
+                    server.getTotalWorldCoronaEffectedCasesDataFromServer();
+                    scrollView.setVisibility(View.INVISIBLE);
+                    loadingDataRelativeLayout.setVisibility(View.VISIBLE);
+                    serverErrorMessageTextView.setVisibility(View.GONE);
+                    retryButton.setVisibility(View.GONE);
+                    cancelButton.setVisibility(View.GONE);
+                    isServerOperationAlreadyGoingOn = true;
+                }else {
+                    Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
+                    Gson gson = new Gson();
+                    String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);
+                    intent.putExtra("JSON_STRING",jsonString);
+                    intent.putExtra("FLAG_ID",R.drawable.ic_white_world);
+                    intent.putExtra("INTENT_TYPE","type_world");
+                    startActivity(intent);
+                }
+            }
+        });
+
+
         retryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,7 +296,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
 
     private void performServerOperation(){
-        FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(this);
+        FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(getApplicationContext(),(FeatchEffectedCountriesDataFromServer.OnServerResponseListener) this);
         server.getAllEffectedCountriesDataFromServer();
         scrollView.setVisibility(View.INVISIBLE);
         loadingDataRelativeLayout.setVisibility(View.VISIBLE);
@@ -261,10 +307,12 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     }
 
 
+
+
     @Override
     public void onServerResponse(String responseStatus, final String errorMessage, AllEffectedCountriesModel allEffectedCountriesModel) {
         if (responseStatus.equalsIgnoreCase("success") && allEffectedCountriesModel != null){
-            allEffectedCountriesInfoList = new ArrayList<>();
+            allEffectedCountriesInfoList.clear();
             allEffectedCountriesInfoList.addAll(allEffectedCountriesModel.getAllEffectedCountriesDetaildList());
             updatedDateOfServerData = allEffectedCountriesModel.getUpdatedDate();
             if (! allEffectedCountriesInfoList.isEmpty()){
@@ -274,6 +322,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                     public void run() {
                         setHomeCountryDetaildOnViews(allEffectedCountriesInfoList);
                         setHomeCountryDetailedViewsVisibility(View.VISIBLE);
+                        mostEffectedCountriesIndexList.clear();
+                        mostEffectedCountriesIndexList.addAll(getMostEffectedCountriesIndexList(allEffectedCountriesInfoList));
+                        homeActivityRecyclerViewAdapter.notifyDataSetChanged();
                         scrollView.setVisibility(View.VISIBLE);
                     }
                 });
@@ -304,9 +355,40 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             }
         });
         isServerOperationAlreadyGoingOn = false;
-
-
     }
+
+
+
+    @Override
+    public void onTotalWorldDataServerResponse(String responseStatus, final String errorMessage, TotalWorldEffectedCasesModel totalWorldEffectedCasesModel) {
+        if (responseStatus.equalsIgnoreCase("success") && totalWorldEffectedCasesModel != null){
+            this.totalWorldEffectedCasesModelObject = totalWorldEffectedCasesModel;
+            Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);
+            intent.putExtra("JSON_STRING",jsonString);
+            intent.putExtra("FLAG_ID",R.drawable.ic_white_world);
+            intent.putExtra("INTENT_TYPE","type_world");
+            startActivity(intent);
+
+        }else if (responseStatus.equalsIgnoreCase("error")){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(HomeActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.setVisibility(View.VISIBLE);
+                loadingDataRelativeLayout.setVisibility(View.GONE);
+            }
+        });
+        isServerOperationAlreadyGoingOn = false;
+    }
+
 
     private ArrayList<String> getAllEffectedCountriesName(List<CountriesInfoModel> allEffectedCountriesInfoList){
         ArrayList<String> allEffectedCountriesNameList = new ArrayList<>();
@@ -332,7 +414,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
 
     private void setDataOnViews(CountriesInfoModel countriesInfoModel){
-        updateDateTextView.setText("Update at "+updatedDateOfServerData);
+        updateDateTextView.setText("Update on "+updatedDateOfServerData);
         reportTextView.setText("Report of Corona Virus Effected People in "+countriesInfoModel.getCountryName());
         totalCasesTextView.setText("Total cases: "+countriesInfoModel.getTotalCases());
         totalDeathsTextView.setText("Total Deaths: "+countriesInfoModel.getTotalDeaths());
@@ -344,6 +426,22 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         deathsPerMillionTextView.setText("Deaths Per 1 Million Population: "+countriesInfoModel.getDeathsPer1mPopulation());
         seriousConditionTextView.setText("Serious Condition: "+countriesInfoModel.getSeriousCritical());
     }
+
+
+
+    private List<Integer> getMostEffectedCountriesIndexList(List<CountriesInfoModel> allEffectedCountriesInfoList){
+        List<Integer> indexList = new ArrayList<>();
+        for (int i = 0; i < allEffectedCountriesInfoList.size(); i++) {
+            CountriesInfoModel countriesInfoModel = allEffectedCountriesInfoList.get(i);
+            String totalCases = countriesInfoModel.getTotalCases();
+            double totalCasesValue = Double.parseDouble(totalCases.replaceAll(",",""));
+            if (totalCasesValue >20000){
+                indexList.add(i);
+            }
+        }
+        return indexList;
+    }
+
 
 
     private boolean isInternetAvailable() {
@@ -371,4 +469,6 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             saveSelectedCountrySharedPreference.saveCountryInfo(countryName,flagId);
         }
     }
+
+
 }
