@@ -36,7 +36,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements FeatchEffectedCountriesDataFromServer.OnServerResponseListener , FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener {
+public class HomeActivity extends AppCompatActivity implements FeatchEffectedCountriesDataFromServer.OnServerResponseListener , FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener,
+        HomeActivityRecyclerViewAdapter.OnGridViewClickEventListener {
 
 
     private TextView updateDateTextView,reportTextView, totalCasesTextView, totalDeathsTextView,activeCasesTextView,totalRecoveredTextView,
@@ -202,8 +203,25 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             setHomeCountryDetailedViewsVisibility(View.VISIBLE);
 
         }
+    }
+
+
+
+    @Override
+    public void onGridViewClick(int position, int flagId) {
+        Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
+        CountriesInfoModel countriesInfoModel = allEffectedCountriesInfoList.get(position);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(countriesInfoModel);
+        intent.putExtra("JSON_STRING",jsonString);
+        intent.putExtra("FLAG_ID",flagId);
+        intent.putExtra("UPDATE_DATE",updatedDateOfServerData);
+        intent.putExtra("INTENT_TYPE","type_country");
+        startActivity(intent);
 
     }
+
+
 
 
     private void setHomeCountryDetailedViewsVisibility(int value){
@@ -435,7 +453,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             CountriesInfoModel countriesInfoModel = allEffectedCountriesInfoList.get(i);
             String totalCases = countriesInfoModel.getTotalCases();
             double totalCasesValue = Double.parseDouble(totalCases.replaceAll(",",""));
-            if (totalCasesValue >20000){
+            if (totalCasesValue >18000){
                 indexList.add(i);
             }
         }

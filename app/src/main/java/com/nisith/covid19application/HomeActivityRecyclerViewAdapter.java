@@ -20,11 +20,18 @@ public class HomeActivityRecyclerViewAdapter extends RecyclerView.Adapter<HomeAc
     private List<Integer> mostEffectedCountriesIndexList;
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
     private CountryFlags countryFlags;
+    private OnGridViewClickEventListener gridViewClickEventListener;
+
+
+    public interface OnGridViewClickEventListener{
+        void onGridViewClick(int position, int flagId);
+    }
 
     public HomeActivityRecyclerViewAdapter(List<Integer> mostEffectedCountriesIndexList, List<CountriesInfoModel> allEffectedCountriesInfoList, AppCompatActivity appCompatActivity){
         this.mostEffectedCountriesIndexList = mostEffectedCountriesIndexList;
         this.allEffectedCountriesInfoList = allEffectedCountriesInfoList;
         countryFlags = new CountryFlags(appCompatActivity.getApplicationContext());
+        this.gridViewClickEventListener = (OnGridViewClickEventListener) appCompatActivity;
 
     }
 
@@ -45,9 +52,10 @@ public class HomeActivityRecyclerViewAdapter extends RecyclerView.Adapter<HomeAc
         }else {
             holder.flagImageView.setImageResource(R.drawable.ic_defalt_flag);
         }
+        holder.countryNameTextView.setText(allEffectedCountriesInfoList.get(mostEffectedCountryIndex).getCountryName());
         holder.totalCasesTextView.setText("Total Cases: "+allEffectedCountriesInfoList.get(mostEffectedCountryIndex).getTotalCases());
         holder.totalDeathsTextView.setText("Total Deaths:  "+allEffectedCountriesInfoList.get(mostEffectedCountryIndex).getTotalDeaths());
-        holder.countryNameTextView.setText(allEffectedCountriesInfoList.get(mostEffectedCountryIndex).getCountryName());
+        holder.activeCasesTextView.setText("Active Cases: "+allEffectedCountriesInfoList.get(mostEffectedCountryIndex).getActivCcases());
     }
 
     @Override
@@ -57,9 +65,10 @@ public class HomeActivityRecyclerViewAdapter extends RecyclerView.Adapter<HomeAc
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView flagImageView;
-        TextView totalCasesTextView;
-        TextView totalDeathsTextView;
         TextView countryNameTextView;
+        TextView totalCasesTextView;
+        TextView activeCasesTextView;
+        TextView totalDeathsTextView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +76,15 @@ public class HomeActivityRecyclerViewAdapter extends RecyclerView.Adapter<HomeAc
             totalCasesTextView = itemView.findViewById(R.id.total_cases_text_view);
             totalDeathsTextView = itemView.findViewById(R.id.total_deaths_text_view);
             countryNameTextView = itemView.findViewById(R.id.country_name_text_view);
+            activeCasesTextView = itemView.findViewById(R.id.active_cases_text_view);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int mostEffectedCountryIndex = mostEffectedCountriesIndexList.get(getAdapterPosition());
+                    int flagId = countryFlags.getCountryFlag(allEffectedCountriesInfoList.get(mostEffectedCountryIndex).getCountryName());
+                    gridViewClickEventListener.onGridViewClick(mostEffectedCountryIndex,flagId);
+                }
+            });
         }
     }
 

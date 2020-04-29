@@ -39,7 +39,7 @@ public class DetailedActivity extends AppCompatActivity {
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("All Details");
+        toolbarTextView.setText("Details Information");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
