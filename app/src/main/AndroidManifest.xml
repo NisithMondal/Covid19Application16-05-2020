@@ -12,24 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CountrySettingActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".AllEffectedCountriesActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".CoronaEffectedStatesDetailsActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".AllCoronaEffectedStates"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".DetailedActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="portrait"
-            >
+        <activity android:name=".AffectedCountryHistorySearchActivity"></activity>
+        <activity
+            android:name=".CountrySettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AllEffectedCountriesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetailedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

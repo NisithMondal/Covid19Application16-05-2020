@@ -139,14 +139,15 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:text="Latest Updates"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:background="@drawable/button_background_shape"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:textStyle="bold"
                 android:layout_marginEnd="7dp"
                 android:drawableStart="@drawable/ic_refresh"
+                android:drawablePadding="-15dp"
                 />
 
             <Button
@@ -154,14 +155,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Effected Countries"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:background="@drawable/button_background_shape"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:textStyle="bold"
                 android:layout_marginStart="7dp"
-                android:drawableStart="@drawable/ic_effected_country"
+                android:drawableStart="@drawable/ic_star"
                 android:drawablePadding="5dp"
                 />
 
@@ -169,57 +170,24 @@
          </LinearLayout>
 
 
-
-         <HorizontalScrollView
-             android:id="@+id/horizental_scroll_view"
-             android:layout_below="@+id/linear_layout"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp"
-             >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                >
-
-               <Button
-                   android:id="@+id/indian_states_button"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Effected States in India"
-                   android:textSize="14sp"
-                   android:textAllCaps="false"
-                   android:textColor="@android:color/white"
-                   android:background="@drawable/button_background_shape"
-                   android:padding="12dp"
-                   android:textStyle="bold"
-                   android:drawableStart="@drawable/ic_effected_state"
-                   android:layout_marginStart="10dp"
-                   android:drawablePadding="5dp"
-                   android:visibility="gone"
-                   />
-
                <Button
                    android:id="@+id/world_status_effected"
+                   android:layout_below="@+id/linear_layout"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="World Status Effected by COVID19"
-                   android:textSize="14sp"
+                   android:text="World Affected Report by COVID19"
+                   android:textSize="13sp"
                    android:textAllCaps="false"
+                   android:layout_marginTop="10dp"
+                   android:layout_centerHorizontal="true"
                    android:textColor="@android:color/white"
                    android:background="@drawable/button_background_shape"
-                   android:padding="12dp"
+                   android:padding="8dp"
                    android:textStyle="bold"
-                   android:drawableStart="@drawable/ic_star"
+                   android:drawableStart="@drawable/ic_effected_country"
                    android:drawablePadding="5dp"
-                   android:gravity="center"
-                   android:layout_marginStart="30dp"
                    />
-            </LinearLayout>
 
-         </HorizontalScrollView>
 
 
 
@@ -228,7 +196,7 @@
 
          <TextView
              android:id="@+id/report_text_view"
-             android:layout_below="@+id/horizental_scroll_view"
+             android:layout_below="@+id/world_status_effected"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textSize="16sp"
@@ -403,12 +371,20 @@
 
 
 
+         <View
+             android:id="@+id/horizental_line"
+             android:layout_below="@+id/total_cases_per_million_text_view"
+             android:layout_width="match_parent"
+             android:layout_height="2dp"
+             android:background="#06796B"
+             />
+
 
 
 
          <TextView
              android:id="@+id/most_effected_text_view"
-             android:layout_below="@+id/total_cases_per_million_text_view"
+             android:layout_below="@+id/horizental_line"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textSize="16sp"

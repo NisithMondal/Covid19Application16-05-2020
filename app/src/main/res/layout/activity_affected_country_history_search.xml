@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AffectedCountryHistorySearchActivity">
+
+    <include
+        android:id="@+id/app_toolbar"
+        layout="@layout/app_toolbar"
+        />
+
+    <include
+        android:id="@+id/loading_data_layout"
+        layout="@layout/loading_data_layout"
+        android:visibility="gone"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/flag_image_view"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:src="@drawable/in"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                />
+            <TextView
+                android:id="@+id/select_country_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flag_image_view"
+                android:text="Select Country"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:textColor="#07720C"
+                android:background="@drawable/text_view_background_shape"
+                android:padding="12dp"
+                android:drawableStart="@drawable/ic_select_country"
+                android:drawablePadding="5dp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_below="@+id/select_country_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Get Report Type:-"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:textColor="#065099"
+                android:textSize="18sp"
+                />
+
+
+
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                >
+
+
+                <RadioButton
+                    android:id="@+id/radio_button_day_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get Report By Day"
+                    android:checked="true"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radio_button_week_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get Report By Week"
+                    />
+
+                <RadioButton
+                    android:id="@+id/radio_button_month_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get Report By Month"
+                    />
+
+            </RadioGroup>
+
+
+            <EditText
+                android:id="@+id/search_date_edit_text"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radio_group"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:hint="Enter Report Date"
+                android:inputType="date"
+                android:textAlignment="center"
+                android:background="@drawable/text_view_background_shape"
+                android:padding="15dp"
+                android:drawableStart="@drawable/ic_date_icon"
+                />
+
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_below="@+id/search_date_edit_text"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Search"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_search"
+                android:background="@drawable/another_button_background_shape"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:drawablePadding="5dp"
+                />
+
+            <View
+                android:id="@+id/line_view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#ee00aa"
+                android:layout_below="@+id/search_button"
+                android:layout_marginTop="15dp"
+                android:visibility="visible"
+                />
+
+            <TextView
+                android:id="@+id/heading_text_view"
+                android:layout_below="@+id/line_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20-04-2020 Report On Covid-19 in India"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="16dp"
+                android:textStyle="bold|italic"
+                android:textColor="#000000"
+                android:padding="0dp"
+                />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/heading_text_view"
+                android:layout_marginTop="20dp"
+                >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

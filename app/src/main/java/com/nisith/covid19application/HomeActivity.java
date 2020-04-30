@@ -7,12 +7,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,6 +39,7 @@ import com.nisith.covid19application.server_operation.FeatchEffectedCountriesDat
 import com.nisith.covid19application.shared_preference.SaveSelectedCountrySharedPreference;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private String updatedDateOfServerData;
     private Button effectedCountriesButton;
     private Button loadDataButton;
-    private Button allOverWorldCasesButton,indianStatesButton;
+    private Button allOverWorldCasesButton;
     private NestedScrollView scrollView;
     private RelativeLayout loadingDataRelativeLayout;
     private List<CountriesInfoModel> allEffectedCountriesInfoList = null;
@@ -86,12 +93,48 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             serverErrorMessageTextView.setText("You are Offline. Please Check Your Internet Connection");
         }
 
+
+
+        //////////////////////// For Test
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://coronavirus-map.p.rapidapi.com/v1/spots/day?region=india")
+                .get()
+                .addHeader("x-rapidapi-host", "coronavirus-map.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", "4cb9c3992cmsh8959d21ec207e07p1940fdjsnb047353be7d3")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("VIP","Error: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String jsonString = response.body().string();
+                Log.d("VIP","Json String = " +jsonString);
+            }
+        });
+
+
+
+
+        /////////////////////////////
+
+
+
+
+
+
     }
 
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Home");
+        toolbarTextView.setText("COVID-19");
         setSupportActionBar(appToolbar);
         setTitle("");
         updateDateTextView = findViewById(R.id.update_date_text_view);
@@ -107,11 +150,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         seriousConditionTextView = findViewById(R.id.serious_condition_text_view);
         effectedCountriesButton = findViewById(R.id.effected_countries_button);
         loadDataButton = findViewById(R.id.load_data_button);
-        indianStatesButton = findViewById(R.id.indian_states_button);
         countryFlagImageView = findViewById(R.id.country_flag_image_view);
         countryNameTextView = findViewById(R.id.country_name_text_view);
         allOverWorldCasesButton = findViewById(R.id.world_status_effected);
-        indianStatesButton = findViewById(R.id.indian_states_button);
         scrollView = findViewById(R.id.scroll_view);
         loadingDataRelativeLayout = findViewById(R.id.loading_data_layout);
         serverErrorMessageTextView = findViewById(R.id.error_message_text_view);
@@ -131,14 +172,6 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     }
 
     private void setViewsVisibility(){
-        if (saveSelectedCountrySharedPreference != null){
-            String countryName = saveSelectedCountrySharedPreference.getSavedCountryName();
-            if (countryName.equalsIgnoreCase("India")){
-                indianStatesButton.setVisibility(View.VISIBLE);
-            }else {
-                indianStatesButton.setVisibility(View.GONE);
-            }
-        }
         scrollView.setVisibility(View.VISIBLE);
         loadingDataRelativeLayout.setVisibility(View.GONE);
     }

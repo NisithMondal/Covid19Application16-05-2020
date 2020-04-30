@@ -2,7 +2,6 @@
     <string name="app_name">Covid19 Application</string>
 
 
-
     <string-array name="countries_name">
 
         <item>Afghanistan</item>
