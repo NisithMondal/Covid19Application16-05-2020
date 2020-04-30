@@ -3,6 +3,7 @@ package com.nisith.covid19application.server_operation;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.nisith.covid19application.model.EffectedCountriesSearchHistoryModel;
@@ -34,10 +35,10 @@ public class FeatchEffectedCountriesReportHistoryFromServer {
     }
 
 
-    public void getEffectedCountriesReportHistory(){
+    public void getEffectedCountriesReportHistory(String countryName, String date, String getReportType){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://coronavirus-map.p.rapidapi.com/v1/spots/week?date=10-04-2020&region=INDIA")
+                .url("https://coronavirus-map.p.rapidapi.com/v1/spots/"+getReportType+"?date="+date+"&region="+countryName)
                 .get()
                 .addHeader("x-rapidapi-host", "coronavirus-map.p.rapidapi.com")
                 .addHeader("x-rapidapi-key", "4cb9c3992cmsh8959d21ec207e07p1940fdjsnb047353be7d3")
@@ -61,7 +62,7 @@ public class FeatchEffectedCountriesReportHistoryFromServer {
                     EffectedCountriesSearchHistoryModel effectedCountriesSearchHistoryModel = gson.fromJson(jsonString, EffectedCountriesSearchHistoryModel.class);
                     serverResponseListeaner.onServerResponse("success","",effectedCountriesSearchHistoryModel);
                 }else {
-                    serverResponseListeaner.onServerResponse("not success","",null);
+                    serverResponseListeaner.onServerResponse("not success","Invalid Date or Country Name",null);
                 }
 
             }

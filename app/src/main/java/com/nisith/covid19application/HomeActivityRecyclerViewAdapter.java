@@ -60,7 +60,11 @@ public class HomeActivityRecyclerViewAdapter extends RecyclerView.Adapter<HomeAc
 
     @Override
     public int getItemCount() {
-        return mostEffectedCountriesIndexList.size();
+        int totalItem = 0;
+        if (mostEffectedCountriesIndexList != null){
+            totalItem = mostEffectedCountriesIndexList.size();
+        }
+        return totalItem;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{

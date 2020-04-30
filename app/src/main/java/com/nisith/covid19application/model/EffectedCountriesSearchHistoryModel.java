@@ -3,6 +3,7 @@ package com.nisith.covid19application.model;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -31,12 +32,21 @@ public class EffectedCountriesSearchHistoryModel {
     public List<CountryInfoSearchHistoryModel> getReportList() {
         List<CountryInfoSearchHistoryModel> itemList = new ArrayList<>();
         Set<String> keys = data.keySet();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                     .create();
+        int position = 0;
         for (String key : keys) {
             JsonObject jsonObject = data.getAsJsonObject(key);
             itemList.add(gson.fromJson(jsonObject, CountryInfoSearchHistoryModel.class));
+            itemList.get(position).setDate(key);// here key contains date
+            position++;
+
+
         }
-        Log.d("VIP","List Size = "+itemList.size());
+
+
+
         return itemList;
     }
 }

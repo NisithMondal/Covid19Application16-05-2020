@@ -13,6 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -24,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements FeatchEffectedCountriesDataFromServer.OnServerResponseListener , FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener,
-        HomeActivityRecyclerViewAdapter.OnGridViewClickEventListener {
+        HomeActivityRecyclerViewAdapter.OnGridViewClickEventListener{
 
 
     private TextView updateDateTextView,reportTextView, totalCasesTextView, totalDeathsTextView,activeCasesTextView,totalRecoveredTextView,
@@ -55,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private Button effectedCountriesButton;
     private Button loadDataButton;
     private Button allOverWorldCasesButton;
+    private Button searchReportByDateButton;
     private NestedScrollView scrollView;
     private RelativeLayout loadingDataRelativeLayout;
     private List<CountriesInfoModel> allEffectedCountriesInfoList = null;
@@ -95,34 +98,6 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
 
 
-        //////////////////////// For Test
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("https://coronavirus-map.p.rapidapi.com/v1/spots/day?region=india")
-                .get()
-                .addHeader("x-rapidapi-host", "coronavirus-map.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "4cb9c3992cmsh8959d21ec207e07p1940fdjsnb047353be7d3")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.d("VIP","Error: "+e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String jsonString = response.body().string();
-                Log.d("VIP","Json String = " +jsonString);
-            }
-        });
-
-
-
-
-        /////////////////////////////
 
 
 
@@ -150,6 +125,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         seriousConditionTextView = findViewById(R.id.serious_condition_text_view);
         effectedCountriesButton = findViewById(R.id.effected_countries_button);
         loadDataButton = findViewById(R.id.load_data_button);
+        searchReportByDateButton = findViewById(R.id.search_report_by_date_button);
         countryFlagImageView = findViewById(R.id.country_flag_image_view);
         countryNameTextView = findViewById(R.id.country_name_text_view);
         allOverWorldCasesButton = findViewById(R.id.world_status_effected);
@@ -324,6 +300,16 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             }
         });
 
+
+        searchReportByDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,AffectedCountryHistorySearchActivity.class);
+                ArrayList<String> allEffectedCountriesNameList = getAllEffectedCountriesName(allEffectedCountriesInfoList);
+                intent.putStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME_ARRAY_LIST",allEffectedCountriesNameList);
+                startActivity(intent);
+            }
+        });
 
         retryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -520,6 +506,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             saveSelectedCountrySharedPreference.saveCountryInfo(countryName,flagId);
         }
     }
+
 
 
 }

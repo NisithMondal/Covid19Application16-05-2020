@@ -381,10 +381,29 @@
 
 
 
+         <Button
+             android:id="@+id/search_report_by_date_button"
+             android:layout_below="@+id/horizental_line"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Search Report By Date"
+             android:textSize="13sp"
+             android:textAllCaps="false"
+             android:layout_marginTop="15dp"
+             android:layout_centerHorizontal="true"
+             android:textColor="@android:color/white"
+             android:background="@drawable/another_button_background_shape"
+             android:padding="8dp"
+             android:textStyle="bold"
+             android:drawableStart="@drawable/ic_search"
+             android:drawablePadding="5dp"
+             />
+
+
 
          <TextView
              android:id="@+id/most_effected_text_view"
-             android:layout_below="@+id/horizental_line"
+             android:layout_below="@+id/search_report_by_date_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textSize="16sp"

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="8dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/flag_image_view"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="25dp"
+            android:src="@drawable/in"
+            android:scaleType="centerCrop"
+            />
+
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date: 30-04-2020 9:7:987"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/flag_image_view"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="17sp"
+            android:textColor="#C4024E"
+            />
+
+        <TextView
+            android:id="@+id/total_cases_text_view"
+            android:layout_below="@+id/date_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Cases: 1200"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            />
+
+
+
+        <TextView
+            android:id="@+id/total_recovered_text_view"
+            android:layout_below="@+id/total_cases_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Recovered: 1200"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            />
+
+        <TextView
+            android:id="@+id/deaths_text_view"
+            android:layout_below="@+id/total_recovered_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deaths: 1200"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            />
+
+
+
+        <TextView
+            android:id="@+id/critical_condition_text_view"
+            android:layout_below="@+id/deaths_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Critical Condition: 1200"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            />
+
+        <TextView
+            android:id="@+id/total_test_text_view"
+            android:layout_below="@+id/critical_condition_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Tested: 1200"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            />
+
+
+        <TextView
+            android:id="@+id/death_ratio_text_view"
+            android:layout_below="@+id/total_test_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Death Ratio: 0.198200"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            />
+
+
+        <TextView
+            android:id="@+id/recovered_ratio_text_view"
+            android:layout_below="@+id/death_ratio_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recovered Ratio: 0.01200"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="25dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="15sp"
+            android:textColor="#1D1B1C"
+            android:layout_marginBottom="14dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

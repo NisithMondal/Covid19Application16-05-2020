@@ -18,6 +18,7 @@
         />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_below="@+id/app_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,18 +40,21 @@
                 />
             <TextView
                 android:id="@+id/select_country_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/flag_image_view"
                 android:text="Select Country"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#07720C"
                 android:background="@drawable/text_view_background_shape"
-                android:padding="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:drawableStart="@drawable/ic_select_country"
-                android:drawablePadding="5dp"
+                android:drawablePadding="20dp"
                 />
 
 
@@ -84,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Get Report By Day"
-                    android:checked="true"
                     />
 
                 <RadioButton
@@ -92,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Get Report By Week"
+                    android:checked="true"
                     />
 
                 <RadioButton
@@ -104,25 +108,25 @@
             </RadioGroup>
 
 
-            <EditText
-                android:id="@+id/search_date_edit_text"
+            <TextView
+                android:id="@+id/select_date_text_view"
                 android:layout_width="290dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/radio_group"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:hint="Enter Report Date"
-                android:inputType="date"
+                android:text="Select Date"
+                android:textSize="16sp"
                 android:textAlignment="center"
                 android:background="@drawable/text_view_background_shape"
-                android:padding="15dp"
+                android:padding="12dp"
                 android:drawableStart="@drawable/ic_date_icon"
                 />
 
 
             <Button
                 android:id="@+id/search_button"
-                android:layout_below="@+id/search_date_edit_text"
+                android:layout_below="@+id/select_date_text_view"
                 android:layout_width="290dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -159,7 +163,8 @@
                 android:textSize="16dp"
                 android:textStyle="bold|italic"
                 android:textColor="#000000"
-                android:padding="0dp"
+                android:padding="10dp"
+                android:background="@drawable/another_text_view_background_shape"
                 />
 
 
@@ -169,9 +174,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/heading_text_view"
                 android:layout_marginTop="20dp"
-                >
+                android:layout_marginBottom="15dp"
+                />
 
-            </androidx.recyclerview.widget.RecyclerView>
+
 
 
 
