@@ -2,6 +2,7 @@ package com.nisith.covid19application;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.nisith.covid19application.model.CountryInfoSearchHistoryModel;
 import com.nisith.covid19application.model.EffectedCountriesSearchHistoryModel;
 import com.nisith.covid19application.popup_alert_dialog.AffectedCountryReportDisplayDialog;
 import com.nisith.covid19application.server_operation.FeatchEffectedCountriesReportHistoryFromServer;
+import com.nisith.covid19application.shared_preference.SaveSelectedCountrySharedPreference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,15 +48,19 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
     private int selectedCountryFlagId;
     private RelativeLayout loadingDataLayout;
     private NestedScrollView nestedScrollView;
+    private View horizentalLine;
+    private TextView countryNameTextView;
     //For recycler view
     private List<CountryInfoSearchHistoryModel> allAffectedCountryReportList;
     private AffectedCountryHistorySearchRecyclerViewAdapter recyclerViewAdapter;
+    private SaveSelectedCountrySharedPreference sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affected_country_history_search);
         setUpLayout();
+        sharedPreference = new SaveSelectedCountrySharedPreference(getApplicationContext());
         setViewsVisibility();
         Intent intent = getIntent();
         allEffectedCountriesNameList = intent.getStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME_ARRAY_LIST");
@@ -63,11 +69,25 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
         setRecyclerViewWithAdapter();
 
 
+
     }
 
 
 
     private void setUpLayout(){
+        Toolbar appToolbar = findViewById(R.id.app_toolbar);
+        TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
+        toolbarTextView.setText("Search Report By Date");
+        setSupportActionBar(appToolbar);
+        setTitle("");
+        appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
+        appToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        countryNameTextView = findViewById(R.id.country_name_text_view);
         flagImageView = findViewById(R.id.flag_image_view);
         selectCountryTextView = findViewById(R.id.select_country_text_view);
         radioGroup = findViewById(R.id.radio_group);
@@ -76,6 +96,7 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
         radioButtonMonth = findViewById(R.id.radio_button_month_report);
         selectDateTextView = findViewById(R.id.select_date_text_view);
         searchButton = findViewById(R.id.search_button);
+        horizentalLine = findViewById(R.id.line_view);
         headingTextView = findViewById(R.id.heading_text_view);
         recyclerView = findViewById(R.id.recycler_view);
         loadingDataLayout = findViewById(R.id.loading_data_layout);
@@ -86,11 +107,30 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
 
 
     private void setViewsVisibility(){
-        flagImageView.setVisibility(View.GONE);
+        if (sharedPreference.getSavedCountryNameForAffectedCountryHistorySearchActivity().equalsIgnoreCase("not_select")) {
+            countryNameTextView.setVisibility(View.INVISIBLE);
+            flagImageView.setVisibility(View.INVISIBLE);
+        }else {
+            countryNameTextView.setVisibility(View.VISIBLE);
+            flagImageView.setVisibility(View.VISIBLE);
+            setCountryNameAndFlagFromSharedPrefearence();
+
+        }
         headingTextView.setVisibility(View.INVISIBLE);
         loadingDataLayout.setVisibility(View.GONE);
         nestedScrollView.setVisibility(View.VISIBLE);
+        horizentalLine.setVisibility(View.INVISIBLE);
 
+    }
+
+    private void setCountryNameAndFlagFromSharedPrefearence(){
+        countryNameTextView.setText(sharedPreference.getSavedCountryNameForAffectedCountryHistorySearchActivity());
+        int flagId = sharedPreference.getSavedCountryFlagIdForAffectedCountryHistorySearchActivity();
+        if (flagId != -1){
+            Picasso.get().load(flagId).centerCrop().fit().into(flagImageView);
+        }else {
+            flagImageView.setImageResource(R.drawable.ic_defalt_flag);
+        }
     }
 
 
@@ -149,9 +189,9 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectCountryNameVale = selectCountryTextView.getText().toString();
+                String countryNameTextViewValue = countryNameTextView.getText().toString();
                 String dateValue = selectDateTextView.getText().toString();
-                if (selectCountryNameVale.equalsIgnoreCase("Select Country")){
+                if (countryNameTextViewValue.equalsIgnoreCase("")){
                     Toast.makeText(AffectedCountryHistorySearchActivity.this, "Select Country Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -160,7 +200,7 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
                     return;
                 }
                 String getReportType = getCheckedRadioButtonValue();
-                performServerOperation(selectCountryNameVale,dateValue,getReportType);
+                performServerOperation(countryNameTextViewValue,dateValue,getReportType);
 
             }
         });
@@ -168,19 +208,6 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
    }
 
 
-   private boolean dateChecker(String inputDate){
-        boolean isOk = false;
-        Calendar calendar = Calendar.getInstance();
-        String currentYear = String.valueOf(calendar.get(Calendar.YEAR));
-        String currentMonth = String.valueOf(calendar.get(Calendar.MONTH));
-        String currentDay = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        long generatedNumberFromCurrentDate = Long.parseLong(currentYear+currentMonth+currentDay);
-        long generatedNumberFromInputDate = Long.parseLong(inputDate.replace("-",""));
-        if (generatedNumberFromInputDate <= generatedNumberFromCurrentDate){
-            isOk = true;
-        }
-        return isOk;
-   }
 
    private String getCheckedRadioButtonValue(){
        String getReportType = "week";
@@ -211,7 +238,11 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
                 flagImageView.setImageResource(R.drawable.ic_defalt_flag);
             }
             flagImageView.setVisibility(View.VISIBLE);
-            selectCountryTextView.setText(selectedCountryName);
+            countryNameTextView.setVisibility(View.VISIBLE);
+            countryNameTextView.setText(selectedCountryName);
+            if (sharedPreference != null){
+                sharedPreference.saveCountryInfoForAffectedCountryHistorySearchActivity(countryNameTextView.getText().toString(),selectedCountryFlagId);
+            }
         }
     }
 
@@ -235,10 +266,11 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        recyclerViewAdapter.setCountryName(selectCountryTextView.getText().toString());
+                        recyclerViewAdapter.setCountryName(countryNameTextView.getText().toString());
                         recyclerViewAdapter.notifyDataSetChanged();
+                        horizentalLine.setVisibility(View.VISIBLE);
                         headingTextView.setVisibility(View.VISIBLE);
-                        headingTextView.setText("Report On Covid-19 in "+selectCountryTextView.getText().toString());
+                        headingTextView.setText("Report On Covid-19 in "+countryNameTextView.getText().toString());
                     }
                 });
             }

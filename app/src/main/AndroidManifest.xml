@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AffectedCountryHistorySearchActivity"></activity>
+        <activity
+            android:name=".AffectedCountryHistorySearchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CountrySettingActivity"
             android:screenOrientation="portrait" />

@@ -51,7 +51,8 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
     private TextView updateDateTextView,reportTextView, totalCasesTextView, totalDeathsTextView,activeCasesTextView,totalRecoveredTextView,
             totalTestsTextView,totalTestsPerMillionTextView,totalCasesPerMillionTextView,deathsPerMillionTextView,seriousConditionTextView;
-    private TextView serverErrorMessageTextView;
+    private TextView serverErrorMessageTextView,mostAffectedCountryTextView;
+    private TextView marqueTextView;
     private Button retryButton,cancelButton;
     private String updatedDateOfServerData;
     private Button effectedCountriesButton;
@@ -82,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         saveSelectedCountrySharedPreference = new SaveSelectedCountrySharedPreference(getApplicationContext());
         setViewsVisibility();
         setActivityCountryNameAndFlags();
+        marqueTextView.setSelected(true);
         setHomeCountryDetailedViewsVisibility(View.INVISIBLE);
         allEffectedCountriesInfoList = new ArrayList<>();
         mostEffectedCountriesIndexList = new ArrayList<>();
@@ -93,7 +95,10 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             serverErrorMessageTextView.setVisibility(View.VISIBLE);
             retryButton.setVisibility(View.VISIBLE);
             cancelButton.setVisibility(View.INVISIBLE);
-            serverErrorMessageTextView.setText("You are Offline. Please Check Your Internet Connection");
+            searchReportByDateButton.setVisibility(View.GONE);
+            mostAffectedCountryTextView.setVisibility(View.GONE);
+            serverErrorMessageTextView.setText("You are Offline. Please Check Your Internet Connection and Retry.");
+
         }
 
 
@@ -113,7 +118,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         setSupportActionBar(appToolbar);
         setTitle("");
         updateDateTextView = findViewById(R.id.update_date_text_view);
+        marqueTextView = findViewById(R.id.marque_text_view);
         reportTextView = findViewById(R.id.report_text_view);
+        mostAffectedCountryTextView = findViewById(R.id.most_effected_text_view);
         totalCasesTextView = findViewById(R.id.total_cases_text_view);
         totalDeathsTextView = findViewById(R.id.total_deaths_text_view);
         activeCasesTextView = findViewById(R.id.active_cases_text_view);
@@ -279,23 +286,28 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         allOverWorldCasesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (totalWorldEffectedCasesModelObject == null) {
-                    FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(getApplicationContext(), (FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener) HomeActivity.this);
-                    server.getTotalWorldCoronaEffectedCasesDataFromServer();
-                    scrollView.setVisibility(View.INVISIBLE);
-                    loadingDataRelativeLayout.setVisibility(View.VISIBLE);
-                    serverErrorMessageTextView.setVisibility(View.GONE);
-                    retryButton.setVisibility(View.GONE);
-                    cancelButton.setVisibility(View.GONE);
-                    isServerOperationAlreadyGoingOn = true;
+                if (isInternetAvailable()) {
+                    if (totalWorldEffectedCasesModelObject == null) {
+                        FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(getApplicationContext(), (FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener) HomeActivity.this);
+                        server.getTotalWorldCoronaEffectedCasesDataFromServer();
+                        scrollView.setVisibility(View.INVISIBLE);
+                        loadingDataRelativeLayout.setVisibility(View.VISIBLE);
+//                        serverErrorMessageTextView.setVisibility(View.GONE);
+//                        retryButton.setVisibility(View.GONE);
+//                        cancelButton.setVisibility(View.GONE);
+                        isServerOperationAlreadyGoingOn = true;
+                    } else {
+                        Intent intent = new Intent(HomeActivity.this, DetailedActivity.class);
+                        Gson gson = new Gson();
+                        String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);
+                        intent.putExtra("JSON_STRING", jsonString);
+                        intent.putExtra("FLAG_ID", R.drawable.ic_white_world);
+                        intent.putExtra("INTENT_TYPE", "type_world");
+                        startActivity(intent);
+                    }
                 }else {
-                    Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
-                    Gson gson = new Gson();
-                    String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);
-                    intent.putExtra("JSON_STRING",jsonString);
-                    intent.putExtra("FLAG_ID",R.drawable.ic_white_world);
-                    intent.putExtra("INTENT_TYPE","type_world");
-                    startActivity(intent);
+                    InternetErrorAlertDialog dialog = new InternetErrorAlertDialog();
+                    dialog.show(getSupportFragmentManager(),"nisith");
                 }
             }
         });
@@ -362,6 +374,8 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                         mostEffectedCountriesIndexList.clear();
                         mostEffectedCountriesIndexList.addAll(getMostEffectedCountriesIndexList(allEffectedCountriesInfoList));
                         homeActivityRecyclerViewAdapter.notifyDataSetChanged();
+                        searchReportByDateButton.setVisibility(View.VISIBLE);
+                        mostAffectedCountryTextView.setVisibility(View.VISIBLE);
                         scrollView.setVisibility(View.VISIBLE);
                     }
                 });

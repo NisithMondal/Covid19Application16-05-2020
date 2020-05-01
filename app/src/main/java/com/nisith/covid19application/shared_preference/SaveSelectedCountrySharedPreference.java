@@ -8,8 +8,10 @@ import com.nisith.covid19application.R;
 public class SaveSelectedCountrySharedPreference {
 
     private SharedPreferences sharedPreferences;
-    private static final String COUNTRY_NAME_KEY = "country_name";
-    private static final String COUNTRY_FLAG_ID_KEY = "country_flag_id";
+    private static final String HOME_ACTIVITY_COUNTRY_NAME_KEY = "country_name";
+    private static final String HOME_ACTIVITY_COUNTRY_FLAG_ID_KEY = "country_flag_id";
+    private static final String AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_NAME_KEY = "another_country_name";
+    private static final String AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_FLAG_ID_KEY = "another_country_flag_id";
 
 
     public SaveSelectedCountrySharedPreference(Context context) {
@@ -19,19 +21,35 @@ public class SaveSelectedCountrySharedPreference {
 
     public void saveCountryInfo(String countryName, int countryFlagId){
        SharedPreferences.Editor editor = sharedPreferences.edit();
-       editor.putString(COUNTRY_NAME_KEY,countryName);
-       editor.putInt(COUNTRY_FLAG_ID_KEY,countryFlagId);
+       editor.putString(HOME_ACTIVITY_COUNTRY_NAME_KEY,countryName);
+       editor.putInt(HOME_ACTIVITY_COUNTRY_FLAG_ID_KEY,countryFlagId);
        editor.commit();
+    }
+
+    public void saveCountryInfoForAffectedCountryHistorySearchActivity(String countryName, int countryFlagId){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_NAME_KEY,countryName);
+        editor.putInt(AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_FLAG_ID_KEY,countryFlagId);
+        editor.commit();
+
     }
 
 
     public String getSavedCountryName(){
-        return sharedPreferences.getString(COUNTRY_NAME_KEY,"India");
+        return sharedPreferences.getString(HOME_ACTIVITY_COUNTRY_NAME_KEY,"India");
     }
 
     public int getSavedCountryFlagId(){
-        return sharedPreferences.getInt(COUNTRY_FLAG_ID_KEY, R.drawable.in);
+        return sharedPreferences.getInt(HOME_ACTIVITY_COUNTRY_FLAG_ID_KEY, R.drawable.in);
     }
 
+
+    public String getSavedCountryNameForAffectedCountryHistorySearchActivity(){
+        return sharedPreferences.getString(AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_NAME_KEY,"not_select");
+    }
+
+    public int getSavedCountryFlagIdForAffectedCountryHistorySearchActivity(){
+        return sharedPreferences.getInt(AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_FLAG_ID_KEY,1);
+    }
 
 }

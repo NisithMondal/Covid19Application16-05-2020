@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@android:color/white"
-    app:cardElevation="8dp"
+    app:cardElevation="6dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="8dp"
     >
@@ -18,9 +18,8 @@
             android:layout_width="55dp"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/in"
             android:scaleType="centerCrop"
             />
 
@@ -29,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date: 30-04-2020"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:textStyle="bold"
             android:layout_marginStart="15dp"
             android:maxLines="1"
@@ -83,7 +82,7 @@
             android:textStyle="italic"
             android:textSize="14sp"
             android:textColor="#1D1B1C"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="14dp"
             />
 
 
@@ -93,7 +92,7 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/flag_image_view"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="18dp"
             android:text="Details"
             android:textSize="18sp"
             android:textColor="#ee00aa"

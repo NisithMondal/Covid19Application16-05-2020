@@ -49,7 +49,7 @@ public class FeatchEffectedCountriesReportHistoryFromServer {
             public void onFailure(Call call, IOException e) {
                 String errorMessage = e.getMessage();
                 if (! isInternetAvailable()){
-                    errorMessage = "You are Offline. Please Check Your Internet Connection";
+                    errorMessage = "You are Offline. Please Check Your Internet Connection and Try Again. This Application Needs Internet Connection To Work.";
                 }
                 serverResponseListeaner.onServerResponse("error",errorMessage,null);
             }
@@ -62,7 +62,7 @@ public class FeatchEffectedCountriesReportHistoryFromServer {
                     EffectedCountriesSearchHistoryModel effectedCountriesSearchHistoryModel = gson.fromJson(jsonString, EffectedCountriesSearchHistoryModel.class);
                     serverResponseListeaner.onServerResponse("success","",effectedCountriesSearchHistoryModel);
                 }else {
-                    serverResponseListeaner.onServerResponse("not success","Invalid Date or Country Name",null);
+                    serverResponseListeaner.onServerResponse("not success","Server Error 502",null);
                 }
 
             }

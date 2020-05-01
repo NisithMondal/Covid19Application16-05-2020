@@ -61,7 +61,7 @@ public class FeatchEffectedCountriesDataFromServer {
             public void onFailure(Call call, IOException e) {
                 String errorMessage = e.getMessage();
                if (! isInternetAvailable()){
-                   errorMessage = "You are Offline. Please Check Your Internet Connection";
+                   errorMessage = "You are Offline. Please Check Your Internet Connection and Try Again. This Application Needs Internet Connection To Work.";
                }
                 onServerResponseListener.onServerResponse("error",errorMessage,null);
             }
@@ -74,7 +74,7 @@ public class FeatchEffectedCountriesDataFromServer {
                     allEffectedCountriesModel = gson.fromJson(serverResponse, AllEffectedCountriesModel.class);
                     onServerResponseListener.onServerResponse("success","", allEffectedCountriesModel);
                 }else {
-                    onServerResponseListener.onServerResponse("not_success","", null);
+                    onServerResponseListener.onServerResponse("not_success","Server Error 502", null);
                 }
             }
         });
@@ -97,7 +97,7 @@ public class FeatchEffectedCountriesDataFromServer {
             public void onFailure(Call call, IOException e) {
                 String errorMessage = e.getMessage();
                 if (! isInternetAvailable()){
-                    errorMessage = "You are Offline. Please Check Your Internet Connection";
+                    errorMessage = "You are Offline. Please Check Your Internet Connection and Try Again. This Application Needs Internet Connection To Work.";
                 }
                 onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("error",errorMessage,null);
             }
@@ -110,7 +110,7 @@ public class FeatchEffectedCountriesDataFromServer {
                     totalWorldEffectedCasesModel = gson.fromJson(serverResponse, TotalWorldEffectedCasesModel.class);
                     onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("success","", totalWorldEffectedCasesModel);
                 }else {
-                    onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("not_success","",null);
+                    onTotalWorldCasesServerResponseListener.onTotalWorldDataServerResponse("not_success","Server Error 502",null);
                 }
             }
         });

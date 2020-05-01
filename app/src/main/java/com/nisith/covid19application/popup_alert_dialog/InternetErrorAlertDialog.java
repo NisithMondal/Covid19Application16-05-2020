@@ -22,7 +22,7 @@ public class InternetErrorAlertDialog extends AppCompatDialogFragment {
                         dismiss();
                     }
                 })
-                .setMessage("Please check your Internet Connection and try again. Turn on mobile data or connect to wi-fi")
+                .setMessage("Please check your Internet Connection and try again. Turn on mobile data or connect to wi-fi.")
                 .setIcon(R.drawable.ic_network);
 
 
