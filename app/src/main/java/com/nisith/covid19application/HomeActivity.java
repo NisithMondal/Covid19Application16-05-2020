@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private Button loadDataButton;
     private Button allOverWorldCasesButton;
     private Button searchReportByDateButton;
+    private Button filterCountriesReport;
     private NestedScrollView scrollView;
     private RelativeLayout loadingDataRelativeLayout;
     private List<CountriesInfoModel> allEffectedCountriesInfoList = null;
@@ -96,6 +97,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             retryButton.setVisibility(View.VISIBLE);
             cancelButton.setVisibility(View.INVISIBLE);
             searchReportByDateButton.setVisibility(View.GONE);
+            filterCountriesReport.setVisibility(View.GONE);
             mostAffectedCountryTextView.setVisibility(View.GONE);
             serverErrorMessageTextView.setText("You are Offline. Please Check Your Internet Connection and Retry.");
 
@@ -133,6 +135,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         effectedCountriesButton = findViewById(R.id.effected_countries_button);
         loadDataButton = findViewById(R.id.load_data_button);
         searchReportByDateButton = findViewById(R.id.search_report_by_date_button);
+        filterCountriesReport = findViewById(R.id.filter_countries_report_button);
         countryFlagImageView = findViewById(R.id.country_flag_image_view);
         countryNameTextView = findViewById(R.id.country_name_text_view);
         allOverWorldCasesButton = findViewById(R.id.world_status_effected);
@@ -292,9 +295,6 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                         server.getTotalWorldCoronaEffectedCasesDataFromServer();
                         scrollView.setVisibility(View.INVISIBLE);
                         loadingDataRelativeLayout.setVisibility(View.VISIBLE);
-//                        serverErrorMessageTextView.setVisibility(View.GONE);
-//                        retryButton.setVisibility(View.GONE);
-//                        cancelButton.setVisibility(View.GONE);
                         isServerOperationAlreadyGoingOn = true;
                     } else {
                         Intent intent = new Intent(HomeActivity.this, DetailedActivity.class);
@@ -322,6 +322,23 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                 startActivity(intent);
             }
         });
+
+        filterCountriesReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (allEffectedCountriesInfoList != null){
+                    Intent intent = new Intent(HomeActivity.this,FilterCountriesActivity.class);
+                    Gson json = new Gson();
+                    String jsonString = json.toJson(allEffectedCountriesInfoList);
+                    intent.putExtra("JSON_STRING",jsonString);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(HomeActivity.this, "Data Not Available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         retryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -375,6 +392,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                         mostEffectedCountriesIndexList.addAll(getMostEffectedCountriesIndexList(allEffectedCountriesInfoList));
                         homeActivityRecyclerViewAdapter.notifyDataSetChanged();
                         searchReportByDateButton.setVisibility(View.VISIBLE);
+                        filterCountriesReport.setVisibility(View.VISIBLE);
                         mostAffectedCountryTextView.setVisibility(View.VISIBLE);
                         scrollView.setVisibility(View.VISIBLE);
                     }
@@ -485,8 +503,10 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         for (int i = 0; i < allEffectedCountriesInfoList.size(); i++) {
             CountriesInfoModel countriesInfoModel = allEffectedCountriesInfoList.get(i);
             String totalCases = countriesInfoModel.getTotalCases();
+            String totalDeaths = countriesInfoModel.getTotalDeaths();
             double totalCasesValue = Double.parseDouble(totalCases.replaceAll(",",""));
-            if (totalCasesValue >18000){
+            double totalDeathsValue = Double.parseDouble(totalDeaths.replaceAll(",",""));
+            if (totalCasesValue >18000 && totalDeathsValue>1000){
                 indexList.add(i);
             }
         }

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FilterCountriesActivity">
+
+    <include
+        android:id="@+id/app_toolbar"
+        layout="@layout/app_toolbar"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_below="@+id/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/filter_countries_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Filter Countries By The Following Process"
+                android:textStyle="italic"
+                android:textSize="18sp"
+                android:textColor="#ee00aa"
+                android:padding="8dp"
+                android:textAlignment="center"
+
+                />
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout1"
+                android:layout_below="@+id/filter_countries_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="30dp"
+                >
+                <TextView
+                    android:id="@+id/filter_radio_group_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter Countries By :-"
+                    android:layout_marginTop="13dp"
+                    android:textColor="#065099"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    />
+                <RadioGroup
+                    android:id="@+id/radio_group_filter_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    >
+                    <RadioButton
+                        android:id="@+id/total_cases_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Cases"
+                        android:checked="true"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/total_deaths_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Deaths"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/total_active_cases_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Active Cases"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/total_test_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Test"
+                        />
+
+                </RadioGroup>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout2"
+                android:layout_below="@+id/linear_layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="30dp"
+                >
+                <TextView
+                    android:id="@+id/text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order By :-"
+                    android:layout_marginTop="13dp"
+                    android:textColor="#065099"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    />
+                <RadioGroup
+                    android:id="@+id/radio_group_order_by"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    >
+                    <RadioButton
+                        android:id="@+id/ascending_order_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ascending Order"
+                        />
+                    <RadioButton
+                        android:id="@+id/descending_order_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Descending Order"
+                        android:checked="true"
+                        />
+                </RadioGroup>
+            </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/filter_button"
+                android:layout_below="@+id/linear_layout2"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="Filter"
+                android:textStyle="italic"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_filter_list"
+                android:background="@drawable/another1_button_background_shape"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:drawablePadding="5dp"
+                />
+
+            <View
+                android:id="@+id/horizental_line"
+                android:layout_below="@+id/filter_button"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#ee00aa"
+                android:layout_marginTop="20dp"
+                />
+
+
+
+            <TextView
+                android:id="@+id/heading_text_view"
+                android:layout_below="@+id/horizental_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Countries Filter By Total Cases in Acending Order"
+                android:layout_marginTop="15dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="15dp"
+                android:textStyle="bold|italic"
+                android:textColor="#03695E"
+                android:padding="10dp"
+                android:background="@drawable/another_text_view_background_shape"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/heading_text_view"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                />
+
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

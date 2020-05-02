@@ -425,10 +425,30 @@
              />
 
 
+         <Button
+             android:id="@+id/filter_countries_report_button"
+             android:layout_below="@+id/search_report_by_date_button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Filter Countries Report"
+             android:textSize="13sp"
+             android:textAllCaps="false"
+             android:layout_marginTop="10dp"
+             android:layout_centerHorizontal="true"
+             android:textColor="@android:color/white"
+             android:background="@drawable/button_background_shape"
+             android:paddingStart="17dp"
+             android:paddingEnd="17dp"
+             android:textStyle="bold"
+             android:drawableStart="@drawable/ic_filter_list"
+             android:drawablePadding="7dp"
+             />
+
+
 
          <TextView
              android:id="@+id/most_effected_text_view"
-             android:layout_below="@+id/search_report_by_date_button"
+             android:layout_below="@+id/filter_countries_report_button"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:textSize="16sp"

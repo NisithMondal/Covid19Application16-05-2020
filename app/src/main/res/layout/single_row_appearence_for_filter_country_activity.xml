@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#ffffff"
+    android:layout_margin="3dp"
+    app:cardElevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/flag_image_view"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="14dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/us"
+            />
+
+        <TextView
+            android:id="@+id/position_number_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No. 211"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:textSize="15sp"
+            android:textColor="#ee00aa"
+            android:textStyle="italic|bold"
+            android:visibility="visible"
+            android:layout_alignParentEnd="true"
+
+            />
+
+        <TextView
+            android:id="@+id/country_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="India"
+            android:layout_marginTop="9dp"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            android:textColor="#C4024E"
+            android:layout_toStartOf="@+id/flag_image_view"
+            />
+
+        <TextView
+            android:id="@+id/total_cases_text_view"
+            android:layout_below="@+id/country_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Cases: 1200"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="15dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textColor="#1D1B1C"
+            />
+
+
+
+        <TextView
+            android:id="@+id/total_deaths_text_view"
+            android:layout_below="@+id/total_cases_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Deaths: 1200"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="15dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textColor="#1D1B1C"
+            />
+
+        <TextView
+            android:id="@+id/active_cases_text_view"
+            android:layout_below="@+id/total_deaths_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Active Cases: 1200"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="15dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textColor="#1D1B1C"
+            />
+
+
+
+        <TextView
+            android:id="@+id/total_tests_text_view"
+            android:layout_below="@+id/active_cases_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Test: 1200"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="15dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:textColor="#1D1B1C"
+            android:layout_marginBottom="14dp"
+            />
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/flag_image_view"
+            android:layout_marginEnd="26dp"
+            android:layout_marginTop="7dp"
+            android:text="Details"
+            android:textSize="18sp"
+            android:textColor="#00796B"
+            android:textStyle="bold|italic"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>

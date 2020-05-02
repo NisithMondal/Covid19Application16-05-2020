@@ -98,6 +98,7 @@
                 android:paddingBottom="13dp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/text_view_background_shape"
+                android:padding="10dp"
                 />
 
             <TextView
