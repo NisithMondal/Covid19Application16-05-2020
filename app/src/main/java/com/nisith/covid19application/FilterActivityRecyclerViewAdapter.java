@@ -1,5 +1,6 @@
 package com.nisith.covid19application;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<FilterActivityRecyclerViewAdapter.MyViewHolder> {
-
 
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
     private OnCountryCardItemClickInterface onCountryCardItemClickInterface;
@@ -29,7 +29,10 @@ public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<Filt
         this.onCountryCardItemClickInterface = (OnCountryCardItemClickInterface) appCompatActivity;
         countryFlags = new CountryFlags(appCompatActivity.getApplicationContext());
 
+
     }
+
+
 
 
 
@@ -38,10 +41,12 @@ public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<Filt
     public FilterActivityRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_appearence_for_filter_country_activity,parent,false);
         return new MyViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull FilterActivityRecyclerViewAdapter.MyViewHolder holder, int position) {
+
         CountriesInfoModel effectedCountryInfo = allEffectedCountriesInfoList.get(position);
 
         String countryName = effectedCountryInfo.getCountryName();
@@ -51,7 +56,7 @@ public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<Filt
         }else {
             holder.flagImageThumbnail.setImageResource(R.drawable.ic_defalt_flag);
         }
-        holder.positionNumberTextView.setText("No: "+String.valueOf(position+1));
+        holder.positionNumberTextView.setText("NO: "+String.valueOf(position+1));
         holder.countryName.setText(countryName);
         holder.totalCases.setText("Total Cases: "+effectedCountryInfo.getTotalCases());
         holder.totalDeaths.setText("Total Deaths: "+effectedCountryInfo.getTotalDeaths());

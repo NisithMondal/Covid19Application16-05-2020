@@ -1,5 +1,6 @@
 package com.nisith.covid19application;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class CountryPickerRecyclerViewAdapter extends RecyclerView.Adapter<Count
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("ABCDE","onCreateViewHolder() is called");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_appearence_for_country_picker,parent,false);
         return new MyViewHolder(view);
     }
@@ -51,6 +53,7 @@ public class CountryPickerRecyclerViewAdapter extends RecyclerView.Adapter<Count
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Log.d("ABCDE","onBindViewHolder() is called");
         String countryName = allEffectedCountriesNameArrayList.get(position);
         int flagId = countryFlags.getCountryFlag(countryName);
         if (flagId != -1){
@@ -65,6 +68,7 @@ public class CountryPickerRecyclerViewAdapter extends RecyclerView.Adapter<Count
 
     @Override
     public int getItemCount() {
+        Log.d("ABCDE","getItemCount() is called");
         int totalItems = 0;
         if (allEffectedCountriesNameArrayList != null){
             totalItems = allEffectedCountriesNameArrayList.size();

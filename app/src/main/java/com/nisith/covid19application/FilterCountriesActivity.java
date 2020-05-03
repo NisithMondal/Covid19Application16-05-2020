@@ -2,39 +2,48 @@ package com.nisith.covid19application;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nisith.covid19application.model.CountriesInfoModel;
+import com.nisith.covid19application.popup_alert_dialog.FilterCountryActivityDisplayDetailedDialog;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class FilterCountriesActivity extends AppCompatActivity implements FilterActivityRecyclerViewAdapter.OnCountryCardItemClickInterface {
+public class FilterCountriesActivity extends AppCompatActivity implements FilterActivityRecyclerViewAdapter.OnCountryCardItemClickInterface,
+        MyComparator.OnThreadStop, SortListedFragment.OnCloseFragmentListener {
 
     private RadioGroup filterCountryRadioGroup,orderByRadioGroup;
     private RadioButton totalCasesRadioButton,totalDeathsRadioButton,activeCasesRadioButton,totalTestRadioButton;
     private RadioButton ascendingOrderRadioButton,descendingOrderRadioButton;
     private Button filterButton;
-    private View horizentalLine;
-    TextView headingTextView;
-    private RecyclerView recyclerView;
+    private RelativeLayout loadingDataLayout;
+    private RelativeLayout performFiltringLayout;
+    private NestedScrollView nestedScrollView;
+    private TextView marqueTextView;
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
     private FilterActivityRecyclerViewAdapter recyclerViewAdapter;
+    private SortListedFragment sortListedFragment;
+    private FrameLayout fragmentContainerLayout;
+    private Toolbar appToolbar;
+
 
 
     @Override
@@ -43,21 +52,20 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
         setContentView(R.layout.activity_filter_countries);
         setUpLayout();
         setViewsVisibility();
-        Intent intent = getIntent();
         allEffectedCountriesInfoList = new ArrayList<>();
-        extractDataFromIntent(intent);
         recyclerViewAdapter = new FilterActivityRecyclerViewAdapter(allEffectedCountriesInfoList,this);
-        setUpRecyclerView();
+        createFragment();
         setButtonListener();
-        setDataInRecyclerView();
+
     }
 
 
 
 
 
+
     private void setUpLayout(){
-        Toolbar appToolbar = findViewById(R.id.app_toolbar);
+        appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
         toolbarTextView.setText("Filter Countries");
         setSupportActionBar(appToolbar);
@@ -69,6 +77,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
                 finish();
             }
         });
+        marqueTextView = findViewById(R.id.marque_text_view);
         filterCountryRadioGroup = findViewById(R.id.radio_group_filter_country);
         orderByRadioGroup = findViewById(R.id.radio_group_order_by);
         totalCasesRadioButton = findViewById(R.id.total_cases_radio_button);
@@ -78,32 +87,83 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
         ascendingOrderRadioButton = findViewById(R.id.ascending_order_radio_button);
         descendingOrderRadioButton = findViewById(R.id.descending_order_radio_button);
         filterButton = findViewById(R.id.filter_button);
-        horizentalLine = findViewById(R.id.horizental_line);
-        headingTextView = findViewById(R.id.heading_text_view);
-        recyclerView = findViewById(R.id.recycler_view);
+        loadingDataLayout = findViewById(R.id.loading_data_layout);
+        performFiltringLayout = findViewById(R.id.perform_filtering_layout);
+        nestedScrollView = findViewById(R.id.nested_scroll_view);
+        fragmentContainerLayout = findViewById(R.id.frame_layout);
     }
 
 
 
-    private void setUpRecyclerView(){
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(recyclerViewAdapter);
-
-    }
 
     private void setViewsVisibility(){
-        horizentalLine.setVisibility(View.VISIBLE);
-        headingTextView.setVisibility(View.VISIBLE);
+        nestedScrollView.setVisibility(View.VISIBLE);
+        loadingDataLayout.setVisibility(View.GONE);
+        performFiltringLayout.setVisibility(View.GONE);
+        fragmentContainerLayout.setVisibility(View.GONE);
+
     }
+
+
+
+
+    private void createFragment(){
+        sortListedFragment = new SortListedFragment(recyclerViewAdapter);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.frame_layout,sortListedFragment,"fragment").commit();
+
+
+    }
+
+    private void showFragment(){
+        String filterByValue = getFilterCountryRadioGroupSelectedValue();
+        String orderByValue = getOrderByRadioGroupSelectedValue();
+        sortListedFragment.setTootbarTitle("Filter By "+ filterByValue +" in "+orderByValue);
+        fragmentContainerLayout.setVisibility(View.VISIBLE);
+        nestedScrollView.setVisibility(View.GONE);
+        appToolbar.setVisibility(View.GONE);
+    }
+
+    private void hideFragment(){
+        fragmentContainerLayout.setVisibility(View.GONE);
+        nestedScrollView.setVisibility(View.VISIBLE);
+        appToolbar.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (fragmentContainerLayout.getVisibility() == View.VISIBLE){
+            hideFragment();
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onCloseFragment() {
+        //This method is called when fragment cross button is clicked
+        hideFragment();
+    }
+
+
+
+
+
 
 
     private void setButtonListener(){
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDataInRecyclerView();
+                if (allEffectedCountriesInfoList.isEmpty()) {
+                    loadingDataLayout.setVisibility(View.VISIBLE);
+                    nestedScrollView.setVisibility(View.GONE);
+                    extractDataFromIntent(getIntent());
 
+                }else {
+                    setDataInRecyclerView();
+                }
             }
         });
     }
@@ -113,14 +173,9 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
     private void setDataInRecyclerView(){
         String filterByValue = getFilterCountryRadioGroupSelectedValue();
         String orderByValue = getOrderByRadioGroupSelectedValue();
-        headingTextView.setText("Countries Filter By "+filterByValue+" in "+orderByValue);
-        performShortingOperationOnArrayList(filterByValue,orderByValue, allEffectedCountriesInfoList);
-        recyclerViewAdapter.notifyDataSetChanged();
+        performShortingOperationOnArrayList(filterByValue, orderByValue);// This method takes some time to give result
+
     }
-
-
-
-
 
 
 
@@ -153,7 +208,6 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
             case R.id.descending_order_radio_button:
                 result = "Descending Order";
                 break;
-
         }
         return result;
     }
@@ -163,27 +217,66 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
 
     @Override
     public void onCountryCardItemClick(int position, int countryFlagId) {
-
-        Toast.makeText(this, "Card item is Clicked", Toast.LENGTH_SHORT).show();
-
+        FilterCountryActivityDisplayDetailedDialog dialog
+                = new FilterCountryActivityDisplayDetailedDialog(allEffectedCountriesInfoList.get(position),countryFlagId,(position+1));
+        dialog.show(getSupportFragmentManager(),"nisith");
     }
 
 
 
-    private void extractDataFromIntent(Intent intent){
-        String jsonString = intent.getStringExtra("JSON_STRING");
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<CountriesInfoModel>>(){}.getType();
-        List<CountriesInfoModel> list = gson.fromJson(jsonString,type);
-        if (list != null) {
-            allEffectedCountriesInfoList.addAll(list);
-        }
+    private void extractDataFromIntent(final Intent intent){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String jsonString = intent.getStringExtra("JSON_STRING");
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<CountriesInfoModel>>(){}.getType();
+                List<CountriesInfoModel> list = gson.fromJson(jsonString,type);
+                allEffectedCountriesInfoList.addAll(list);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingDataLayout.setVisibility(View.GONE);
+                    }
+                });
+                if (allEffectedCountriesInfoList != null) {
+                    setDataInRecyclerView();
+                }
+            }
+        });
+
+        thread.start();
     }
 
 
-    private void performShortingOperationOnArrayList(String filterType, String orderBy, List<CountriesInfoModel> allEffectedCountriesArrayList){
-        MyComparator myComparator = new MyComparator(filterType,orderBy);
-        Collections.sort(allEffectedCountriesArrayList,myComparator);
+
+
+    private void performShortingOperationOnArrayList(String filterType, String orderBy){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                performFiltringLayout.setVisibility(View.VISIBLE);
+                nestedScrollView.setVisibility(View.GONE);
+            }
+        });
+        MyComparator myComparator = new MyComparator(filterType,orderBy,allEffectedCountriesInfoList,this);
+        myComparator.performFiltering();
+
+    }
+
+
+    @Override
+    public void onThreadStop() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                performFiltringLayout.setVisibility(View.GONE);
+                recyclerViewAdapter.notifyDataSetChanged();
+                showFragment();
+
+            }
+        });
+
     }
 
 

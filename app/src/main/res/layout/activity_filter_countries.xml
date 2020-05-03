@@ -7,38 +7,66 @@
     android:layout_height="match_parent"
     tools:context=".FilterCountriesActivity">
 
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        />
+
     <include
         android:id="@+id/app_toolbar"
         layout="@layout/app_toolbar"
+        android:visibility="invisible"
+        />
+
+
+
+
+
+    <include
+        android:id="@+id/loading_data_layout"
+        layout="@layout/loading_data_layout"
+        android:visibility="gone"
+        />
+
+
+    <include
+        android:id="@+id/perform_filtering_layout"
+        layout="@layout/filter_processing_layout"
+        android:visibility="gone"
         />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_below="@+id/app_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/filter_countries_text_view"
+                android:id="@+id/marque_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Filter Countries By The Following Process"
-                android:textStyle="italic"
-                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textSize="17sp"
                 android:textColor="#ee00aa"
                 android:padding="8dp"
+                android:maxLines="1"
                 android:textAlignment="center"
-
+                android:text="Filter  Countries  By  Following  Methods"
                 />
 
 
             <LinearLayout
                 android:id="@+id/linear_layout1"
-                android:layout_below="@+id/filter_countries_text_view"
+                android:layout_below="@+id/marque_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -155,45 +183,8 @@
                 android:drawablePadding="5dp"
                 />
 
-            <View
-                android:id="@+id/horizental_line"
-                android:layout_below="@+id/filter_button"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#ee00aa"
-                android:layout_marginTop="20dp"
-                />
-
-
-
-            <TextView
-                android:id="@+id/heading_text_view"
-                android:layout_below="@+id/horizental_line"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Countries Filter By Total Cases in Acending Order"
-                android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="15dp"
-                android:textStyle="bold|italic"
-                android:textColor="#03695E"
-                android:padding="10dp"
-                android:background="@drawable/another_text_view_background_shape"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/heading_text_view"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
-                />
-
-
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 </RelativeLayout>

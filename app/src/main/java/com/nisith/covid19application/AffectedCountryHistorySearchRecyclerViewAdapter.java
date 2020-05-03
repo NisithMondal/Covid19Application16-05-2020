@@ -1,5 +1,6 @@
 package com.nisith.covid19application;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +41,13 @@ public class AffectedCountryHistorySearchRecyclerViewAdapter extends RecyclerVie
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_appearence_for_history_search,parent,false);
+        Log.d("QWE","onCreateViewHolder() is called");
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Log.d("QWE","onBindViewHolder() is called");
 
         CountryInfoSearchHistoryModel countryReport = allAffectedCountryReportList.get(position);
         int flagId = countryFlags.getCountryFlag(countryName);
@@ -62,6 +65,7 @@ public class AffectedCountryHistorySearchRecyclerViewAdapter extends RecyclerVie
 
     @Override
     public int getItemCount() {
+        Log.d("QWE","getItemCount() is called");
         int totalItem = 0;
         if (allAffectedCountryReportList != null){
             totalItem = allAffectedCountryReportList.size();

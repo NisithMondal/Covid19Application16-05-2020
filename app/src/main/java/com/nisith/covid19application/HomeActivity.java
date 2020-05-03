@@ -361,6 +361,8 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     }
 
 
+
+
     private void performServerOperation(){
         FeatchEffectedCountriesDataFromServer server = new FeatchEffectedCountriesDataFromServer(getApplicationContext(),(FeatchEffectedCountriesDataFromServer.OnServerResponseListener) this);
         server.getAllEffectedCountriesDataFromServer();
