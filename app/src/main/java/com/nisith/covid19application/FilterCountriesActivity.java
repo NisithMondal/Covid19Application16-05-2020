@@ -2,11 +2,8 @@ package com.nisith.covid19application;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,6 +48,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_countries);
         setUpLayout();
+        marqueTextView.setSelected(true);
         setViewsVisibility();
         allEffectedCountriesInfoList = new ArrayList<>();
         recyclerViewAdapter = new FilterActivityRecyclerViewAdapter(allEffectedCountriesInfoList,this);
@@ -118,7 +116,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
     private void showFragment(){
         String filterByValue = getFilterCountryRadioGroupSelectedValue();
         String orderByValue = getOrderByRadioGroupSelectedValue();
-        sortListedFragment.setTootbarTitle("Filter By "+ filterByValue +" in "+orderByValue);
+        sortListedFragment.setToolbarTitle("Filter By "+ filterByValue +" in "+orderByValue);
         fragmentContainerLayout.setVisibility(View.VISIBLE);
         nestedScrollView.setVisibility(View.GONE);
         appToolbar.setVisibility(View.GONE);
@@ -146,12 +144,6 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
         hideFragment();
     }
 
-
-
-
-
-
-
     private void setButtonListener(){
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,14 +161,13 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
     }
 
 
-
     private void setDataInRecyclerView(){
         String filterByValue = getFilterCountryRadioGroupSelectedValue();
         String orderByValue = getOrderByRadioGroupSelectedValue();
+        recyclerViewAdapter.setFilterType(filterByValue);
         performShortingOperationOnArrayList(filterByValue, orderByValue);// This method takes some time to give result
 
     }
-
 
 
     private String getFilterCountryRadioGroupSelectedValue(){
@@ -216,9 +207,9 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
 
 
     @Override
-    public void onCountryCardItemClick(int position, int countryFlagId) {
+    public void onCountryCardItemClick(int position,int positionNumberTextViewValue,int countryFlagId) {
         FilterCountryActivityDisplayDetailedDialog dialog
-                = new FilterCountryActivityDisplayDetailedDialog(allEffectedCountriesInfoList.get(position),countryFlagId,(position+1));
+                = new FilterCountryActivityDisplayDetailedDialog(allEffectedCountriesInfoList.get(position),countryFlagId,positionNumberTextViewValue);
         dialog.show(getSupportFragmentManager(),"nisith");
     }
 
@@ -271,6 +262,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
             @Override
             public void run() {
                 performFiltringLayout.setVisibility(View.GONE);
+                recyclerViewAdapter.setAnotherAllEffectedCountriesInfoList(allEffectedCountriesInfoList);
                 recyclerViewAdapter.notifyDataSetChanged();
                 showFragment();
 

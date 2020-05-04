@@ -112,11 +112,12 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border1"
-
+                android:drawablePadding="2dp"
                 />
 
+
             <TextView
-                android:id="@+id/total_deaths_text_view"
+                android:id="@+id/new_cases_text_view"
                 android:layout_below="@id/total_cases_text_view"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
@@ -125,12 +126,28 @@
                 android:textColor="@android:color/black"
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
-                android:drawableStart="@drawable/ic_star_border"
-
+                android:drawableStart="@drawable/ic_star_border5"
+                android:drawablePadding="2dp"
                 />
 
+
             <TextView
-                android:id="@+id/active_cases_text_view"
+                android:id="@+id/total_deaths_text_view"
+                android:layout_below="@id/new_cases_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                android:drawableStart="@drawable/ic_star_border"
+                android:drawablePadding="2dp"
+                />
+
+
+            <TextView
+                android:id="@+id/new_deaths_text_view"
                 android:layout_below="@id/total_deaths_text_view"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
@@ -139,8 +156,23 @@
                 android:textColor="@android:color/black"
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
-                android:drawableStart="@drawable/ic_star_border4"
+                android:drawableStart="@drawable/ic_star_border7"
+                android:drawablePadding="2dp"
+                />
 
+
+            <TextView
+                android:id="@+id/active_cases_text_view"
+                android:layout_below="@id/new_deaths_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="normal"
+                android:layout_marginStart="15dp"
+                android:drawableStart="@drawable/ic_star_border4"
+                android:drawablePadding="2dp"
                 />
 
 
@@ -155,7 +187,7 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border6"
-
+                android:drawablePadding="2dp"
                 />
 
 
@@ -172,7 +204,7 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border2"
-
+                android:drawablePadding="2dp"
                 />
 
             <TextView
@@ -186,6 +218,7 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border7"
+                android:drawablePadding="2dp"
                 />
 
 
@@ -204,7 +237,7 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border8"
-
+                android:drawablePadding="2dp"
                 />
 
             <TextView
@@ -218,6 +251,7 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border9"
+                android:drawablePadding="2dp"
                 />
 
 
@@ -232,6 +266,7 @@
                 android:textStyle="normal"
                 android:layout_marginStart="15dp"
                 android:drawableStart="@drawable/ic_star_border1"
+                android:drawablePadding="2dp"
                 />
 
 

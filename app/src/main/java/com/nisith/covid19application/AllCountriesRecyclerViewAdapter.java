@@ -101,7 +101,6 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
             }
             FilterResults filterResults = new FilterResults();
             filterResults.values = arrayList;
-            Log.d("ABCD","arrayList size= "+arrayList.size());
             return filterResults;
         }
 

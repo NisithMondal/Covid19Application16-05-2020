@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
+
+import java.util.Objects;
 
 
 /**
@@ -48,14 +56,16 @@ public class SortListedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sort_listed, container, false);
+        setHasOptionsMenu(true);
         setUpLayout(view);
         return view;
     }
 
     private void setUpLayout(View view){
         Toolbar appToolbar = view.findViewById(R.id.app_toolbar);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(appToolbar);
         appToolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        appToolbarTextView.setTextSize(14);
+        appToolbarTextView.setTextSize(15);
         appToolbar.setNavigationIcon(R.drawable.ic_cross);
         appToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +75,31 @@ public class SortListedFragment extends Fragment {
         });
         recyclerView = view.findViewById(R.id.recycler_view);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        super.onCreateOptionsMenu(menu, menuInflater);
+        menu.clear();
+        menuInflater.inflate(R.menu.setting_activity_menu,menu);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint("Enter Country Name");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Filter filter = recyclerViewAdapter.getFilter();
+                filter.filter(searchView.getQuery());
+                return true;
+            }
+        });
+
+    }
+
+
+
 
 
     @Override
@@ -80,9 +115,11 @@ public class SortListedFragment extends Fragment {
     }
 
 
-    public void setTootbarTitle(String toolbarTitle){
+    public void setToolbarTitle(String toolbarTitle){
         appToolbarTextView.setText(toolbarTitle);
     }
+
+
 
 
 

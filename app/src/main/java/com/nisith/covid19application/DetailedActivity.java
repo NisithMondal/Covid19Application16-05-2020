@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 public class DetailedActivity extends AppCompatActivity {
 
     private ImageView flagImageView;
-    private TextView countryNameTextView, updateDateTextView,reportTextView, totalCasesTextView, totalDeathsTextView,activeCasesTextView,totalRecoveredTextView,
+    private TextView countryNameTextView, updateDateTextView,reportTextView, totalCasesTextView,newCasesTextView, totalDeathsTextView,newDeathsTextView,activeCasesTextView,totalRecoveredTextView,
                       totalTestsTextView,totalTestsPerMillionTextView,totalCasesPerMillionTextView,deathsPerMillionTextView,seriousConditionTextView;
     private String updatedDateOfServerData;
     private int flagId;
@@ -54,7 +54,9 @@ public class DetailedActivity extends AppCompatActivity {
         updateDateTextView = findViewById(R.id.update_date_text_view);
         reportTextView = findViewById(R.id.report_text_view);
         totalCasesTextView = findViewById(R.id.total_cases_text_view);
+        newCasesTextView = findViewById(R.id.new_cases_text_view);
         totalDeathsTextView = findViewById(R.id.total_deaths_text_view);
+        newDeathsTextView = findViewById(R.id.new_deaths_text_view);
         activeCasesTextView = findViewById(R.id.active_cases_text_view);
         totalRecoveredTextView = findViewById(R.id.total_recovered_text_view);
         totalTestsTextView = findViewById(R.id.total_tests_text_view);
@@ -98,7 +100,9 @@ public class DetailedActivity extends AppCompatActivity {
             updateDateTextView.setText("Update on " + updatedDateOfServerData);
             reportTextView.setText("Report of Corona Virus Effected People in " + countriesInfoModel.getCountryName());
             totalCasesTextView.setText("Total cases: " + countriesInfoModel.getTotalCases());
+            newCasesTextView.setText("New Cases: "+countriesInfoModel.getNewCases());
             totalDeathsTextView.setText("Total Deaths: " + countriesInfoModel.getTotalDeaths());
+            newDeathsTextView.setText("new Deaths: "+countriesInfoModel.getNewDeaths());
             activeCasesTextView.setText("Active Cases: " + countriesInfoModel.getActivCcases());
             totalRecoveredTextView.setText("Total Recovered: " + countriesInfoModel.getTotalRecovered());
             totalTestsTextView.setText("Total Test: " + countriesInfoModel.getTotalTests());
@@ -109,6 +113,8 @@ public class DetailedActivity extends AppCompatActivity {
 
         }else if (intentType.equalsIgnoreCase("type_world")){
             countryNameTextView.setVisibility(View.GONE);
+            newCasesTextView.setVisibility(View.GONE);
+            newDeathsTextView.setVisibility(View.GONE);
             flagImageView.setImageResource(flagId);
             updateDateTextView.setText("Update on " + totalWorldEffectedCasesModelObject.getUpdatedDate());
             reportTextView.setText("Report of Corona Virus Effected People Through Out the World");
@@ -118,7 +124,7 @@ public class DetailedActivity extends AppCompatActivity {
             totalRecoveredTextView.setText("Total Recovered: " + totalWorldEffectedCasesModelObject.getTotalRecovered());
             totalTestsTextView.setText("New Cases: " + totalWorldEffectedCasesModelObject.getNewCases());
             totalCasesPerMillionTextView.setText("Total Cases Per 1 Million Population: " + totalWorldEffectedCasesModelObject.getTotalCasesPer1mPopulation());
-            totalTestsPerMillionTextView.setText("Total New Deaths: " + totalWorldEffectedCasesModelObject.getNewDeaths());
+            totalTestsPerMillionTextView.setText("New Deaths: " + totalWorldEffectedCasesModelObject.getNewDeaths());
             deathsPerMillionTextView.setText("Deaths Per 1 Million Population: " + totalWorldEffectedCasesModelObject.getDeathsPer1mPopulation());
             seriousConditionTextView.setText("Serious Condition: " + totalWorldEffectedCasesModelObject.getSeriousCritical());
         }

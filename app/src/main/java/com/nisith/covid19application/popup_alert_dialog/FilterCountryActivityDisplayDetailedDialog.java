@@ -74,7 +74,7 @@ public class FilterCountryActivityDisplayDetailedDialog extends AppCompatDialogF
             flagImageView.setImageResource(R.drawable.ic_defalt_flag);
         }
         countryNameTextView.setText(countryInfo.getCountryName());
-        positionNumberTextView.setText("No: "+String.valueOf(positionNumber));
+        positionNumberTextView.setText("Position No:  "+String.valueOf(positionNumber));
         totalCasesTextView.setText("Total Cases: "+countryInfo.getTotalCases());
         newCasesTextView.setText("New Cases: "+countryInfo.getNewCases());
         activeCasesTextView.setText("Active Cases: "+countryInfo.getActivCcases());

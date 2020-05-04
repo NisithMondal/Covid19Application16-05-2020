@@ -270,7 +270,7 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
                         recyclerViewAdapter.notifyDataSetChanged();
                         horizentalLine.setVisibility(View.VISIBLE);
                         headingTextView.setVisibility(View.VISIBLE);
-                        headingTextView.setText("Report On Covid-19 in "+countryNameTextView.getText().toString());
+                        headingTextView.setText("Date Wise Report On Covid-19 in "+countryNameTextView.getText().toString());
                     }
                 });
             }
@@ -304,8 +304,8 @@ public class AffectedCountryHistorySearchActivity extends AppCompatActivity
 
 
     @Override
-    public void onCardItemClick(int position, int flagId) {
-        AffectedCountryReportDisplayDialog dialog = new AffectedCountryReportDisplayDialog(allAffectedCountryReportList.get(position),flagId);
+    public void onCardItemClick(int position, String countryName, int flagId) {
+        AffectedCountryReportDisplayDialog dialog = new AffectedCountryReportDisplayDialog(allAffectedCountryReportList.get(position),countryName,flagId);
         dialog.show(getSupportFragmentManager(),"covid 19");
         dialog.getView();
     }

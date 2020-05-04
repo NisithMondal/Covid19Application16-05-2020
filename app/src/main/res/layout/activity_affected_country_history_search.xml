@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="12dp"
                 android:textSize="16sp"
                 android:textColor="#ee00aa"
                 android:textStyle="italic|bold"
@@ -100,6 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Get Report By Day"
+                    android:checked="true"
                     />
 
                 <RadioButton
@@ -107,7 +108,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Get Report By Week"
-                    android:checked="true"
                     />
 
                 <RadioButton

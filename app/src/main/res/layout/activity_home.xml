@@ -22,7 +22,6 @@
 
    <TextView
        android:id="@+id/error_message_text_view"
-       android:layout_marginTop="100dp"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:textSize="16sp"
@@ -40,7 +39,7 @@
        android:layout_height="wrap_content"
        android:layout_above="@+id/cancel_button"
        android:layout_centerHorizontal="true"
-       android:layout_marginTop="30dp"
+       android:layout_marginTop="10dp"
        android:background="@drawable/button_background_shape"
        android:text="RETRY"
        android:textSize="18sp"
@@ -60,7 +59,7 @@
        android:textSize="18sp"
        android:textColor="@android:color/white"
        android:layout_alignParentBottom="true"
-       android:layout_marginBottom='60dp'
+       android:layout_marginBottom='50dp'
        android:visibility="gone"
        />
 
@@ -99,13 +98,15 @@
                    android:id="@+id/country_flag_image_view"
                    android:layout_width="match_parent"
                    android:layout_height="180dp"
+                   android:src="@drawable/in"
+                   android:scaleType="centerCrop"
                    />
 
 
                <TextView
                    android:id="@+id/country_name_text_view"
                    android:layout_centerHorizontal="true"
-                   android:layout_marginTop="5dp"
+                   android:layout_marginTop="10dp"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:padding="6dp"
@@ -113,6 +114,7 @@
                    android:textSize="15sp"
                    android:background="@drawable/another1_text_view_background_shape"
                    android:textColor="@android:color/white"
+                   android:text="India"
                    />
             </RelativeLayout>
 
@@ -223,18 +225,18 @@
              android:textSize="14sp"
              android:textAlignment="center"
              android:layout_marginTop="25dp"
-             android:textColor="#068D0D"
+             android:textColor="#C2185B"
              android:textStyle="bold|italic"
              android:paddingTop="10dp"
              android:paddingBottom="10dp"
              android:paddingStart="30dp"
              android:paddingEnd="30dp"
              android:layout_centerHorizontal="true"
-             android:background="@drawable/text_view_background_shape"
+             android:background="@drawable/another2_text_view_background_shape"
              android:drawableStart="@drawable/ic_report"
-             android:layout_marginStart="8dp"
-             android:layout_marginEnd="8dp"
              android:drawablePadding="5dp"
+             android:layout_marginStart="7dp"
+             android:layout_marginEnd="7dp"
              android:text="Report of Corona Virus Affected People In USA"
              />
 
@@ -265,12 +267,28 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border1"
+             android:drawablePadding="2dp"
 
              />
 
          <TextView
-             android:id="@+id/total_deaths_text_view"
+             android:id="@+id/new_cases_text_view"
              android:layout_below="@id/total_cases_text_view"
+             android:layout_marginTop="8dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textSize="16sp"
+             android:textColor="@android:color/black"
+             android:textStyle="normal"
+             android:layout_marginStart="20dp"
+             android:drawableStart="@drawable/ic_star_border5"
+             android:drawablePadding="2dp"
+             />
+
+
+         <TextView
+             android:id="@+id/total_deaths_text_view"
+             android:layout_below="@id/new_cases_text_view"
              android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -280,12 +298,31 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border"
+             android:drawablePadding="2dp"
 
              />
 
+
+
+         <TextView
+             android:id="@+id/new_deaths_text_view"
+             android:layout_below="@id/total_deaths_text_view"
+             android:layout_marginTop="8dp"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textSize="16sp"
+             android:textColor="@android:color/black"
+             android:textStyle="normal"
+             android:layout_marginStart="20dp"
+             android:drawableStart="@drawable/ic_star_border7"
+             android:drawablePadding="2dp"
+
+             />
+
+
          <TextView
              android:id="@+id/active_cases_text_view"
-             android:layout_below="@id/total_deaths_text_view"
+             android:layout_below="@id/new_deaths_text_view"
              android:layout_marginTop="8dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -295,7 +332,7 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border2"
-
+             android:drawablePadding="2dp"
              />
 
 
@@ -311,7 +348,7 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border5"
-
+             android:drawablePadding="2dp"
              />
 
 
@@ -329,6 +366,8 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border7"
+             android:drawablePadding="2dp"
+
 
              />
 
@@ -344,6 +383,8 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border8"
+             android:drawablePadding="2dp"
+
 
              />
 
@@ -360,6 +401,7 @@
              android:textColor="@android:color/black"
              android:textSize="16sp"
              android:textStyle="normal"
+             android:drawablePadding="2dp"
 
              />
 
@@ -374,6 +416,7 @@
              android:textStyle="normal"
              android:layout_marginStart="20dp"
              android:drawableStart="@drawable/ic_star_border3"
+             android:drawablePadding="2dp"
 
              />
 
@@ -389,7 +432,10 @@
              android:drawableStart="@drawable/ic_star_border5"
              android:textColor="@android:color/black"
              android:textSize="16sp"
-             android:textStyle="normal" />
+             android:textStyle="normal"
+             android:drawablePadding="2dp"
+
+             />
 
 
 
@@ -449,22 +495,22 @@
          <TextView
              android:id="@+id/most_effected_text_view"
              android:layout_below="@+id/filter_countries_report_button"
-             android:layout_width="wrap_content"
+             android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:textSize="16sp"
+             android:textSize="17sp"
              android:textAlignment="center"
-             android:layout_marginTop="15dp"
-             android:textColor="#028D09"
-             android:textStyle="bold"
-             android:paddingStart="15dp"
-             android:paddingEnd="15dp"
-             android:paddingBottom="10dp"
-             android:paddingTop="10dp"
+             android:layout_marginTop="25dp"
+             android:textColor="#04990C"
+             android:textStyle="bold|italic"
+             android:paddingStart="25dp"
+             android:paddingEnd="25dp"
+             android:paddingBottom="15dp"
+             android:paddingTop="15dp"
              android:layout_centerHorizontal="true"
              android:text="Most Affected Countries by Corona Virus"
              android:background="@drawable/text_view_background_shape"
-             android:layout_marginStart="5dp"
-             android:layout_marginEnd="5dp"
+             android:layout_marginStart="10dp"
+             android:layout_marginEnd="10dp"
              />
 
 
@@ -474,7 +520,9 @@
              android:layout_below="@+id/most_effected_text_view"
              android:layout_marginTop="18dp"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"/>
+             android:layout_height="wrap_content"
+             android:background="#EBE7E7"
+             />
 
 
 

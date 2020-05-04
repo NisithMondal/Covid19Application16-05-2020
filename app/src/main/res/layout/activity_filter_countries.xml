@@ -18,7 +18,6 @@
     <include
         android:id="@+id/app_toolbar"
         layout="@layout/app_toolbar"
-        android:visibility="invisible"
         />
 
 
@@ -55,12 +54,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="italic|bold"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textColor="#ee00aa"
+                android:layout_marginTop="5dp"
                 android:padding="8dp"
-                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="marquee"
                 android:textAlignment="center"
-                android:text="Filter  Countries  By  Following  Methods"
+                android:text="Filter  Countries  By  Total Cases, Total Deaths, Active Cases, Total Test in Ascending or Descending Order"
                 />
 
 
@@ -70,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="40dp"
                 >
                 <TextView
                     android:id="@+id/filter_radio_group_text_view"
@@ -94,6 +96,7 @@
                         android:layout_height="wrap_content"
                         android:text="Total Cases"
                         android:checked="true"
+                        android:textSize="16sp"
                         />
 
                     <RadioButton
@@ -101,6 +104,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Total Deaths"
+                        android:textSize="16sp"
+
                         />
 
                     <RadioButton
@@ -108,13 +113,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Active Cases"
+                        android:textSize="16sp"
+
                         />
 
                     <RadioButton
                         android:id="@+id/total_test_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Test"
+                        android:text="Total  Test"
+                        android:textSize="16sp"
+
                         />
 
                 </RadioGroup>
@@ -128,7 +137,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
                 >
                 <TextView
                     android:id="@+id/text_view"
@@ -139,6 +149,7 @@
                     android:textColor="#065099"
                     android:textStyle="bold"
                     android:textSize="18sp"
+
                     />
                 <RadioGroup
                     android:id="@+id/radio_group_order_by"
@@ -151,6 +162,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ascending Order"
+                        android:textSize="16sp"
+
                         />
                     <RadioButton
                         android:id="@+id/descending_order_radio_button"
@@ -158,6 +171,8 @@
                         android:layout_height="wrap_content"
                         android:text="Descending Order"
                         android:checked="true"
+                        android:textSize="16sp"
+
                         />
                 </RadioGroup>
             </LinearLayout>
@@ -170,7 +185,7 @@
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="45dp"
                 android:text="Filter"
                 android:textStyle="italic"
                 android:textSize="18sp"

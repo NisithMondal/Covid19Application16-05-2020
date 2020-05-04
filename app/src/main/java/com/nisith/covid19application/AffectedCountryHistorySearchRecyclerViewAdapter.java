@@ -25,7 +25,7 @@ public class AffectedCountryHistorySearchRecyclerViewAdapter extends RecyclerVie
 
 
     public interface OnCardItemClickListener{
-        void onCardItemClick(int position, int flagId);
+        void onCardItemClick(int position, String countryName, int flagId);
     }
 
 
@@ -94,7 +94,7 @@ public class AffectedCountryHistorySearchRecyclerViewAdapter extends RecyclerVie
                 @Override
                 public void onClick(View v) {
                     int flagId = countryFlags.getCountryFlag(countryName);
-                    cardItemClickListener.onCardItemClick(getAdapterPosition(),flagId);
+                    cardItemClickListener.onCardItemClick(getAdapterPosition(),countryName,flagId);
                 }
             });
 

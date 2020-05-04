@@ -22,10 +22,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class AffectedCountryReportDisplayDialog extends AppCompatDialogFragment {
 
     private CountryInfoSearchHistoryModel countryReport;
+    private String countryName;
     private int flagId;
 
-    public AffectedCountryReportDisplayDialog(CountryInfoSearchHistoryModel countryReport,int flagId) {
+    public AffectedCountryReportDisplayDialog(CountryInfoSearchHistoryModel countryReport, String countryName , int flagId) {
         this.countryReport = countryReport;
+        this.countryName = countryName;
         this.flagId = flagId;
     }
 
@@ -53,6 +55,7 @@ public class AffectedCountryReportDisplayDialog extends AppCompatDialogFragment 
 
     private void setUpReportDisplayDialogViews(View view,CountryInfoSearchHistoryModel countryReport, int flagId){
         ImageView flagImageView = view.findViewById(R.id.flag_image_view);
+        TextView countryNameTextView = view.findViewById(R.id.country_name_text_view);
         TextView dateTextView = view.findViewById(R.id.date_text_view);
         TextView totalCasesTextView = view.findViewById(R.id.total_cases_text_view);
         TextView totalRecoveredTextView = view.findViewById(R.id.total_recovered_text_view);
@@ -66,6 +69,7 @@ public class AffectedCountryReportDisplayDialog extends AppCompatDialogFragment 
         }else {
             flagImageView.setImageResource(R.drawable.ic_defalt_flag);
         }
+        countryNameTextView.setText(countryName);
         dateTextView.setText("Date: "+countryReport.getDate());
         String text = "not available";
             totalCasesTextView.setText("Total Cases: "+String.valueOf(countryReport.getTotalCases()));

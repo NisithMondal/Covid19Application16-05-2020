@@ -34,7 +34,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="17sp"
-            android:textColor="#C4024E"
+            android:textColor="#D80256"
             />
 
 
@@ -50,8 +50,8 @@
             android:layout_below="@+id/country_name_text_view"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="15sp"
-            android:textColor="#2A832E"
+            android:textSize="14sp"
+            android:textColor="#F37D04"
             />
 
 

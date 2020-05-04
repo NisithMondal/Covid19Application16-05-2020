@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         HomeActivityRecyclerViewAdapter.OnGridViewClickEventListener{
 
 
-    private TextView updateDateTextView,reportTextView, totalCasesTextView, totalDeathsTextView,activeCasesTextView,totalRecoveredTextView,
+    private TextView updateDateTextView,reportTextView, totalCasesTextView,newCasesTextView, totalDeathsTextView,newDeathsTextView,activeCasesTextView,totalRecoveredTextView,
             totalTestsTextView,totalTestsPerMillionTextView,totalCasesPerMillionTextView,deathsPerMillionTextView,seriousConditionTextView;
     private TextView serverErrorMessageTextView,mostAffectedCountryTextView;
     private TextView marqueTextView;
@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private Button effectedCountriesButton;
     private Button loadDataButton;
     private Button allOverWorldCasesButton;
+    private View horizentalLine;
     private Button searchReportByDateButton;
     private Button filterCountriesReport;
     private NestedScrollView scrollView;
@@ -96,6 +97,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             serverErrorMessageTextView.setVisibility(View.VISIBLE);
             retryButton.setVisibility(View.VISIBLE);
             cancelButton.setVisibility(View.INVISIBLE);
+            horizentalLine.setVisibility(View.GONE);
             searchReportByDateButton.setVisibility(View.GONE);
             filterCountriesReport.setVisibility(View.GONE);
             mostAffectedCountryTextView.setVisibility(View.GONE);
@@ -124,7 +126,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         reportTextView = findViewById(R.id.report_text_view);
         mostAffectedCountryTextView = findViewById(R.id.most_effected_text_view);
         totalCasesTextView = findViewById(R.id.total_cases_text_view);
+        newCasesTextView = findViewById(R.id.new_cases_text_view);
         totalDeathsTextView = findViewById(R.id.total_deaths_text_view);
+        newDeathsTextView = findViewById(R.id.new_deaths_text_view);
         activeCasesTextView = findViewById(R.id.active_cases_text_view);
         totalRecoveredTextView = findViewById(R.id.total_recovered_text_view);
         totalTestsTextView = findViewById(R.id.total_tests_text_view);
@@ -140,6 +144,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         countryNameTextView = findViewById(R.id.country_name_text_view);
         allOverWorldCasesButton = findViewById(R.id.world_status_effected);
         scrollView = findViewById(R.id.scroll_view);
+        horizentalLine = findViewById(R.id.horizental_line);
         loadingDataRelativeLayout = findViewById(R.id.loading_data_layout);
         serverErrorMessageTextView = findViewById(R.id.error_message_text_view);
         retryButton = findViewById(R.id.retry_button);
@@ -160,6 +165,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private void setViewsVisibility(){
         scrollView.setVisibility(View.VISIBLE);
         loadingDataRelativeLayout.setVisibility(View.GONE);
+        horizentalLine.setVisibility(View.VISIBLE);
     }
 
 
@@ -247,7 +253,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         updateDateTextView.setVisibility(value);
         reportTextView.setVisibility(value);
         totalCasesTextView.setVisibility(value);
+        newCasesTextView.setVisibility(value);
         totalDeathsTextView.setVisibility(value);
+        newDeathsTextView.setVisibility(value);
         activeCasesTextView.setVisibility(value);
         totalRecoveredTextView.setVisibility(value);
         totalTestsTextView.setVisibility(value);
@@ -396,6 +404,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                         searchReportByDateButton.setVisibility(View.VISIBLE);
                         filterCountriesReport.setVisibility(View.VISIBLE);
                         mostAffectedCountryTextView.setVisibility(View.VISIBLE);
+                        horizentalLine.setVisibility(View.VISIBLE);
                         scrollView.setVisibility(View.VISIBLE);
                     }
                 });
@@ -488,7 +497,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         updateDateTextView.setText("Update on "+updatedDateOfServerData);
         reportTextView.setText("Report of Corona Virus Effected People in "+countriesInfoModel.getCountryName());
         totalCasesTextView.setText("Total cases: "+countriesInfoModel.getTotalCases());
+        newCasesTextView.setText("New Cases: "+countriesInfoModel.getNewCases());
         totalDeathsTextView.setText("Total Deaths: "+countriesInfoModel.getTotalDeaths());
+        newDeathsTextView.setText("New Deaths: "+countriesInfoModel.getNewDeaths());
         activeCasesTextView.setText("Active Cases: "+countriesInfoModel.getActivCcases());
         totalRecoveredTextView.setText("Total Recovered: "+countriesInfoModel.getTotalRecovered());
         totalTestsTextView.setText("Total Test: "+countriesInfoModel.getTotalTests());

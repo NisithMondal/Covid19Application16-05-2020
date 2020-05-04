@@ -12,7 +12,7 @@
 
         <ImageView
             android:id="@+id/flag_image_view"
-            android:layout_width="55dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_marginTop="15dp"
@@ -23,18 +23,35 @@
 
 
         <TextView
-            android:id="@+id/date_text_view"
+            android:id="@+id/country_name_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date: 30-04-2020 9:7:987"
-            android:layout_marginTop="20dp"
+            android:text="India"
+            android:layout_marginTop="13dp"
             android:textStyle="bold|italic"
             android:layout_marginStart="15dp"
             android:layout_toEndOf="@+id/flag_image_view"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="17sp"
-            android:textColor="#C4024E"
+            android:textSize="16sp"
+            android:textColor="#E4055D"
+            />
+
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_below="@+id/country_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date: 30-04-2020 9:7:987"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/flag_image_view"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="15sp"
+            android:textColor="#E64A19"
             />
 
         <TextView
@@ -43,13 +60,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Total Cases: 1200"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
+            android:drawableStart="@drawable/ic_star_border1"
+            android:drawablePadding="3dp"
             />
 
 
@@ -61,12 +80,14 @@
             android:layout_height="wrap_content"
             android:text="Total Recovered: 1200"
             android:layout_marginTop="6dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
+            android:drawableStart="@drawable/ic_star_border5"
+            android:drawablePadding="3dp"
             />
 
         <TextView
@@ -76,12 +97,14 @@
             android:layout_height="wrap_content"
             android:text="Deaths: 1200"
             android:layout_marginTop="6dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
+            android:drawableStart="@drawable/ic_star_border"
+            android:drawablePadding="3dp"
             />
 
 
@@ -93,12 +116,14 @@
             android:layout_height="wrap_content"
             android:text="Critical Condition: 1200"
             android:layout_marginTop="6dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
+            android:drawableStart="@drawable/ic_star_border4"
+            android:drawablePadding="3dp"
             />
 
         <TextView
@@ -108,12 +133,14 @@
             android:layout_height="wrap_content"
             android:text="Total Tested: 1200"
             android:layout_marginTop="6dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
+            android:drawableStart="@drawable/ic_star_border7"
+            android:drawablePadding="3dp"
             />
 
 
@@ -124,12 +151,14 @@
             android:layout_height="wrap_content"
             android:text="Death Ratio: 0.198200"
             android:layout_marginTop="6dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
+            android:drawableStart="@drawable/ic_star_border6"
+            android:drawablePadding="3dp"
             />
 
 
@@ -140,13 +169,15 @@
             android:layout_height="wrap_content"
             android:text="Recovered Ratio: 0.01200"
             android:layout_marginTop="6dp"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="20dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="italic"
             android:textSize="15sp"
-            android:textColor="#1D1B1C"
+            android:textColor="#000000"
             android:layout_marginBottom="14dp"
+            android:drawableStart="@drawable/ic_star_border9"
+            android:drawablePadding="3dp"
             />
 
 

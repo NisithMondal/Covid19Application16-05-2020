@@ -4,36 +4,53 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nisith.covid19application.model.CountriesInfoModel;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<FilterActivityRecyclerViewAdapter.MyViewHolder> {
+public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<FilterActivityRecyclerViewAdapter.MyViewHolder> implements Filterable {
 
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
+    private List<CountriesInfoModel> anotherAllEffectedCountriesInfoList;
     private OnCountryCardItemClickInterface onCountryCardItemClickInterface;
     private CountryFlags countryFlags;
+    private String filterType;
+
+
 
 
     public interface OnCountryCardItemClickInterface {
-        void onCountryCardItemClick(int position, int countryFlagId);
+        void onCountryCardItemClick(int position,int positionNumberTextViewValue, int countryFlagId);
     }
 
     public FilterActivityRecyclerViewAdapter(List<CountriesInfoModel> allEffectedCountriesInfoList, AppCompatActivity appCompatActivity){
         this.allEffectedCountriesInfoList = allEffectedCountriesInfoList;
+        anotherAllEffectedCountriesInfoList = new ArrayList<>();
         this.onCountryCardItemClickInterface = (OnCountryCardItemClickInterface) appCompatActivity;
         countryFlags = new CountryFlags(appCompatActivity.getApplicationContext());
+    }
 
 
+    public void setFilterType(String filterType){
+        this.filterType = filterType;
     }
 
 
 
+    public void setAnotherAllEffectedCountriesInfoList(List<CountriesInfoModel> anotherAllEffectedCountriesInfoList){
+        this.anotherAllEffectedCountriesInfoList.clear();
+        this.anotherAllEffectedCountriesInfoList.addAll(anotherAllEffectedCountriesInfoList);
+    }
 
 
     @NonNull
@@ -56,12 +73,14 @@ public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<Filt
         }else {
             holder.flagImageThumbnail.setImageResource(R.drawable.ic_defalt_flag);
         }
-        holder.positionNumberTextView.setText("NO: "+String.valueOf(position+1));
+        int objectPosition = anotherAllEffectedCountriesInfoList.indexOf(effectedCountryInfo);// this line is to solve position number text view value
+        holder.positionNumberTextView.setText("NO: "+String.valueOf(objectPosition+1));
         holder.countryName.setText(countryName);
         holder.totalCases.setText("Total Cases: "+effectedCountryInfo.getTotalCases());
         holder.totalDeaths.setText("Total Deaths: "+effectedCountryInfo.getTotalDeaths());
         holder.activeCasesTextView.setText("Active Cases: "+effectedCountryInfo.getActivCcases());
         holder.totalTestTextView.setText("Total Tests: "+effectedCountryInfo.getTotalTests());
+        setDotIconOnCardView(holder);
     }
 
     @Override
@@ -77,13 +96,15 @@ public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<Filt
 
 
 
+
+
     class MyViewHolder extends RecyclerView.ViewHolder{
 
         ImageView flagImageThumbnail;
         TextView countryName, totalCases, totalDeaths,activeCasesTextView, totalTestTextView;
         TextView positionNumberTextView;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             flagImageThumbnail = itemView.findViewById(R.id.flag_image_view);
             positionNumberTextView = itemView.findViewById(R.id.position_number_text_view);
@@ -96,11 +117,90 @@ public class FilterActivityRecyclerViewAdapter extends RecyclerView.Adapter<Filt
                 @Override
                 public void onClick(View v) {
                     int flagId = countryFlags.getCountryFlag(allEffectedCountriesInfoList.get(getAdapterPosition()).getCountryName());
-                    onCountryCardItemClickInterface.onCountryCardItemClick(getAdapterPosition(),flagId);
+                    int positionNumberTextViewValue = anotherAllEffectedCountriesInfoList.indexOf(allEffectedCountriesInfoList.get(getAdapterPosition())) + 1;
+                    onCountryCardItemClickInterface.onCountryCardItemClick(getAdapterPosition(),positionNumberTextViewValue,flagId);
                 }
             });
         }
     }
+
+
+
+    @Override
+    public Filter getFilter() {
+        return new MyFilter();
+    }
+
+
+    private class MyFilter extends Filter{
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            //This method runs on background Thread
+            String inputString = constraint.toString().trim().toLowerCase();
+            List<CountriesInfoModel> countriesInfoModelList = new ArrayList<>();
+            if (inputString.length() == 0){
+                countriesInfoModelList.addAll(anotherAllEffectedCountriesInfoList);
+
+            }else {
+                for (CountriesInfoModel item : anotherAllEffectedCountriesInfoList) {
+                    if (item.getCountryName().toLowerCase().contains(inputString)) {
+                        countriesInfoModelList.add(item);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = countriesInfoModelList;
+            return filterResults;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
+            //This method runs on UI Thread i.e. main Thread
+            allEffectedCountriesInfoList.clear();
+            allEffectedCountriesInfoList.addAll((List<CountriesInfoModel>) filterResults.values);
+            notifyDataSetChanged();
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    private void setDotIconOnCardView(FilterActivityRecyclerViewAdapter.MyViewHolder holder){
+        if (filterType.equalsIgnoreCase("Total Cases")){
+            holder.totalCases.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_green,0,0,0);
+            holder.totalDeaths.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.activeCasesTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.totalTestTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+        }else if (filterType.equalsIgnoreCase("Total Deaths")){
+            holder.totalCases.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.totalDeaths.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_green,0,0,0);
+            holder.activeCasesTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.totalTestTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+
+        }else if (filterType.equalsIgnoreCase("Active Cases")){
+            holder.totalCases.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.totalDeaths.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.activeCasesTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_green,0,0,0);
+            holder.totalTestTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+
+        }else {
+            holder.totalCases.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.totalDeaths.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.activeCasesTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_white,0,0,0);
+            holder.totalTestTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_dot_green,0,0,0);
+
+        }
+    }
+
 
 
 }
