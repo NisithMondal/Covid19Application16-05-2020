@@ -128,13 +128,15 @@
              android:id="@+id/marque_text_view"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text=" Stay Home And Save Lives. Tata By By Good By Corona Virus"
+             android:text=" Stay Home And Save Lives. This Application Give You World's All Countries Information Affected By COVID-19"
              android:textStyle="bold|italic"
              android:textColor="#ee00aa"
              android:layout_below="@+id/card_image_view"
              android:textSize="16sp"
              android:singleLine="true"
              android:ellipsize="marquee"
+             android:scrollHorizontally="true"
+             android:marqueeRepeatLimit="marquee_forever"
              android:layout_marginTop="10dp"
 
              />
@@ -521,7 +523,7 @@
              android:layout_marginTop="18dp"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:background="#EBE7E7"
+             android:background="#FDFBFB"
              />
 
 

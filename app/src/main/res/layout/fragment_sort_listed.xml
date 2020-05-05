@@ -11,14 +11,27 @@
         android:id="@+id/app_toolbar"
         layout="@layout/app_toolbar"
         />
+    <TextView
+        android:id="@+id/heading_text_view"
+        android:layout_below="@+id/app_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:textColor="#ee00aa"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_below="@+id/app_toolbar"
+        android:layout_below="@+id/heading_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
         />
 
 </RelativeLayout>

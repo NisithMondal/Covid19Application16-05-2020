@@ -34,7 +34,7 @@ public class SortListedFragment extends Fragment {
     private OnCloseFragmentListener closeFragmentListener;
     private RecyclerView recyclerView;
     private FilterActivityRecyclerViewAdapter recyclerViewAdapter;
-    private TextView appToolbarTextView;
+    private TextView headingTextView;
 
 
     public SortListedFragment() {
@@ -64,8 +64,9 @@ public class SortListedFragment extends Fragment {
     private void setUpLayout(View view){
         Toolbar appToolbar = view.findViewById(R.id.app_toolbar);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(appToolbar);
-        appToolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        appToolbarTextView.setTextSize(15);
+        TextView appToolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
+        headingTextView = view.findViewById(R.id.heading_text_view);
+        appToolbarTextView.setText("Sorted Result");
         appToolbar.setNavigationIcon(R.drawable.ic_cross);
         appToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,11 +115,9 @@ public class SortListedFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
-
-    public void setToolbarTitle(String toolbarTitle){
-        appToolbarTextView.setText(toolbarTitle);
+    public void setHeadingTextView(String headingTextViewValue){
+        this.headingTextView.setText(headingTextViewValue);
     }
-
 
 
 

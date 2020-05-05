@@ -36,6 +36,7 @@ import com.google.gson.Gson;
 import com.nisith.covid19application.model.AllEffectedCountriesModel;
 import com.nisith.covid19application.model.CountriesInfoModel;
 import com.nisith.covid19application.model.TotalWorldEffectedCasesModel;
+import com.nisith.covid19application.popup_alert_dialog.CountryPickerAlertDialog;
 import com.nisith.covid19application.popup_alert_dialog.InternetErrorAlertDialog;
 import com.nisith.covid19application.server_operation.FeatchEffectedCountriesDataFromServer;
 import com.nisith.covid19application.shared_preference.SaveSelectedCountrySharedPreference;
@@ -43,10 +44,11 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements FeatchEffectedCountriesDataFromServer.OnServerResponseListener , FeatchEffectedCountriesDataFromServer.OnTotalWorldCasesServerResponseListener,
-        HomeActivityRecyclerViewAdapter.OnGridViewClickEventListener{
+        HomeActivityRecyclerViewAdapter.OnGridViewClickEventListener, CountryPickerAlertDialog.OnCountryPickerDialogOptionSelectListener {
 
 
     private TextView updateDateTextView,reportTextView, totalCasesTextView,newCasesTextView, totalDeathsTextView,newDeathsTextView,activeCasesTextView,totalRecoveredTextView,
@@ -81,9 +83,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUpLayout();
-        setClickListenerOnButtons();
-        saveSelectedCountrySharedPreference = new SaveSelectedCountrySharedPreference(getApplicationContext());
         setViewsVisibility();
+        saveSelectedCountrySharedPreference = new SaveSelectedCountrySharedPreference(getApplicationContext());
+        setClickListenerOnButtons();
         setActivityCountryNameAndFlags();
         marqueTextView.setSelected(true);
         setHomeCountryDetailedViewsVisibility(View.INVISIBLE);
@@ -105,15 +107,19 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
         }
 
-
-
-
-
-
-
-
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
@@ -193,25 +199,38 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.set_country:
-                Intent intent = new Intent(HomeActivity.this,CountrySettingActivity.class);
-                if (! isServerOperationAlreadyGoingOn) {
-                    if (allEffectedCountriesInfoList.size()>0) {
-                        ArrayList<String> allEffectedCountriesNameList = getAllEffectedCountriesName(allEffectedCountriesInfoList);
-                        intent.putStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME", allEffectedCountriesNameList);
-                        startActivityForResult(intent, FLAG_SETTING_REQUEST_CODE);
-                    } else {
-                        performServerOperation();
-                        isOpenFlagSettingActivity = true;
-                    }
-                }else {
-                    //Server operation is Already Going On
-                    Toast.makeText(this, "Server Operation Already Going On...", Toast.LENGTH_SHORT).show();
-                }
+            case R.id.Select_country:
+               openCountrySettingActivity();
                 break;
+
+            case R.id.privacy_policy:
+                Toast.makeText(this, "Privacy Policy", Toast.LENGTH_SHORT).show();
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+    private void openCountrySettingActivity(){
+        Intent intent = new Intent(HomeActivity.this,CountrySettingActivity.class);
+        if (! isServerOperationAlreadyGoingOn) {
+            if (allEffectedCountriesInfoList.size()>0) {
+                ArrayList<String> allEffectedCountriesNameList = getAllEffectedCountriesName(allEffectedCountriesInfoList);
+                intent.putStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME", allEffectedCountriesNameList);
+                startActivityForResult(intent, FLAG_SETTING_REQUEST_CODE);
+            } else {
+                performServerOperation();
+                isOpenFlagSettingActivity = true;
+            }
+        }else {
+            //Server operation is Already Going On
+            Toast.makeText(this, "Server Operation Already Going On...", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -383,6 +402,21 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     }
 
 
+    private void showCountryPickerAlertDialog(){
+        CountryPickerAlertDialog alertDialog = new CountryPickerAlertDialog(this);
+        alertDialog.show(getSupportFragmentManager(),"dialog");
+    }
+
+
+    @Override
+    public void OnCountryPickerDialogOptionSelect(String selectionType) {
+        if (selectionType.equalsIgnoreCase("SELECT")){
+            // When country Picker Alert Dialog's "SELECT" text is clicked, then this condition will true.
+            Intent intent = new Intent(HomeActivity.this,CountrySettingActivity.class);
+            intent.putStringArrayListExtra("ALL_EFFECTED_COUNTRIES_NAME", getAllEffectedCountriesName(allEffectedCountriesInfoList));
+            startActivityForResult(intent, FLAG_SETTING_REQUEST_CODE);
+        }
+    }
 
 
     @Override
@@ -406,6 +440,11 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                         mostAffectedCountryTextView.setVisibility(View.VISIBLE);
                         horizentalLine.setVisibility(View.VISIBLE);
                         scrollView.setVisibility(View.VISIBLE);
+                        if (!saveSelectedCountrySharedPreference.isCountryPickerAlertDialogAlreadyShown()) {
+                            //This alert dialog only shown at one time when after installing this app user first open this app.
+                            showCountryPickerAlertDialog();
+                            saveSelectedCountrySharedPreference.saveCountryPickerAlertDialogShowingState(true);
+                        }
                     }
                 });
 
@@ -443,6 +482,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     public void onTotalWorldDataServerResponse(String responseStatus, final String errorMessage, TotalWorldEffectedCasesModel totalWorldEffectedCasesModel) {
         if (responseStatus.equalsIgnoreCase("success") && totalWorldEffectedCasesModel != null){
             this.totalWorldEffectedCasesModelObject = totalWorldEffectedCasesModel;
+
             Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
             Gson gson = new Gson();
             String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);
@@ -459,6 +499,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                 }
             });
         }
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -466,6 +507,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                 loadingDataRelativeLayout.setVisibility(View.GONE);
             }
         });
+
         isServerOperationAlreadyGoingOn = false;
     }
 
@@ -495,7 +537,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
     private void setDataOnViews(CountriesInfoModel countriesInfoModel){
         updateDateTextView.setText("Update on "+updatedDateOfServerData);
-        reportTextView.setText("Report of Corona Virus Effected People in "+countriesInfoModel.getCountryName());
+        reportTextView.setText("Report of Corona Virus Affected People in "+countriesInfoModel.getCountryName());
         totalCasesTextView.setText("Total cases: "+countriesInfoModel.getTotalCases());
         newCasesTextView.setText("New Cases: "+countriesInfoModel.getNewCases());
         totalDeathsTextView.setText("Total Deaths: "+countriesInfoModel.getTotalDeaths());

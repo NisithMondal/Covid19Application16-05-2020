@@ -39,7 +39,7 @@ public class DetailedActivity extends AppCompatActivity {
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Details Information");
+        toolbarTextView.setText("Detailed Information");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -64,6 +64,8 @@ public class DetailedActivity extends AppCompatActivity {
         totalCasesPerMillionTextView = findViewById(R.id.total_cases_per_million_text_view);
         deathsPerMillionTextView = findViewById(R.id.deaths_per_million_text_view);
         seriousConditionTextView = findViewById(R.id.serious_condition_text_view);
+        ImageView backgroundImageView = findViewById(R.id.background_image_view);
+        Picasso.get().load(R.drawable.corona1).fit().centerCrop().into(backgroundImageView);
 
     }
 
@@ -98,7 +100,7 @@ public class DetailedActivity extends AppCompatActivity {
                 flagImageView.setImageResource(R.drawable.ic_defalt_flag);
             }
             updateDateTextView.setText("Update on " + updatedDateOfServerData);
-            reportTextView.setText("Report of Corona Virus Effected People in " + countriesInfoModel.getCountryName());
+            reportTextView.setText("Report of Corona Virus Affected People in " + countriesInfoModel.getCountryName());
             totalCasesTextView.setText("Total cases: " + countriesInfoModel.getTotalCases());
             newCasesTextView.setText("New Cases: "+countriesInfoModel.getNewCases());
             totalDeathsTextView.setText("Total Deaths: " + countriesInfoModel.getTotalDeaths());

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -19,13 +20,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nisith.covid19application.model.CountriesInfoModel;
 import com.nisith.covid19application.popup_alert_dialog.FilterCountryActivityDisplayDetailedDialog;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FilterCountriesActivity extends AppCompatActivity implements FilterActivityRecyclerViewAdapter.OnCountryCardItemClickInterface,
-        MyComparator.OnThreadStop, SortListedFragment.OnCloseFragmentListener {
+        MyComparator.OnSortingThreadStopListener, SortListedFragment.OnCloseFragmentListener {
 
     private RadioGroup filterCountryRadioGroup,orderByRadioGroup;
     private RadioButton totalCasesRadioButton,totalDeathsRadioButton,activeCasesRadioButton,totalTestRadioButton;
@@ -65,7 +67,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
     private void setUpLayout(){
         appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Filter Countries");
+        toolbarTextView.setText("Filter Countries Report");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -76,7 +78,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
             }
         });
         marqueTextView = findViewById(R.id.marque_text_view);
-        filterCountryRadioGroup = findViewById(R.id.radio_group_filter_country);
+        filterCountryRadioGroup = findViewById(R.id.radio_group_sorting_country);
         orderByRadioGroup = findViewById(R.id.radio_group_order_by);
         totalCasesRadioButton = findViewById(R.id.total_cases_radio_button);
         totalDeathsRadioButton = findViewById(R.id.total_deaths_radio_button);
@@ -89,6 +91,8 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
         performFiltringLayout = findViewById(R.id.perform_filtering_layout);
         nestedScrollView = findViewById(R.id.nested_scroll_view);
         fragmentContainerLayout = findViewById(R.id.frame_layout);
+        ImageView backgroundImageView = findViewById(R.id.background_image_view);
+        Picasso.get().load(R.drawable.corona2).fit().centerCrop().into(backgroundImageView);
     }
 
 
@@ -116,7 +120,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
     private void showFragment(){
         String filterByValue = getFilterCountryRadioGroupSelectedValue();
         String orderByValue = getOrderByRadioGroupSelectedValue();
-        sortListedFragment.setToolbarTitle("Filter By "+ filterByValue +" in "+orderByValue);
+        sortListedFragment.setHeadingTextView("Sorted By "+ filterByValue +" in "+orderByValue);
         fragmentContainerLayout.setVisibility(View.VISIBLE);
         nestedScrollView.setVisibility(View.GONE);
         appToolbar.setVisibility(View.GONE);
@@ -257,7 +261,8 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
 
 
     @Override
-    public void onThreadStop() {
+    public void onSortingThreadStop() {
+        //This method will be called from MyComparator class when sorting operation is completed.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

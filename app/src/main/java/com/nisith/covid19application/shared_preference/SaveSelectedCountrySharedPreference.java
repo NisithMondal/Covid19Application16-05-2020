@@ -12,6 +12,7 @@ public class SaveSelectedCountrySharedPreference {
     private static final String HOME_ACTIVITY_COUNTRY_FLAG_ID_KEY = "country_flag_id";
     private static final String AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_NAME_KEY = "another_country_name";
     private static final String AFFECTED_COUNTRY_HISTORY_ACTIVITY_COUNTRY_FLAG_ID_KEY = "another_country_flag_id";
+    private static final String COUNTRY_PICKER_ALERT_DIALOG_SHOWING_STATE_KEY = "country_picker_alert_dialog_showing_state";
 
 
     public SaveSelectedCountrySharedPreference(Context context) {
@@ -34,6 +35,15 @@ public class SaveSelectedCountrySharedPreference {
 
     }
 
+    public void saveCountryPickerAlertDialogShowingState(boolean value){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(COUNTRY_PICKER_ALERT_DIALOG_SHOWING_STATE_KEY,value);
+        editor.commit();
+    }
+
+    public boolean isCountryPickerAlertDialogAlreadyShown(){
+        return sharedPreferences.getBoolean(COUNTRY_PICKER_ALERT_DIALOG_SHOWING_STATE_KEY,false);
+    }
 
     public String getSavedCountryName(){
         return sharedPreferences.getString(HOME_ACTIVITY_COUNTRY_NAME_KEY,"India");

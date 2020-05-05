@@ -31,11 +31,11 @@
 
 
             <ImageView
-                android:id="@+id/image_view"
+                android:id="@+id/background_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/corona_virus_image" />
+                />
 
             <ImageView
                 android:id="@+id/flag_image_view"
@@ -75,11 +75,12 @@
                 android:textSize="14sp"
                 android:textAlignment="center"
                 android:layout_marginTop="20dp"
-                android:textColor="#C2185B"
+                android:textColor="#8C05C5"
                 android:textStyle="bold"
                 android:padding="13dp"
                 android:background="@drawable/text_view_background_shape"
                 android:layout_centerHorizontal="true"
+                android:text="Update On 05-05-2020 12:12:033"
                 />
 
             <TextView
@@ -92,13 +93,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:textColor="#0369A0"
+                android:textColor="#098879"
                 android:textStyle="bold"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/text_view_background_shape"
-                android:padding="10dp"
+                android:text="cx cbnxbcnxbcnbxnvbncbvnbxn"
                 />
 
             <TextView
@@ -269,24 +270,31 @@
                 android:drawablePadding="2dp"
                 />
 
+            <View
+                android:id="@+id/horizental_line"
+                android:layout_below="@+id/total_cases_per_million_text_view"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#049786"
+                />
+
 
 
             <TextView
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:textColor="#07AF0F"
+                android:textColor="#06990C"
                 android:textStyle="bold"
                 android:layout_marginBottom="15dp"
-                android:text="STAY HOME SAVE LIVES"
+                android:text="Stay  Home  And  Save  Lives"
                 android:textAlignment="center"
-                android:layout_below="@+id/total_cases_per_million_text_view"
+                android:layout_below="@+id/horizental_line"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/another_text_view_background_shape"
                 android:padding="10dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+
                 />
 
 

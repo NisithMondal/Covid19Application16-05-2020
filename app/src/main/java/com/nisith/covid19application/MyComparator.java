@@ -1,27 +1,24 @@
 package com.nisith.covid19application;
 
-import android.util.Log;
-
 import com.nisith.covid19application.model.CountriesInfoModel;
 
-import java.util.Comparator;
 import java.util.List;
 
 class MyComparator  {
     private String orderBy;
     private String filterType;
     private List<CountriesInfoModel> allEffectedCountriesInfoList;
-    private OnThreadStop onThreadStop;
+    private OnSortingThreadStopListener onSortingThreadStopListener;
 
-    public interface OnThreadStop{
-        void onThreadStop();
+    public interface OnSortingThreadStopListener {
+        void onSortingThreadStop();
     }
 
-    public MyComparator(String filterType, String orderBy, List<CountriesInfoModel> allEffectedCountriesInfoList, OnThreadStop onThreadStop){
+    public MyComparator(String filterType, String orderBy, List<CountriesInfoModel> allEffectedCountriesInfoList, OnSortingThreadStopListener onSortingThreadStopListener){
         this.orderBy = orderBy;
         this.filterType = filterType;
         this.allEffectedCountriesInfoList = allEffectedCountriesInfoList;
-        this.onThreadStop = onThreadStop;
+        this.onSortingThreadStopListener = onSortingThreadStopListener;
     }
 
 
@@ -33,7 +30,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInAscendingOrder("Total Cases");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -43,7 +40,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInAscendingOrder("Total Deaths");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -53,7 +50,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInAscendingOrder("Active Cases");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -63,7 +60,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInAscendingOrder("Total Test");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -78,7 +75,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInDescendingOrder("Total Cases");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -88,7 +85,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInDescendingOrder("Total Deaths");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -98,7 +95,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInDescendingOrder("Active Cases");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -108,7 +105,7 @@ class MyComparator  {
                     @Override
                     public void run() {
                         filterInDescendingOrder("Total Test");
-                        onThreadStop.onThreadStop();
+                        onSortingThreadStopListener.onSortingThreadStop();
                     }
                 });
                 thread.start();
@@ -121,6 +118,7 @@ class MyComparator  {
 
     }
 
+    //Here we use Bubble sort approach for filtering all Affected countries.
 
     private void filterInDescendingOrder(String filterType){
         if (filterType.equalsIgnoreCase("Total Cases")){
