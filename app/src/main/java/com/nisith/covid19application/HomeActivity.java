@@ -7,18 +7,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -124,7 +128,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("COVID-19");
+        CircleImageView toolbarImageView = appToolbar.findViewById(R.id.home_activity_toolbar_image_view);
+        Picasso.get().load(R.drawable.corona_icon).fit().centerCrop().into(toolbarImageView);
+        toolbarTextView.setText("COVID-19  UPDATES");
         setSupportActionBar(appToolbar);
         setTitle("");
         updateDateTextView = findViewById(R.id.update_date_text_view);
@@ -204,11 +210,9 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                 break;
 
             case R.id.privacy_policy:
-                Toast.makeText(this, "Privacy Policy", Toast.LENGTH_SHORT).show();
+                openApplicationPrivacyPolicy();
                 break;
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -229,9 +233,25 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             }
         }else {
             //Server operation is Already Going On
-            Toast.makeText(this, "Server Operation Already Going On...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Server operation is already going on...", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+    private void openApplicationPrivacyPolicy(){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://technisith.blogspot.com/p/privacy-policy-covid-19-updates.html"));
+        try {
+        startActivity(intent);
+        }catch (Exception e){
+        Toast.makeText(this, "Not Open. Something Went Wrong", Toast.LENGTH_SHORT).show();
+       }
+    }
+
+
+
 
 
     @Override
@@ -378,9 +398,14 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             @Override
             public void onClick(View v) {
                 scrollView.setVisibility(View.VISIBLE);
-                serverErrorMessageTextView.setVisibility(View.VISIBLE);
-                serverErrorMessageTextView.setText("You are Offline. Please Check Your Internet Connection");
-                retryButton.setVisibility(View.VISIBLE);
+                if (allEffectedCountriesInfoList.isEmpty()) {
+                    retryButton.setVisibility(View.VISIBLE);
+                    serverErrorMessageTextView.setVisibility(View.VISIBLE);
+                    serverErrorMessageTextView.setText("You are Offline. Please Check Your Internet Connection");
+                }else {
+                    retryButton.setVisibility(View.GONE);
+                    serverErrorMessageTextView.setVisibility(View.GONE);
+                }
                 cancelButton.setVisibility(View.INVISIBLE);
             }
         });
@@ -466,6 +491,8 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
                     cancelButton.setVisibility(View.VISIBLE);
                 }
             });
+        }else if (responseStatus.equalsIgnoreCase("not_success")){
+            scrollView.setVisibility(View.VISIBLE);
         }
         runOnUiThread(new Runnable() {
             @Override
@@ -483,7 +510,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         if (responseStatus.equalsIgnoreCase("success") && totalWorldEffectedCasesModel != null){
             this.totalWorldEffectedCasesModelObject = totalWorldEffectedCasesModel;
 
-            Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
+            final Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
             Gson gson = new Gson();
             String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);
             intent.putExtra("JSON_STRING",jsonString);

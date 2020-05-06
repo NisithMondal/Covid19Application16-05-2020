@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Covid19 Application</string>
+    <string name="app_name">Covid19 Updates</string>
 
 
     <string-array name="countries_name">

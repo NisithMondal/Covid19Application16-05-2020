@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:elevation="10dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/home_activity_toolbar_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:civ_border_width="3dp"
+        app:civ_border_color="#02F7DA"
+        />
+
+    <TextView
+        android:id="@+id/toolbar_text_view"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold|italic"
+        android:text="COVID-19 UPDATES"
+        android:layout_marginStart="30dp"
+        />
+
+</androidx.appcompat.widget.Toolbar>
