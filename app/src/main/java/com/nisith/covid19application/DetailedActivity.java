@@ -115,18 +115,18 @@ public class DetailedActivity extends AppCompatActivity {
 
         }else if (intentType.equalsIgnoreCase("type_world")){
             countryNameTextView.setVisibility(View.GONE);
-            newCasesTextView.setVisibility(View.GONE);
-            newDeathsTextView.setVisibility(View.GONE);
+            totalTestsTextView.setVisibility(View.GONE);
+            totalTestsPerMillionTextView.setVisibility(View.GONE);
             flagImageView.setImageResource(flagId);
             updateDateTextView.setText("Update on " + totalWorldEffectedCasesModelObject.getUpdatedDate());
             reportTextView.setText("Report of Corona Virus Effected People Through Out the World");
             totalCasesTextView.setText("Total cases: " + totalWorldEffectedCasesModelObject.getTotalCases());
+            newCasesTextView.setText("New Cases: " + totalWorldEffectedCasesModelObject.getNewCases());
             totalDeathsTextView.setText("Total Deaths: " + totalWorldEffectedCasesModelObject.getTotalDeaths());
+            newDeathsTextView.setText("New Deaths: " + totalWorldEffectedCasesModelObject.getNewDeaths());
             activeCasesTextView.setText("Active Cases: " + totalWorldEffectedCasesModelObject.getActiveCases());
             totalRecoveredTextView.setText("Total Recovered: " + totalWorldEffectedCasesModelObject.getTotalRecovered());
-            totalTestsTextView.setText("New Cases: " + totalWorldEffectedCasesModelObject.getNewCases());
             totalCasesPerMillionTextView.setText("Total Cases Per 1 Million Population: " + totalWorldEffectedCasesModelObject.getTotalCasesPer1mPopulation());
-            totalTestsPerMillionTextView.setText("New Deaths: " + totalWorldEffectedCasesModelObject.getNewDeaths());
             deathsPerMillionTextView.setText("Deaths Per 1 Million Population: " + totalWorldEffectedCasesModelObject.getDeathsPer1mPopulation());
             seriousConditionTextView.setText("Serious Condition: " + totalWorldEffectedCasesModelObject.getSeriousCritical());
         }

@@ -67,7 +67,7 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
     private void setUpLayout(){
         appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Filter Countries Report");
+        toolbarTextView.setText("Filter Country's Report");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);
@@ -212,8 +212,10 @@ public class FilterCountriesActivity extends AppCompatActivity implements Filter
 
     @Override
     public void onCountryCardItemClick(int position,int positionNumberTextViewValue,int countryFlagId) {
+        String sortedByValue = getFilterCountryRadioGroupSelectedValue();
+        String orderByValue = getOrderByRadioGroupSelectedValue();
         FilterCountryActivityDisplayDetailedDialog dialog
-                = new FilterCountryActivityDisplayDetailedDialog(allEffectedCountriesInfoList.get(position),countryFlagId,positionNumberTextViewValue);
+                = new FilterCountryActivityDisplayDetailedDialog(allEffectedCountriesInfoList.get(position),countryFlagId,positionNumberTextViewValue,sortedByValue,orderByValue);
         dialog.show(getSupportFragmentManager(),"nisith");
     }
 

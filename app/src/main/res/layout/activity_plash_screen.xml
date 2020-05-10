@@ -6,28 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlashScreenActivity"
-    android:background="#aa00ee"
+    android:background="@android:color/white"
     >
 
     <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="COVID-19  REPORT"
+        android:text="COVID-19  Updates"
         android:layout_centerInParent="true"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="italic|bold"
-        android:textColor="@android:color/white"
+        android:textColor="#E97804"
         />
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_above="@+id/text_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/corona2"
+        android:layout_marginBottom="20dp"
         android:scaleType="centerCrop"
         />
 

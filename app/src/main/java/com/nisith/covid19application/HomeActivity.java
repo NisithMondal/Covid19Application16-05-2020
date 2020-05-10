@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
         CircleImageView toolbarImageView = appToolbar.findViewById(R.id.home_activity_toolbar_image_view);
         Picasso.get().load(R.drawable.corona_icon).fit().centerCrop().into(toolbarImageView);
-        toolbarTextView.setText("COVID-19  UPDATES");
+        toolbarTextView.setText("COVID-19  Updates");
         setSupportActionBar(appToolbar);
         setTitle("");
         updateDateTextView = findViewById(R.id.update_date_text_view);
@@ -575,7 +575,7 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
         totalCasesPerMillionTextView.setText("Total Cases Per 1 Million Population: "+countriesInfoModel.getTotalCasesPer1mPopulation());
         totalTestsPerMillionTextView.setText("Total Tests Per 1 Million Population: "+countriesInfoModel.getTestsPer1mPopulation());
         deathsPerMillionTextView.setText("Deaths Per 1 Million Population: "+countriesInfoModel.getDeathsPer1mPopulation());
-        seriousConditionTextView.setText("Serious Condition: "+countriesInfoModel.getSeriousCritical());
+        seriousConditionTextView.setText("Critical Condition: "+countriesInfoModel.getSeriousCritical());
     }
 
 

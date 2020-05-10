@@ -47,7 +47,7 @@ public class CountrySettingActivity extends AppCompatActivity implements Country
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Set Your Country");
+        toolbarTextView.setText("Select Your Country");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);

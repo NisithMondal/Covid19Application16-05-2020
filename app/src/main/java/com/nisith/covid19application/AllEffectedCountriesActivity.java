@@ -57,7 +57,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     private void setUpLayout(){
         Toolbar appToolbar = findViewById(R.id.app_toolbar);
         TextView toolbarTextView = appToolbar.findViewById(R.id.toolbar_text_view);
-        toolbarTextView.setText("Effected Countries");
+        toolbarTextView.setText("Affected Countries");
         setSupportActionBar(appToolbar);
         setTitle("");
         appToolbar.setNavigationIcon(R.drawable.ic_back_arrow);

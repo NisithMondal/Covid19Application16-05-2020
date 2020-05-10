@@ -15,11 +15,11 @@
 
         <ImageView
             android:id="@+id/flag_image_thumbnail"
-            android:layout_width="115dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="9dp"
-            android:layout_marginStart="13dp"
+            android:layout_width="135dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="11dp"
+            android:layout_marginStart="15dp"
             android:scaleType="centerCrop"
             />
 
@@ -27,7 +27,6 @@
             android:id="@+id/country_name_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="INDIA"
             android:textStyle="bold|italic"
             android:textSize="18sp"
             android:textColor="@color/colorAccent"
@@ -43,7 +42,6 @@
             android:id="@+id/total_cases_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Cases  54534"
             android:textStyle="italic"
             android:textSize="15sp"
             android:textColor="@android:color/black"
@@ -61,7 +59,6 @@
             android:id="@+id/total_deaths_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Deaths  54534"
             android:textStyle="italic"
             android:textSize="15sp"
             android:textColor="@android:color/black"

@@ -173,7 +173,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="16dp"
                 android:textStyle="bold|italic"
-                android:textColor="#000000"
+                android:textColor="#7D13AA"
                 android:padding="10dp"
                 android:background="@drawable/another_text_view_background_shape"
                 />

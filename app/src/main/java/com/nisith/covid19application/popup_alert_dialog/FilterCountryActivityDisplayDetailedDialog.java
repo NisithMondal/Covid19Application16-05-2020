@@ -25,11 +25,14 @@ public class FilterCountryActivityDisplayDetailedDialog extends AppCompatDialogF
     private CountriesInfoModel countryInfo;
     private int flagId;
     private int positionNumber;
+    private String sortedByValue, orderByValue;
 
-    public FilterCountryActivityDisplayDetailedDialog(CountriesInfoModel countryInfo, int flagId, int positionNumber) {
+    public FilterCountryActivityDisplayDetailedDialog(CountriesInfoModel countryInfo, int flagId, int positionNumber,String sortedByValue, String orderByValue) {
         this.countryInfo = countryInfo;
         this.flagId = flagId;
         this.positionNumber = positionNumber;
+        this.sortedByValue = sortedByValue;
+        this.orderByValue = orderByValue;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -55,6 +58,8 @@ public class FilterCountryActivityDisplayDetailedDialog extends AppCompatDialogF
     private void setUpReportDisplayDialogViews(View view,CountriesInfoModel countryInfo, int flagId){
         ImageView flagImageView = view.findViewById(R.id.flag_image_view);
         TextView countryNameTextView = view.findViewById(R.id.country_name_text_view);
+        TextView orderByTextView = view.findViewById(R.id.order_by_text_view);
+        TextView sortedByTextView = view.findViewById(R.id.sorted_by_text_view);
         TextView positionNumberTextView = view.findViewById(R.id.position_number_text_view);
         TextView totalCasesTextView = view.findViewById(R.id.total_cases_text_view);
         TextView newCasesTextView = view.findViewById(R.id.new_cases_text_view);
@@ -74,6 +79,8 @@ public class FilterCountryActivityDisplayDetailedDialog extends AppCompatDialogF
             flagImageView.setImageResource(R.drawable.ic_defalt_flag);
         }
         countryNameTextView.setText(countryInfo.getCountryName());
+        orderByTextView.setText("Order By:  "+orderByValue);
+        sortedByTextView.setText("Sorted By:  "+sortedByValue);
         positionNumberTextView.setText("Position No:  "+String.valueOf(positionNumber));
         totalCasesTextView.setText("Total Cases: "+countryInfo.getTotalCases());
         newCasesTextView.setText("New Cases: "+countryInfo.getNewCases());

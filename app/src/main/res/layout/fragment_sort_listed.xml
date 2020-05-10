@@ -23,6 +23,7 @@
         android:padding="8dp"
         android:textColor="#ffffff"
         android:background="#0288D1"
+        android:textStyle="italic"
         />
 
 
