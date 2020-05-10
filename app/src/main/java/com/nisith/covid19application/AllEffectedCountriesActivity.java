@@ -39,6 +39,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     private TextView errorMessageTextView;
     private Button retryButton;
     private String updatedDateOfServerData;
+    private SearchView searchView;
 
 
     @Override
@@ -90,7 +91,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.setting_activity_menu,menu);
-        final SearchView searchView =(SearchView) menu.findItem(R.id.search).getActionView();
+        searchView =(SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Enter Country Name");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -100,8 +101,12 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Filter filter = allCountriesRecyclerViewAdapter.getFilter();
-                filter.filter(searchView.getQuery());
+                if (allCountriesRecyclerViewAdapter.getAnotherAllEffectedCountriesInfoListSize()>0) {
+                    Filter filter = allCountriesRecyclerViewAdapter.getFilter();
+                    filter.filter(searchView.getQuery());
+                }else {
+                    Toast.makeText(AllEffectedCountriesActivity.this, "No items found", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });
@@ -134,7 +139,7 @@ public class AllEffectedCountriesActivity extends AppCompatActivity implements A
     }
 
     @Override
-    public void onServerResponse(String responseStatus, final String errorMessage, AllEffectedCountriesModel allEffectedCountriesModel) {
+    public void onServerResponse(String responseStatus, final String errorMessage, final AllEffectedCountriesModel allEffectedCountriesModel) {
 
         if (responseStatus.equalsIgnoreCase("success") && allEffectedCountriesModel != null){
             allEffectedCountriesInfoList.clear();

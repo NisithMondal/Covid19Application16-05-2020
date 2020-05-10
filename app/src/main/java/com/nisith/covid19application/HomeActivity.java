@@ -498,6 +498,11 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
             @Override
             public void run() {
                 loadingDataRelativeLayout.setVisibility(View.GONE);
+                if (allEffectedCountriesInfoList.isEmpty()){
+                    setFourViewVisibility(View.INVISIBLE);
+                }else {
+                    setFourViewVisibility(View.VISIBLE);
+                }
             }
         });
         isServerOperationAlreadyGoingOn = false;
@@ -505,11 +510,18 @@ public class HomeActivity extends AppCompatActivity implements FeatchEffectedCou
 
 
 
+    private void setFourViewVisibility(int value){
+        horizentalLine.setVisibility(value);
+        searchReportByDateButton.setVisibility(value);
+        filterCountriesReport.setVisibility(value);
+        mostAffectedCountryTextView.setVisibility(value);
+    }
+
+
     @Override
     public void onTotalWorldDataServerResponse(String responseStatus, final String errorMessage, TotalWorldEffectedCasesModel totalWorldEffectedCasesModel) {
         if (responseStatus.equalsIgnoreCase("success") && totalWorldEffectedCasesModel != null){
             this.totalWorldEffectedCasesModelObject = totalWorldEffectedCasesModel;
-
             final Intent intent = new Intent(HomeActivity.this,DetailedActivity.class);
             Gson gson = new Gson();
             String jsonString = gson.toJson(totalWorldEffectedCasesModelObject);

@@ -43,6 +43,14 @@ public class AllCountriesRecyclerViewAdapter extends RecyclerView.Adapter<AllCou
         this.anotherAllEffectedCountriesInfoList = new ArrayList<>(anotherAllEffectedCountriesInfoList);
     }
 
+    public int getAnotherAllEffectedCountriesInfoListSize(){
+        int listSize = 0;
+        if (anotherAllEffectedCountriesInfoList != null) {
+            listSize =  this.anotherAllEffectedCountriesInfoList.size();
+        }
+        return listSize;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
