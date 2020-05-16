@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nisith.covid19application">
+    package="com.technicalnisith.covid19updates">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,26 +14,26 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".FilterCountriesActivity"
+            android:name="com.technicalnisith.covid19updates.FilterCountriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AffectedCountryHistorySearchActivity"
+            android:name="com.technicalnisith.covid19updates.AffectedCountryHistorySearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CountrySettingActivity"
+            android:name="com.technicalnisith.covid19updates.CountrySettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AllEffectedCountriesActivity"
+            android:name="com.technicalnisith.covid19updates.AllEffectedCountriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DetailedActivity"
+            android:name="com.technicalnisith.covid19updates.DetailedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HomeActivity"
+            android:name="com.technicalnisith.covid19updates.HomeActivity"
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".PlashScreenActivity"
+        <activity android:name="com.technicalnisith.covid19updates.PlashScreenActivity"
             android:screenOrientation="portrait" >
 
             <intent-filter>

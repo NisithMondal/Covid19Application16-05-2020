@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.nisith.covid19application"
+        applicationId "com.technicalnisith.covid19updates"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
